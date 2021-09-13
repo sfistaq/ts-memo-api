@@ -10,7 +10,7 @@ import CssBaseline from "@material-ui/core/CssBaseline"; // GLOBAL RESET
 import useStyles from "./styles/global";
 
 //COMPONENTS
-import MemoList from "./components/MemoList/MemoList";
+import MemosList from "./components/MemosList/MemosList";
 
 function App() {
   const classes = useStyles();
@@ -28,7 +28,7 @@ function App() {
   return (
     <Container className={classes.app} component="main">
       <CssBaseline />
-      <MemoList />
+      <MemosList />
     </Container>
   );
 }

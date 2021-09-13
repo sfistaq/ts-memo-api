@@ -17,7 +17,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
-import useStyles from "./MemoList.styles";
+import useStyles from "./MemosList.styles";
 
 //MUI ICONS
 import WarningIcon from "@material-ui/icons/Warning";
@@ -36,7 +36,7 @@ import Pagination from "../Pagination/Pagination";
 import { sortArrayOfObj } from "../../utils/sort";
 import { filterMemoByStatus } from "../../utils/filter";
 
-const TodosList: React.FC = () => {
+const MemosList: React.FC = () => {
   //FITLER BY MEMO TYPE
   const [filterByStatus, setFilterByStatus] = useState<FilterType>(1);
 
@@ -156,4 +156,4 @@ const TodosList: React.FC = () => {
   );
 };
 
-export default TodosList;
+export default MemosList;
