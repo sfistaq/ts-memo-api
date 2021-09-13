@@ -1,6 +1,5 @@
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
-// MUI
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
@@ -8,6 +7,10 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: theme.spacing(5),
       paddingBottom: theme.spacing(5),
       backgroundColor: "rgba(245,245,245, 0.2)",
+      [theme.breakpoints.down("xs")]: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
+      },
     },
     table: {
       display: "flex",
@@ -22,16 +25,13 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         minHeight: "450px",
       },
-      // "@media (max-width:800px)": {
-      //   display: "none",
-      // },
     },
     message: {
       display: "flex",
-      minHeight: "500px",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
+      minHeight: "500px",
       borderBottom: "1px solid black",
       backgroundColor: "rgba(245,245,245, 0.2)",
       "& td": {

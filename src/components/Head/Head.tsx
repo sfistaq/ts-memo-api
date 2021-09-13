@@ -32,7 +32,7 @@ const Head: React.FC<Props> = ({
     {
       id: 2,
       title: "title",
-      class: classes.headName,
+      class: classes.headTitle,
     },
     {
       id: 3,

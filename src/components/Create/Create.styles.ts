@@ -7,9 +7,9 @@ const useStyles = makeStyles((theme: Theme) =>
       backdropFilter: "blur(3px)",
     },
     dialogContent: {
-      minHeight: "200px",
       display: "flex",
       alignItems: "center",
+      minHeight: "200px",
     },
 
     textarea: {

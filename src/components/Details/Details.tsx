@@ -158,11 +158,11 @@ const Details: React.FC<Props> = ({
             <>
               <Button
                 variant="contained"
-                className={classes.completePendingButton}
-                onClick={() => completeHandler(id, status)}
-                endIcon={status === "pending" ? <DoneIcon /> : <RestoreIcon />}
+                color="secondary"
+                onClick={() => deleteHandler(id)}
+                endIcon={<DeleteForeverIcon />}
               >
-                {status === "pending" ? "complete" : "pending"}
+                delete
               </Button>
               <Button
                 variant="contained"
@@ -174,11 +174,11 @@ const Details: React.FC<Props> = ({
               </Button>
               <Button
                 variant="contained"
-                color="secondary"
-                onClick={() => deleteHandler(id)}
-                endIcon={<DeleteForeverIcon />}
+                className={classes.completePendingButton}
+                onClick={() => completeHandler(id, status)}
+                endIcon={status === "pending" ? <DoneIcon /> : <RestoreIcon />}
               >
-                delete
+                {status === "pending" ? "complete" : "pending"}
               </Button>
             </>
           )}

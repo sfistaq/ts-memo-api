@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: "5% 0",
     },
     dialogContentText: {
-      width: "500px",
       display: "flex",
       flexDirection: "column",
-      alignItems: "start",
       justifyContent: "center",
+      alignItems: "start",
+      width: "500px",
       wordBreak: "break-word",
     },
     mainText: {

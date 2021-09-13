@@ -52,16 +52,16 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
 
   useEffect(() => {
     if (windowSize > 800) {
-      setSliceText(90);
+      setSliceText(150);
     }
     if (windowSize < 800) {
-      setSliceText(70);
+      setSliceText(100);
     }
     if (windowSize < 600) {
-      setSliceText(50);
+      setSliceText(80);
     }
     if (windowSize < 499) {
-      setSliceText(38);
+      setSliceText(60);
     }
   }, [sliceText, windowSize]);
 

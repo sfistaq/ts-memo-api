@@ -5,11 +5,11 @@ const useStyles = makeStyles((theme: Theme) =>
     form: {
       display: "flex",
       flexDirection: "row",
-      width: "100%",
       alignItems: "center",
       justifyContent: "space-evenly",
-      backgroundColor: "rgba(245,245,245, 0.5)",
+      width: "100%",
       padding: theme.spacing(2),
+      backgroundColor: "rgba(245,245,245, 0.5)",
       borderTopLeftRadius: "15px",
       borderTopRightRadius: "15px",
       [theme.breakpoints.down("xs")]: {
@@ -25,16 +25,16 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         width: "60%",
         "& input": {
-          fontSize: "14px",
           padding: theme.spacing(2),
+          fontSize: "14px",
         },
       },
     },
     button: {
       [theme.breakpoints.down("xs")]: {
-        fontSize: "14px",
         height: "35px",
         width: "90px",
+        fontSize: "14px",
       },
     },
   })

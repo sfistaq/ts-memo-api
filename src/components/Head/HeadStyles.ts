@@ -9,16 +9,16 @@ const css = {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     head: {
-      backgroundColor: "rgba(245,245,245, 0.5)",
       display: "flex",
+      backgroundColor: "rgba(245,245,245, 0.5)",
       borderBottom: "1px solid black",
     },
     headStatus: {
-      flex: 0.1,
-      border: "none",
       display: "flex",
       alignItems: "center",
       justifyContent: "start",
+      flex: 0.1,
+      border: "none",
 
       "&:hover": {
         color: theme.palette.primary.main,
@@ -27,12 +27,12 @@ const useStyles = makeStyles((theme: Theme) =>
         ...css,
       },
     },
-    headName: {
-      flex: 0.55,
-      border: "none",
+    headTitle: {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      flex: 0.55,
+      border: "none",
       "&:hover": {
         color: theme.palette.primary.main,
       },
@@ -41,20 +41,24 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     headDate: {
-      flex: 0.35,
-      border: "none",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      marginRight: "10px",
+      flex: 0.35,
+      border: "none",
+
       "&:hover": {
         color: theme.palette.primary.main,
       },
       "@media (max-width:800px)": {
         justifyContent: "start",
       },
+      [theme.breakpoints.down("sm")]: {
+        ...css,
+      },
       [theme.breakpoints.down("xs")]: {
         ...css,
+        marginRight: "15px",
       },
     },
   })

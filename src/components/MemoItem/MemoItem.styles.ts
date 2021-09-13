@@ -7,10 +7,10 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     row: {
-      height: "100px",
-      maxHeight: "100px",
       display: "flex",
       alignItems: "center",
+      height: "100px",
+      maxHeight: "100px",
       borderBottom: "1px solid black",
       transition: "all 0.3s ease",
       background: (props: Props) =>
@@ -29,9 +29,9 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     completeItem: {
-      flex: 0.05,
       display: "flex",
       justifyContent: "center",
+      flex: 0.05,
       width: "6%",
       border: "none",
     },
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flex: 0.8,
       border: "none",
       wordBreak: "break-word",
+      padding: theme.spacing(1),
       textDecoration: (props: Props) =>
         props.status === "pending" ? "none" : "line-through",
       color: (props: Props) =>
@@ -48,20 +49,20 @@ const useStyles = makeStyles((theme: Theme) =>
           : theme.palette.text.disabled,
       "& p": {
         [theme.breakpoints.down("xs")]: {
-          fontSize: "13px",
+          fontSize: "14px",
         },
       },
       [theme.breakpoints.down("xs")]: {
-        flexDirection: "column",
-        flex: 1,
+        padding: theme.spacing(0.5),
       },
     },
     dateItem: {
-      flex: 0.05,
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+      flex: 0.05,
       border: "none",
+      padding: 0,
       textDecoration: (props: Props) =>
         props.status === "pending" ? "none" : "line-through",
       color: (props: Props) =>
@@ -79,11 +80,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
     editButtons: {
       display: "flex",
-      flex: 0.1,
       justifyContent: "center",
+      flex: 0.1,
       border: "none",
       [theme.breakpoints.down("xs")]: {
         flexDirection: "column",
+        padding: theme.spacing(0.8),
       },
     },
     modalCell: { border: "none", display: "none" },
