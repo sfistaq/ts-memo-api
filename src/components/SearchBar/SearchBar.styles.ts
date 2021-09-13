@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2),
       borderTopLeftRadius: "15px",
       borderTopRightRadius: "15px",
+      [theme.breakpoints.down("xs")]: {
+        padding: theme.spacing(1),
+      },
     },
     textfiled: {
       width: "70%",
@@ -21,6 +24,17 @@ const useStyles = makeStyles((theme: Theme) =>
       outline: "none",
       [theme.breakpoints.down("xs")]: {
         width: "60%",
+        "& input": {
+          fontSize: "14px",
+          padding: theme.spacing(2),
+        },
+      },
+    },
+    button: {
+      [theme.breakpoints.down("xs")]: {
+        fontSize: "14px",
+        height: "35px",
+        width: "90px",
       },
     },
   })

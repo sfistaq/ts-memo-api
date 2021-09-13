@@ -1,26 +1,21 @@
 import React, { useState, useEffect, memo } from "react";
 
-//TYPES
 import { MemosData } from "../../types/types";
 
-//REDUX
 import { useDispatch } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
 
-//MUI
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
 import useStyles from "./MemoItem.styles";
 
-//MUI ICONS
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import PageviewIcon from "@material-ui/icons/Pageview";
 
-//COMPONENTS
 import Details from "../Details/Details";
 
 const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
@@ -28,10 +23,22 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
   const [windowSize, setWindowSize] = useState<number>(window.innerWidth);
   const [sliceText, setSliceText] = useState<number>(150);
 
+  const classes = useStyles({ status: status });
   const dispatch = useDispatch();
-  const classes = useStyles({ status: status }); // PASS PROPS TO useStyles
 
-  //WINDOW SIZE
+  const completeHandler = (id: number, status: string) => {
+    const data = {
+      status: status === "pending" ? "completed" : "pending",
+      title: title,
+      due_on: new Date().toString(),
+    };
+    dispatch(Actions.fetchComplete(data, id));
+  };
+
+  const removeMemoHander = (id: number) => {
+    dispatch(Actions.fetchRemove(id));
+  };
+
   const handleResize = () => {
     setWindowSize(window.innerWidth);
   };
@@ -39,11 +46,10 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize); // cleanup
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  // SLICE VALUE
   useEffect(() => {
     if (windowSize > 800) {
       setSliceText(90);
@@ -54,26 +60,13 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
     if (windowSize < 600) {
       setSliceText(50);
     }
+    if (windowSize < 499) {
+      setSliceText(38);
+    }
   }, [sliceText, windowSize]);
-
-  // COMPLETE HANDLER
-  const completeHandler = (id: number, status: string) => {
-    const data = {
-      status: status === "pending" ? "completed" : "pending",
-      title: title,
-      due_on: new Date().toString(),
-    };
-    dispatch(Actions.fetchComplete(data, id));
-  };
-
-  // REMOVE HANDLER
-  const removeMemoHander = (id: number) => {
-    dispatch(Actions.fetchRemove(id));
-  };
 
   return (
     <TableRow className={classes.row}>
-      {/*// COMPLETE */}
       <TableCell className={classes.completeItem}>
         <IconButton size="small" onClick={() => completeHandler(id, status)}>
           {status === "completed" ? (
@@ -83,7 +76,6 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
           )}
         </IconButton>
       </TableCell>
-      {/*// TITLE */}
       <TableCell className={classes.titleItem}>
         <Typography onDoubleClick={() => setOpen(true)}>
           {title.length < sliceText
@@ -91,7 +83,6 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
             : `${title.slice(0, sliceText)} ...`}
         </Typography>
       </TableCell>
-      {/*// DATE */}
       <TableCell className={classes.dateItem}>
         <Typography className={classes.dateText}>
           {new Date(`${due_on}`).toLocaleDateString()}
@@ -100,7 +91,6 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
           {new Date(`${due_on}`).toLocaleTimeString()}
         </Typography>
       </TableCell>
-      {/*// EDIT */}
       <TableCell className={classes.editButtons}>
         <IconButton onClick={() => setOpen(true)}>
           <PageviewIcon className={classes.blue} />
@@ -109,7 +99,6 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
           <DeleteForeverIcon className={classes.red} />
         </IconButton>
       </TableCell>
-
       <TableCell className={classes.modalCell}>
         {open && (
           <Details

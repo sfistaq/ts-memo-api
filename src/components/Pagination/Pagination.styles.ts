@@ -16,6 +16,22 @@ const useStyles = makeStyles((theme: Theme) =>
       "& select": {
         fontWeight: theme.typography.fontWeightBold,
       },
+      [theme.breakpoints.down("xs")]: {
+        "& select": {
+          fontSize: "13px",
+          fontWeight: theme.typography.fontWeightRegular,
+        },
+        "& p": {
+          fontSize: "13px",
+          fontWeight: theme.typography.fontWeightRegular,
+        },
+        "& .MuiTablePagination-selectRoot": {
+          margin: theme.spacing(0.01),
+        },
+        "& .MuiTablePagination-actions": {
+          margin: theme.spacing(0.01),
+        },
+      },
     },
   })
 );

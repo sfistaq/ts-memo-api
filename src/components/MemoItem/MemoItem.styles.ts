@@ -7,7 +7,7 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     row: {
-      minHeight: "80px",
+      height: "100px",
       maxHeight: "100px",
       display: "flex",
       alignItems: "center",
@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme: Theme) =>
           props.status === "pending"
             ? theme.palette.grey[100]
             : theme.palette.grey[500],
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: "90px",
       },
     },
     completeItem: {
@@ -43,6 +46,15 @@ const useStyles = makeStyles((theme: Theme) =>
         props.status === "pending"
           ? theme.palette.text.primary
           : theme.palette.text.disabled,
+      "& p": {
+        [theme.breakpoints.down("xs")]: {
+          fontSize: "13px",
+        },
+      },
+      [theme.breakpoints.down("xs")]: {
+        flexDirection: "column",
+        flex: 1,
+      },
     },
     dateItem: {
       flex: 0.05,

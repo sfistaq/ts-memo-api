@@ -1,11 +1,10 @@
 import React, { useState } from "react";
+
 import * as Constants from "../../utils/constants";
 
-// REDUX
 import { useDispatch } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
 
-// MUI
 import Paper from "@material-ui/core/Paper";
 import Backdrop from "@material-ui/core/Backdrop";
 import Dialog from "@material-ui/core/Dialog";
@@ -19,7 +18,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import useStyles from "./Details.styles";
 
-//MUI ICONS
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import DoneIcon from "@material-ui/icons/Done";
 import RestoreIcon from "@material-ui/icons/Restore";
@@ -38,60 +36,55 @@ interface Props {
 }
 
 const Details: React.FC<Props> = ({
-  open,
-  setOpen,
-  complete,
   id,
   title,
   status,
   due_on,
+  open,
+  setOpen,
+  complete,
 }) => {
   const [input, setInput] = useState<string>("");
-  const [showEdit, setShowEdit] = useState<boolean>(false); // SHOW EDIT
-
+  const [showEdit, setShowEdit] = useState<boolean>(false);
   const [startEditMemo, setStartEditMemo] = useState<boolean>(false);
 
   const classes = useStyles({ status: status });
   const dispatch = useDispatch();
 
-  //CLOSE MODAL
   const closeOnOverlay = (event: React.MouseEvent) => {
     if ((event.target as Element).classList.contains("MuiBackdrop-root")) {
       setOpen(false);
     }
   };
-  // OPEN EDIT TEXTAREA
+
   const openEditTextarea = () => {
     setStartEditMemo(true);
     setShowEdit(true);
     setInput(title);
   };
 
-  // REMOVE MEMO
   const deleteHandler = (id: number) => {
     dispatch(Actions.fetchRemove(id));
     setOpen(false);
   };
-  // COMPLETE MEMO
+
   const completeHandler = (id: number, status: string) => {
     complete(id, status);
   };
 
-  // EDIT MEMO
   const editHandler = (id: number) => {
     if (title === input) {
       return setShowEdit(false);
     } else if (startEditMemo) {
       const data = {
-        status: status,
-        title: input,
-        due_on: new Date().toString(),
         id: id,
+        title: input,
+        status: status,
+        due_on: new Date().toString(),
       };
       dispatch(Actions.fetchEdit(data, id));
-
       setShowEdit(false);
-      setOpen(false);
+      // setOpen(false);
     }
   };
 
@@ -117,8 +110,6 @@ const Details: React.FC<Props> = ({
             onClick={() => setOpen(false)}
           />
         </MuiDialogTitle>
-
-        {/* DIALOG TEXTAREA */}
         <MuiDialogContent dividers className={classes.dialogContent}>
           {showEdit && (
             <TextField
@@ -126,7 +117,7 @@ const Details: React.FC<Props> = ({
               variant="outlined"
               multiline
               rows={5}
-              ref={(ref) => ref && ref.focus()} // FOCUS ON END TEXT AREA
+              ref={(ref) => ref && ref.focus()}
               autoFocus={true}
               onFocus={(e) =>
                 e.currentTarget.setSelectionRange(
@@ -147,7 +138,6 @@ const Details: React.FC<Props> = ({
               error={input.length === Constants.CHARLIMIT}
             />
           )}
-          {/* DIALOG CONTENT */}
           {!showEdit && (
             <DialogContentText className={classes.dialogContentText}>
               <Typography component={"span"} className={classes.mainText}>
@@ -163,8 +153,6 @@ const Details: React.FC<Props> = ({
             </DialogContentText>
           )}
         </MuiDialogContent>
-
-        {/* DIALOG ACTIONS */}
         <MuiDialogActions className={classes.buttonWrapper}>
           {!showEdit && (
             <>
@@ -198,14 +186,6 @@ const Details: React.FC<Props> = ({
             <>
               <Button
                 variant="contained"
-                color="primary"
-                onClick={() => editHandler(id)}
-                endIcon={<SendIcon />}
-              >
-                save
-              </Button>
-              <Button
-                variant="contained"
                 color="secondary"
                 onClick={() => {
                   setShowEdit(false);
@@ -214,6 +194,14 @@ const Details: React.FC<Props> = ({
                 endIcon={<CancelIcon />}
               >
                 cancel
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => editHandler(id)}
+                endIcon={<SendIcon />}
+              >
+                save
               </Button>
             </>
           )}

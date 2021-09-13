@@ -9,8 +9,6 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "space-around",
       backgroundColor: "rgba(245,245,245, 0.5)",
-      padding: theme.spacing(0.5),
-
       [theme.breakpoints.down("sm")]: {
         display: "grid",
         gridTemplateRows: "repeat(2, 1fr)",
@@ -18,14 +16,21 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: theme.spacing(0),
         justifyItems: "center",
       },
+      [theme.breakpoints.down("xs")]: {
+        "& td": {
+          padding: theme.spacing(1),
+        },
+      },
     },
     button: {
       minWidth: "120px",
       [theme.breakpoints.down("sm")]: {
         minWidth: "180px",
       },
+      [theme.breakpoints.down("xs")]: {
+        minWidth: "130px",
+      },
     },
-
     tableCell: { border: "none" },
   })
 );

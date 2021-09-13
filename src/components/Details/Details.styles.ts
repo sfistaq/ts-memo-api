@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme: Theme) =>
       backdropFilter: "blur(3px)",
       background: "rgba(0, 0, 0, 0.5)",
     },
-
     title: {
       background: theme.palette.grey[200],
       color: theme.palette.primary.main,

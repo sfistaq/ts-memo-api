@@ -1,31 +1,29 @@
 import React, { useEffect, memo } from "react";
 
-//MUI
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import CreateIcon from "@material-ui/icons/Create";
 import ErrorIcon from "@material-ui/icons/Error";
+import CreateIcon from "@material-ui/icons/Create";
 import useStyles from "./SearchBar.styles";
 
 interface Props {
-  setSearchInput: React.Dispatch<React.SetStateAction<string>>;
   searchInput: string;
-  createButtonDisabled: boolean;
+  setSearchInput: React.Dispatch<React.SetStateAction<string>>;
   createModalOpen: boolean;
   setCreateModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  createButtonDisabled: boolean;
 }
 
 const SearchBar: React.FC<Props> = ({
-  setSearchInput,
   searchInput,
-  createButtonDisabled,
+  setSearchInput,
   createModalOpen,
   setCreateModalOpen,
+  createButtonDisabled,
 }) => {
   const classes = useStyles();
 
-  // CLOSE MODAL ON KEYPRESS "Escape"
   useEffect(() => {
     document.addEventListener("keydown", (event: KeyboardEvent) => {
       event.key === "Escape" && setCreateModalOpen(false);
@@ -37,8 +35,8 @@ const SearchBar: React.FC<Props> = ({
 
   return (
     <FormControl
-      className={classes.form}
       component={"form"}
+      className={classes.form}
       onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
       }}
@@ -57,8 +55,8 @@ const SearchBar: React.FC<Props> = ({
         ) => setSearchInput(event.target.value)}
         inputProps={{ minLength: 1, maxLength: 50 }}
       />
-
       <Button
+        className={classes.button}
         size={createButtonDisabled ? "medium" : "large"}
         variant="contained"
         color="primary"

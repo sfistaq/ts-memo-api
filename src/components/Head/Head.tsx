@@ -1,9 +1,7 @@
 import React, { memo } from "react";
 
-//TYPES
 import { MemosData, HeadData } from "../../types/types";
 
-// MUI
 import TableHead from "@material-ui/core/TableHead";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import TableRow from "@material-ui/core/TableRow";
@@ -12,16 +10,16 @@ import useStyles from "./HeadStyles";
 
 interface Props {
   sortByProperty: keyof MemosData;
+  setSortByProperty: React.Dispatch<React.SetStateAction<keyof MemosData>>;
   sortDirection: boolean;
   setSortDirection: React.Dispatch<React.SetStateAction<boolean>>;
-  setSortByProperty: React.Dispatch<React.SetStateAction<keyof MemosData>>;
 }
 
 const Head: React.FC<Props> = ({
   sortByProperty,
+  setSortByProperty,
   sortDirection,
   setSortDirection,
-  setSortByProperty,
 }) => {
   const classes = useStyles();
 
@@ -43,13 +41,11 @@ const Head: React.FC<Props> = ({
     },
   ];
 
-  //SORT DIRECTION HANDLER
   const sortDirectionHandler = (sortBy: keyof MemosData) => {
     setSortDirection((prev: boolean) => !prev);
     setSortByProperty(sortBy);
   };
 
-  //SORT INDICATOR
   const sortDirectionIndicator = (sortBy: keyof MemosData) => {
     return sortByProperty === sortBy && sortDirection ? "asc" : "desc";
   };

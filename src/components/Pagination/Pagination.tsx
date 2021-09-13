@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 
-//MUI
 import TablePagination from "@material-ui/core/TablePagination";
 import useStyles from "./Pagination.styles";
 
@@ -21,7 +20,6 @@ const Pagination: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
 
-  // PAGINATION HANDLERS
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -34,14 +32,14 @@ const Pagination: React.FC<Props> = ({
   };
   return (
     <TablePagination
-      labelRowsPerPage="Memo`s per page"
+      labelRowsPerPage="Memos per page"
       className={classes.pagination}
       rowsPerPageOptions={[5, 10, 20]}
       count={itemCounter}
       rowsPerPage={rowsPerPage}
       page={page}
-      onPageChange={handleChangePage} //from MUI
-      onRowsPerPageChange={handleChangeRowsPerPage} //from MUI
+      onPageChange={handleChangePage}
+      onRowsPerPageChange={handleChangeRowsPerPage}
       SelectProps={{
         inputProps: { "aria-label": "rows per page" },
         native: true,

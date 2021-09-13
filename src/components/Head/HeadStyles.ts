@@ -1,5 +1,11 @@
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
+const css = {
+  fontSize: "13px",
+  paddingTop: "5px",
+  paddingBottom: "5px",
+};
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     head: {
@@ -13,8 +19,12 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "start",
+
       "&:hover": {
         color: theme.palette.primary.main,
+      },
+      [theme.breakpoints.down("xs")]: {
+        ...css,
       },
     },
     headName: {
@@ -25,6 +35,9 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
       "&:hover": {
         color: theme.palette.primary.main,
+      },
+      [theme.breakpoints.down("xs")]: {
+        ...css,
       },
     },
     headDate: {
@@ -39,6 +52,9 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "@media (max-width:800px)": {
         justifyContent: "start",
+      },
+      [theme.breakpoints.down("xs")]: {
+        ...css,
       },
     },
   })

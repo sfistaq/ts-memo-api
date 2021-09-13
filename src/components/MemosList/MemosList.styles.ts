@@ -17,16 +17,18 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-beetween",
-      minHeight: "405px",
+      minHeight: "500px",
       backgroundColor: "rgba(245,245,245, 0.2)",
       [theme.breakpoints.down("xs")]: {
-        minHeight: "500px",
+        minHeight: "450px",
       },
+      // "@media (max-width:800px)": {
+      //   display: "none",
+      // },
     },
-
     message: {
       display: "flex",
-      minHeight: "405px",
+      minHeight: "500px",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
@@ -42,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
         color: theme.palette.text.hint,
       },
       [theme.breakpoints.down("xs")]: {
-        minHeight: "500px",
+        minHeight: "450px",
       },
     },
     pagination: {

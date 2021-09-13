@@ -1,39 +1,34 @@
 import React, { memo } from "react";
-//REDUX
+
 import { useDispatch } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
 
-//TYPES
 import { MemosData, MemoByStatus } from "../../types/types";
 import { FilterType } from "../../types/enums";
 
-//MUI
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
 import useStyles from "./BottomControls.styles";
 
-//MUI ICONS
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
-//DATA
 import { memoByStatusButtons } from "./data";
 
 interface Props {
+  memos: MemosData[];
   filterByStatus: FilterType;
   setFilterByStatus: React.Dispatch<React.SetStateAction<FilterType>>;
-  memos: MemosData[];
 }
 
 const BottomControls: React.FC<Props> = ({
+  memos,
   filterByStatus,
   setFilterByStatus,
-  memos,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  // CLEAR ALL COMPLETED
   const clearCompletedHandler = (data: MemosData[]) => {
     const clearID = data
       .filter((item: MemosData) => item.status === "completed")
@@ -49,7 +44,6 @@ const BottomControls: React.FC<Props> = ({
 
   return (
     <TableRow className={classes.bottom} component="tr">
-      {/* // SORT BUTTONS */}
       {memoByStatusButtons.map((item: MemoByStatus) => (
         <TableCell className={classes.tableCell} key={item.id}>
           <Button
@@ -70,8 +64,6 @@ const BottomControls: React.FC<Props> = ({
           </Button>
         </TableCell>
       ))}
-
-      {/* // CLEAR COMPLETED */}
       <TableCell className={classes.tableCell}>
         <Button
           className={classes.button}

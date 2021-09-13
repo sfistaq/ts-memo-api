@@ -1,10 +1,8 @@
 import { apiRequest } from "../../api/apiRequest";
 import { AppDispatch } from "../../index";
 import { MemosReduxData } from "../../types/types";
-
 import * as actionTypes from "./actionTypes";
 
-//! SET LOADING
 const setLoading = () => {
   return {
     type: actionTypes.SET_LOADING,
@@ -18,13 +16,13 @@ const setError = (error: string) => {
   };
 };
 
-//!INIT FETCH MEMOS
 const setMemos = (data: MemosReduxData) => {
   return {
     type: actionTypes.INIT_MEMOS,
     data: data,
   };
 };
+
 export const fetchMemos = () => {
   return (dispatch: AppDispatch) => {
     dispatch(setLoading());
@@ -38,7 +36,6 @@ export const fetchMemos = () => {
   };
 };
 
-//! REMOVE MEMO
 const removeMemo = (id: number) => {
   return {
     type: actionTypes.REMOVE_MEMO,
@@ -58,7 +55,6 @@ export const fetchRemove = (id: number) => {
   };
 };
 
-//! ADD MEMO
 const addMemo = (data: MemosReduxData) => {
   return {
     type: actionTypes.ADD_MEMO,
@@ -82,7 +78,6 @@ export const fetchAdd = (data: MemosReduxData) => {
   };
 };
 
-//! COMPLETE MEMO
 const completeMemo = (data: MemosReduxData, id: number) => {
   return {
     type: actionTypes.COMPLETE_MEMO,
@@ -103,7 +98,6 @@ export const fetchComplete = (data: MemosReduxData, id: number) => {
   };
 };
 
-//! EDIT MEMO
 const editMemo = (data: MemosReduxData, id: number) => {
   return {
     type: actionTypes.EDIT_MEMO,
@@ -125,7 +119,6 @@ export const fetchEdit = (data: MemosReduxData, id: number) => {
   };
 };
 
-//! DELETE ALL COMPLETED
 const clearCompleted = (data: MemosReduxData[]) => {
   return {
     type: actionTypes.CLEAR_COMPLETED,

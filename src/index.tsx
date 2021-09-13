@@ -1,9 +1,8 @@
 import ReactDOM from "react-dom";
 import App from "./App";
 
-//REDUX
-import { Provider } from "react-redux";
 import { createStore, compose, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import reducer from "./store/reducers/MemoReducer";
 
