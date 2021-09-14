@@ -1,15 +1,12 @@
 import React, { useCallback, useEffect } from "react";
-
 import { useDispatch } from "react-redux";
 import * as Actions from "./store/actions/actionsIndex";
-
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useStyles from "./styles/global";
-
 import MemosList from "./components/MemosList/MemosList";
 
-function App() {
+const App: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -27,6 +24,6 @@ function App() {
       <MemosList />
     </Container>
   );
-}
+};
 
 export default App;

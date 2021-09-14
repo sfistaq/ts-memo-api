@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-
 import TablePagination from "@material-ui/core/TablePagination";
 import useStyles from "./Pagination.styles";
 

@@ -1,7 +1,5 @@
 import React, { memo } from "react";
-
 import { MemosData, HeadData } from "../../types/types";
-
 import TableHead from "@material-ui/core/TableHead";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import TableRow from "@material-ui/core/TableRow";

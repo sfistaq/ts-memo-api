@@ -1,21 +1,16 @@
 import React, { useState, useEffect, memo } from "react";
-
 import { MemosData } from "../../types/types";
-
 import { useDispatch } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
-
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import useStyles from "./MemoItem.styles";
-
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import PageviewIcon from "@material-ui/icons/Pageview";
-
 import Details from "../Details/Details";
 
 const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {

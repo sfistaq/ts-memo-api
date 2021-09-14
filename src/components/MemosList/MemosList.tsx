@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-
 import { MemosData } from "../../types/types";
 import { FilterType } from "../../types/enums";
-
 import { RootStateOrAny, useSelector } from "react-redux";
-
 import Container from "@material-ui/core/Container";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -15,18 +12,15 @@ import TableFooter from "@material-ui/core/TableFooter";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import useStyles from "./MemosList.styles";
-
 import InfoIcon from "@material-ui/icons/Info";
 import WarningIcon from "@material-ui/icons/Warning";
 import FindReplaceIcon from "@material-ui/icons/FindReplace";
-
 import SearchBar from "../SearchBar/SearchBar";
 import Create from "../Create/Create";
 import Head from "../Head/Head";
 import MemoItem from "../MemoItem/MemoItem";
 import BottomControls from "../BottomControls/BottomControls";
 import Pagination from "../Pagination/Pagination";
-
 import { sortArrayOfObj } from "../../utils/sort";
 import { filterMemoByStatus } from "../../utils/filter";
 
@@ -41,7 +35,6 @@ const MemosList: React.FC = () => {
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
 
   const classes = useStyles();
-
   const memos = useSelector((state: RootStateOrAny) => state.memos);
   const loading = useSelector((state: RootStateOrAny) => state.loading);
   const error = useSelector((state: RootStateOrAny) => state.error);
@@ -77,7 +70,11 @@ const MemosList: React.FC = () => {
           createButtonDisabled={memos.length === 20}
         />
         {createModalOpen && (
-          <Create open={createModalOpen} setOpen={setCreateModalOpen} />
+          <Create
+            open={createModalOpen}
+            setOpen={setCreateModalOpen}
+            setSearchInput={setSearchInput}
+          />
         )}
         <Table className={classes.table}>
           <Head

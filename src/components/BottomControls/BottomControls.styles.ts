@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "space-around",
       backgroundColor: "rgba(245,245,245, 0.5)",
-      padding: theme.spacing(1.5),
+      padding: theme.spacing(1.2),
       [theme.breakpoints.down("sm")]: {
         display: "grid",
         gridTemplateRows: "repeat(2, 1fr)",

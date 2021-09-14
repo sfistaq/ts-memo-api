@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import * as Constants from "../../utils/constants";
-
 import { AddMemoData } from "../../types/types";
-
 import { useDispatch, RootStateOrAny, useSelector } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
-
 import Backdrop from "@material-ui/core/Backdrop";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
@@ -16,16 +13,16 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import useStyles from "./Create.styles";
-
 import CloseIcon from "@material-ui/icons/Close";
 import SendIcon from "@material-ui/icons/Send";
 
 interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearchInput: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Create: React.FC<Props> = ({ open, setOpen }) => {
+const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
   const [input, setInput] = useState<string>("");
   const [startAddMemo, setStartAddMemo] = useState<boolean>(false);
 
@@ -49,6 +46,7 @@ const Create: React.FC<Props> = ({ open, setOpen }) => {
     };
     dispatch(Actions.fetchAdd(data));
     setInput("");
+    setSearchInput("");
   };
 
   useEffect(() => {

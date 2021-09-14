@@ -4,13 +4,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       borderRadius: "15px",
-      paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(5),
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
       backgroundColor: "rgba(245,245,245, 0.2)",
-      [theme.breakpoints.down("xs")]: {
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(2),
-      },
     },
     table: {
       display: "flex",

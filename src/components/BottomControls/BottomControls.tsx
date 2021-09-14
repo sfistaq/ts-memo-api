@@ -1,18 +1,13 @@
 import React, { memo } from "react";
-
 import { useDispatch } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
-
 import { MemosData, MemoByStatus } from "../../types/types";
 import { FilterType } from "../../types/enums";
-
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
 import useStyles from "./BottomControls.styles";
-
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-
 import { memoByStatusButtons } from "./data";
 
 interface Props {
@@ -48,7 +43,9 @@ const BottomControls: React.FC<Props> = ({
         <TableCell className={classes.tableCell} key={item.id}>
           <Button
             className={classes.button}
-            onClick={() => setFilterByStatus(item.sortProperty)}
+            onClick={() => {
+              setFilterByStatus(item.sortProperty);
+            }}
             variant={
               filterByStatus === item.sortProperty ? "contained" : "outlined"
             }

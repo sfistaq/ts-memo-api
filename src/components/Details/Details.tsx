@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-
 import * as Constants from "../../utils/constants";
-
 import { useDispatch } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
-
 import Paper from "@material-ui/core/Paper";
 import Backdrop from "@material-ui/core/Backdrop";
 import Dialog from "@material-ui/core/Dialog";
@@ -17,7 +14,6 @@ import Button from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import useStyles from "./Details.styles";
-
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import DoneIcon from "@material-ui/icons/Done";
 import RestoreIcon from "@material-ui/icons/Restore";
