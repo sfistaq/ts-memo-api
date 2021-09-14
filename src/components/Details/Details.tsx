@@ -42,7 +42,6 @@ const Details: React.FC<Props> = ({
 }) => {
   const [input, setInput] = useState<string>("");
   const [showEdit, setShowEdit] = useState<boolean>(false);
-  const [startEditMemo, setStartEditMemo] = useState<boolean>(false);
 
   const classes = useStyles({ status: status });
   const dispatch = useDispatch();
@@ -54,7 +53,6 @@ const Details: React.FC<Props> = ({
   };
 
   const openEditTextarea = () => {
-    setStartEditMemo(true);
     setShowEdit(true);
     setInput(title);
   };
@@ -71,17 +69,16 @@ const Details: React.FC<Props> = ({
   const editHandler = (id: number) => {
     if (title === input) {
       return setShowEdit(false);
-    } else if (startEditMemo) {
-      const data = {
-        id: id,
-        title: input,
-        status: status,
-        due_on: new Date().toString(),
-      };
-      dispatch(Actions.fetchEdit(data, id));
-      setShowEdit(false);
-      // setOpen(false);
     }
+    const data = {
+      id: id,
+      title: input,
+      status: status,
+      due_on: new Date().toString(),
+    };
+    dispatch(Actions.fetchEdit(data, id));
+    setShowEdit(false);
+    setOpen(false);
   };
 
   return (
@@ -185,7 +182,6 @@ const Details: React.FC<Props> = ({
                 color="secondary"
                 onClick={() => {
                   setShowEdit(false);
-                  setStartEditMemo(false);
                 }}
                 endIcon={<CancelIcon />}
               >

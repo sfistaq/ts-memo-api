@@ -7,9 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
-import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import useStyles from "./MemosList.styles";
 import InfoIcon from "@material-ui/icons/Info";
@@ -18,6 +16,7 @@ import FindReplaceIcon from "@material-ui/icons/FindReplace";
 import SearchBar from "../SearchBar/SearchBar";
 import Create from "../Create/Create";
 import Head from "../Head/Head";
+import InfoMessage from "../InfoMessage/InfoMessage";
 import MemoItem from "../MemoItem/MemoItem";
 import BottomControls from "../BottomControls/BottomControls";
 import Pagination from "../Pagination/Pagination";
@@ -48,17 +47,6 @@ const MemosList: React.FC = () => {
     searchInput
   ).length;
 
-  const infoMessage = (message: string, icon: JSX.Element) => {
-    return (
-      <TableRow className={classes.message}>
-        <TableCell>
-          {icon}
-          <Typography>{message}</Typography>
-        </TableCell>
-      </TableRow>
-    );
-  };
-
   return (
     <Container maxWidth="md" className={classes.container}>
       <TableContainer>
@@ -83,27 +71,40 @@ const MemosList: React.FC = () => {
             sortDirection={sortDirection}
             setSortDirection={setSortDirection}
           />
-          <TableBody className={classes.tableBody}>
-            {sortedMemo.length > 0 && itemCounter > 0 && !loading && !error
-              ? filterMemoByStatus(sortedMemo, filterByStatus, searchInput)
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((item: MemosData, i: number) => (
-                    <MemoItem {...item} key={i} />
-                  ))
-              : loading && !error
-              ? //prettier-ignore
-                infoMessage("Loading...", <CircularProgress color="secondary" />)
-              : sortedMemo.length === 0 && itemCounter === 0 && !error
-              ? //prettier-ignore
-                infoMessage(`Add memo note by click "Create" button`, <InfoIcon style={{color: 'rgba(0, 0, 0, 0.38)'}}/>)
-              : sortedMemo.length > 0 && itemCounter === 0 && !error
-              ? //prettier-ignore
-                infoMessage("Memo not found...", <FindReplaceIcon style={{color: 'rgba(0, 0, 0, 0.38)'}} />)
-              : error
-              ? //prettier-ignore
-                infoMessage(`Request failed: "${error}"`, <WarningIcon color="secondary" />)
-              : null}
+
+          {/* MEMOS LIST */}
+          <TableBody className={classes.memosList}>
+            {sortedMemo.length > 0 && itemCounter > 0 && !loading && !error ? (
+              filterMemoByStatus(sortedMemo, filterByStatus, searchInput)
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((item: MemosData, i: number) => (
+                  <MemoItem {...item} key={i} />
+                ))
+            ) : loading && !error ? (
+              <InfoMessage
+                message="Loading..."
+                icon={<CircularProgress color="secondary" />}
+              />
+            ) : sortedMemo.length === 0 && itemCounter === 0 && !error ? (
+              <InfoMessage
+                message="Add memo note by click 'Create' button"
+                icon={<InfoIcon style={{ color: "rgba(0, 0, 0, 0.38)" }} />}
+              />
+            ) : sortedMemo.length > 0 && itemCounter === 0 && !error ? (
+              <InfoMessage
+                message="Memo not found..."
+                icon={
+                  <FindReplaceIcon style={{ color: "rgba(0, 0, 0, 0.38)" }} />
+                }
+              />
+            ) : error ? (
+              <InfoMessage
+                message={`Request failed: "${error}"`}
+                icon={<WarningIcon color="secondary" />}
+              />
+            ) : null}
           </TableBody>
+
           <TableBody>
             <BottomControls
               memos={memos}
