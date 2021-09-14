@@ -31,8 +31,8 @@ const Pagination: React.FC<Props> = ({
   };
   return (
     <TablePagination
-      labelRowsPerPage="Memos per page"
       className={classes.pagination}
+      labelRowsPerPage="Memos per page"
       rowsPerPageOptions={[5, 10, 20]}
       count={itemCounter}
       rowsPerPage={rowsPerPage}

@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       [theme.breakpoints.down("xs")]: {
-        height: "35px",
-        width: "90px",
-        fontSize: "14px",
+        height: "40px",
+        width: "100px",
+        fontSize: "13px",
       },
     },
   })

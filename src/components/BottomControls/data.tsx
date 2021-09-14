@@ -5,7 +5,7 @@ import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 
-export const memoByStatusButtons: MemoByStatus[] = [
+export const bottomButtons: MemoByStatus[] = [
   {
     id: 1,
     name: "All",

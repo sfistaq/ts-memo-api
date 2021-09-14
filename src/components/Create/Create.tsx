@@ -3,6 +3,7 @@ import * as Constants from "../../utils/constants";
 import { AddMemoData } from "../../types/types";
 import { useDispatch, RootStateOrAny, useSelector } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
+import Paper from "@material-ui/core/Paper";
 import Backdrop from "@material-ui/core/Backdrop";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
@@ -10,11 +11,10 @@ import MuiDialogContent from "@material-ui/core/DialogContent";
 import MuiDialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import useStyles from "./Create.styles";
 import CloseIcon from "@material-ui/icons/Close";
 import SendIcon from "@material-ui/icons/Send";
+import useStyles from "./Create.styles";
 
 interface Props {
   open: boolean;
@@ -25,10 +25,8 @@ interface Props {
 const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
   const [input, setInput] = useState<string>("");
   const [startAddMemo, setStartAddMemo] = useState<boolean>(false);
-
   const classes = useStyles();
   const dispatch = useDispatch();
-
   const loading = useSelector((state: RootStateOrAny) => state.loading);
 
   const closeOnOverlay = (event: React.MouseEvent) => {
@@ -64,7 +62,9 @@ const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
       open={open}
       onClick={(event: React.MouseEvent) => closeOnOverlay(event)}
       onKeyPress={(event: React.KeyboardEvent) => {
-        event.key === "Enter" && addMemoHandler(input);
+        if (input.replace(/\s+/g, "").length >= 1) {
+          event.key === "Enter" && addMemoHandler(input);
+        }
       }}
     >
       <Dialog open={open} onClose={() => setOpen(false)} PaperComponent={Paper}>
@@ -100,10 +100,12 @@ const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => addMemoHandler(input)}
+            onClick={() => {
+              addMemoHandler(input);
+            }}
             endIcon={loading ? <CircularProgress size={20} /> : <SendIcon />}
             className={classes.button}
-            disabled={input.length === 0 || loading}
+            disabled={input.replace(/\s+/g, "").length === 0 || loading}
           >
             Submit
           </Button>

@@ -67,7 +67,6 @@ const reducer = (state: MemosReducer = initialState, action: any) => {
           (item: MemosData) => item.status !== "completed"
         ),
       };
-
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
@@ -21,4 +21,4 @@ const InfoMessage: React.FC<Props> = ({ message, icon }) => {
   );
 };
 
-export default InfoMessage;
+export default memo(InfoMessage);

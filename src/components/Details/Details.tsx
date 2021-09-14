@@ -13,13 +13,13 @@ import MuiDialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
-import useStyles from "./Details.styles";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import DoneIcon from "@material-ui/icons/Done";
 import RestoreIcon from "@material-ui/icons/Restore";
 import EditIcon from "@material-ui/icons/Edit";
 import SendIcon from "@material-ui/icons/Send";
 import CancelIcon from "@material-ui/icons/Cancel";
+import useStyles from "./Details.styles";
 
 interface Props {
   id: number;
@@ -192,6 +192,7 @@ const Details: React.FC<Props> = ({
                 color="primary"
                 onClick={() => editHandler(id)}
                 endIcon={<SendIcon />}
+                disabled={input.length === 0}
               >
                 save
               </Button>

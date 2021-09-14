@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
 import { MemosData, MemoByStatus } from "../../types/types";
 import { FilterType } from "../../types/enums";
+import { bottomButtons } from "./data";
 import TableRow from "@material-ui/core/TableRow";
-import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
-import useStyles from "./BottomControls.styles";
+import Button from "@material-ui/core/Button";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import { memoByStatusButtons } from "./data";
+import useStyles from "./BottomControls.styles";
 
 interface Props {
   memos: MemosData[];
@@ -39,7 +39,7 @@ const BottomControls: React.FC<Props> = ({
 
   return (
     <TableRow className={classes.bottom} component="tr">
-      {memoByStatusButtons.map((item: MemoByStatus) => (
+      {bottomButtons.map((item: MemoByStatus) => (
         <TableCell className={classes.tableCell} key={item.id}>
           <Button
             className={classes.button}

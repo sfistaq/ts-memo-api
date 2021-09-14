@@ -6,18 +6,17 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import useStyles from "./MemoItem.styles";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import PageviewIcon from "@material-ui/icons/Pageview";
 import Details from "../Details/Details";
+import useStyles from "./MemoItem.styles";
 
 const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [windowSize, setWindowSize] = useState<number>(window.innerWidth);
   const [sliceText, setSliceText] = useState<number>(150);
-
   const classes = useStyles({ status: status });
   const dispatch = useDispatch();
 
