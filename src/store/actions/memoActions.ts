@@ -25,6 +25,7 @@ const setMemos = (data: MemosReduxData) => {
 
 export const fetchMemos = () => {
   return (dispatch: AppDispatch) => {
+    console.log(typeof dispatch(setLoading()));
     dispatch(setLoading());
     apiRequest("GET")
       .then((res) => {
