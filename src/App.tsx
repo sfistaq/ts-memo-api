@@ -20,6 +20,11 @@ import BottomControls from "./components/BottomControls/BottomControls";
 import Pagination from "./components/Pagination/Pagination";
 import useStyles from "./styles/App.styles";
 
+import { ThemeProvider, createTheme, Theme } from "@material-ui/core/styles";
+
+const theme: Theme = createTheme();
+console.log(theme);
+
 const App: React.FC = () => {
   //prettier-ignore
   const [sortByProperty, setSortByProperty] = useState<keyof MemosData>("due_on");
@@ -52,62 +57,64 @@ const App: React.FC = () => {
   }, [onInitMemos]);
 
   return (
-    <Container className={classes.app} component="main">
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="md" className={classes.container}>
-        <TableContainer>
-          <SearchBar
-            searchInput={searchInput}
-            setSearchInput={setSearchInput}
-            createModalOpen={createModalOpen}
-            setCreateModalOpen={setCreateModalOpen}
-            createButtonDisabled={memos.length === 20}
-          />
-          {createModalOpen && (
-            <Create
-              open={createModalOpen}
-              setOpen={setCreateModalOpen}
-              setSearchInput={setSearchInput}
-            />
-          )}
-          <Table className={classes.table}>
-            <Head
-              sortByProperty={sortByProperty}
-              setSortByProperty={setSortByProperty}
-              sortDirection={sortDirection}
-              setSortDirection={setSortDirection}
-            />
-
-            <MemosList
-              filterByStatus={filterByStatus}
+      <Container className={classes.app} component="main">
+        <Container maxWidth="md" className={classes.container}>
+          <TableContainer>
+            <SearchBar
               searchInput={searchInput}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              sortedMemo={sortedMemo}
-              itemCounter={itemCounter}
+              setSearchInput={setSearchInput}
+              createModalOpen={createModalOpen}
+              setCreateModalOpen={setCreateModalOpen}
+              createButtonDisabled={memos.length === 20}
             />
-            <TableBody>
-              <BottomControls
-                memos={memos}
-                filterByStatus={filterByStatus}
-                setFilterByStatus={setFilterByStatus}
+            {createModalOpen && (
+              <Create
+                open={createModalOpen}
+                setOpen={setCreateModalOpen}
+                setSearchInput={setSearchInput}
               />
-            </TableBody>
-            <TableFooter>
-              <TableRow className={classes.pagination}>
-                <Pagination
-                  page={page}
-                  setPage={setPage}
-                  rowsPerPage={rowsPerPage}
-                  setRowsPerPage={setRowsPerPage}
-                  itemCounter={itemCounter}
+            )}
+            <Table className={classes.table}>
+              <Head
+                sortByProperty={sortByProperty}
+                setSortByProperty={setSortByProperty}
+                sortDirection={sortDirection}
+                setSortDirection={setSortDirection}
+              />
+
+              <MemosList
+                filterByStatus={filterByStatus}
+                searchInput={searchInput}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                sortedMemo={sortedMemo}
+                itemCounter={itemCounter}
+              />
+              <TableBody>
+                <BottomControls
+                  memos={memos}
+                  filterByStatus={filterByStatus}
+                  setFilterByStatus={setFilterByStatus}
                 />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
+              </TableBody>
+              <TableFooter>
+                <TableRow className={classes.pagination}>
+                  <Pagination
+                    page={page}
+                    setPage={setPage}
+                    rowsPerPage={rowsPerPage}
+                    setRowsPerPage={setRowsPerPage}
+                    itemCounter={itemCounter}
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </TableContainer>
+        </Container>
       </Container>
-    </Container>
+    </ThemeProvider>
   );
 };
 
