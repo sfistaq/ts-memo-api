@@ -1,8 +1,11 @@
 import styled from "@mui/styled-engine-sc";
 import { MuiTheme } from "../../types/types";
-import TableRow from "@mui/material/TableRow";
-import Button, { ButtonProps } from "@mui/material/Button";
-import TableCell from "@mui/material/TableCell";
+import {
+  Button as MuiButton,
+  ButtonProps,
+  TableRow,
+  TableCell,
+} from "@mui/material";
 
 export const Container = styled(TableRow)`
   display: flex;
@@ -28,7 +31,7 @@ export const Container = styled(TableRow)`
   }
 `;
 
-export const Btn = styled(Button)<ButtonProps>`
+export const Button = styled(MuiButton)<ButtonProps>`
   min-width: 110px;
 
   ${(props: MuiTheme) => props.theme.breakpoints.down("md")} {

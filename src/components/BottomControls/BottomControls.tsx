@@ -4,7 +4,7 @@ import * as Actions from "../../store/actions/actionsIndex";
 import { MemosData, MemoByStatus } from "../../types/types";
 import { FilterType } from "../../types/enums";
 import { bottomButtons } from "./data";
-import { Container, Wrapper, Btn as Button } from "./BottomControls.styles";
+import { Container, Wrapper, Button } from "./BottomControls.styles";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 interface Props {

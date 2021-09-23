@@ -3,18 +3,19 @@ import * as Constants from "../../utils/constants";
 import { AddMemoData } from "../../types/types";
 import { useDispatch, RootStateOrAny, useSelector } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
-import Paper from "@material-ui/core/Paper";
-import Backdrop from "@material-ui/core/Backdrop";
-import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import MuiDialogActions from "@material-ui/core/DialogActions";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import CloseIcon from "@material-ui/icons/Close";
-import SendIcon from "@material-ui/icons/Send";
-import useStyles from "./Create.styles";
+import Paper from "@mui/material/Paper";
+import Dialog from "@mui/material/Dialog";
+import CircularProgress from "@mui/material/CircularProgress";
+import SendIcon from "@mui/icons-material/Send";
+import {
+  Backdrop,
+  DialogContent,
+  TextField,
+  CloseButton,
+  DialogTitle,
+  DialogActions,
+  Button,
+} from "./Create.styles";
 
 interface Props {
   open: boolean;
@@ -25,7 +26,6 @@ interface Props {
 const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
   const [input, setInput] = useState<string>("");
   const [startAddMemo, setStartAddMemo] = useState<boolean>(false);
-  const classes = useStyles();
   const dispatch = useDispatch();
   const loading = useSelector((state: RootStateOrAny) => state.loading);
 
@@ -58,7 +58,6 @@ const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
 
   return (
     <Backdrop
-      className={classes.backdrop}
       open={open}
       onClick={(event: React.MouseEvent) => closeOnOverlay(event)}
       onKeyPress={(event: React.KeyboardEvent) => {
@@ -68,16 +67,12 @@ const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
       }}
     >
       <Dialog open={open} onClose={() => setOpen(false)} PaperComponent={Paper}>
-        <MuiDialogTitle className={classes.title}>
+        <DialogTitle>
           Create Memo
-          <CloseIcon
-            className={classes.closeButton}
-            onClick={() => setOpen(false)}
-          />
-        </MuiDialogTitle>
-        <MuiDialogContent className={classes.dialogContent} dividers>
+          <CloseButton onClick={() => setOpen(false)} />
+        </DialogTitle>
+        <DialogContent dividers>
           <TextField
-            className={classes.textarea}
             variant="outlined"
             multiline
             rows={5}
@@ -95,8 +90,8 @@ const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
             }
             error={input.length === Constants.CHARLIMIT}
           />
-        </MuiDialogContent>
-        <MuiDialogActions className={classes.dialogActions}>
+        </DialogContent>
+        <DialogActions>
           <Button
             variant="contained"
             color="primary"
@@ -104,12 +99,11 @@ const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
               addMemoHandler(input);
             }}
             endIcon={loading ? <CircularProgress size={20} /> : <SendIcon />}
-            className={classes.button}
             disabled={input.replace(/\s+/g, "").length === 0 || loading}
           >
             Submit
           </Button>
-        </MuiDialogActions>
+        </DialogActions>
       </Dialog>
     </Backdrop>
   );
