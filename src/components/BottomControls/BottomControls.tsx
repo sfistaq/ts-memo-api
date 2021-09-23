@@ -4,11 +4,8 @@ import * as Actions from "../../store/actions/actionsIndex";
 import { MemosData, MemoByStatus } from "../../types/types";
 import { FilterType } from "../../types/enums";
 import { bottomButtons } from "./data";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Button from "@material-ui/core/Button";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import useStyles from "./BottomControls.styles";
+import { Container, Wrapper, Btn as Button } from "./BottomControls.styles";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 interface Props {
   memos: MemosData[];
@@ -21,7 +18,6 @@ const BottomControls: React.FC<Props> = ({
   filterByStatus,
   setFilterByStatus,
 }) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   const clearCompletedHandler = (data: MemosData[]) => {
@@ -38,11 +34,10 @@ const BottomControls: React.FC<Props> = ({
   };
 
   return (
-    <TableRow className={classes.bottom} component="tr">
+    <Container>
       {bottomButtons.map((item: MemoByStatus) => (
-        <TableCell className={classes.tableCell} key={item.id}>
+        <Wrapper key={item.id}>
           <Button
-            className={classes.button}
             onClick={() => {
               setFilterByStatus(item.sortProperty);
             }}
@@ -59,22 +54,21 @@ const BottomControls: React.FC<Props> = ({
           >
             {item.name}
           </Button>
-        </TableCell>
+        </Wrapper>
       ))}
-      <TableCell className={classes.tableCell}>
+      <Wrapper>
         <Button
-          className={classes.button}
           onClick={() => clearCompletedHandler(memos)}
           size="small"
           variant="contained"
-          color="secondary"
+          color="error"
           endIcon={<DeleteForeverIcon />}
           disabled={disabled("completed")}
         >
           Remove Completed
         </Button>
-      </TableCell>
-    </TableRow>
+      </Wrapper>
+    </Container>
   );
 };
 

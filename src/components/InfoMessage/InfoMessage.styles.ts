@@ -2,7 +2,7 @@ import styled from "@mui/styled-engine-sc";
 import { MuiTheme } from "../../types/types";
 import TableRow from "@mui/material/TableRow";
 
-export const Message = styled(TableRow)<MuiTheme>`
+export const Message = styled(TableRow)`
   display: flex;
   flex-direction: column;
   align-items: center;

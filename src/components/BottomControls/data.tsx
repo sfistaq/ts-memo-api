@@ -1,9 +1,8 @@
 import { MemoByStatus } from "../../types/types";
 import { FilterType } from "../../types/enums";
-
-import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
-import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
-import ScheduleIcon from "@material-ui/icons/Schedule";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import ScheduleIcon from "@mui/icons-material/Schedule";
 
 export const bottomButtons: MemoByStatus[] = [
   {
