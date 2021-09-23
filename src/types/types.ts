@@ -1,4 +1,5 @@
 import { FilterType } from "./enums";
+import { Theme } from "@mui/material";
 
 export interface MemosData {
   id: number;
@@ -45,4 +46,8 @@ export interface sendMemoData {
   title: string;
   status: string;
   due_on: string;
+}
+
+export interface MuiTheme {
+  theme: Theme;
 }

@@ -1,8 +1,7 @@
 import React, { memo } from "react";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Typography from "@material-ui/core/Typography";
-import useStyles from "./InfoMessage.styles";
+import TableCell from "@mui/material/TableCell";
+import Typography from "@mui/material/Typography";
+import { Message } from "./InfoMessage.styles";
 
 interface Props {
   message: string;
@@ -10,14 +9,13 @@ interface Props {
 }
 
 const InfoMessage: React.FC<Props> = ({ message, icon }) => {
-  const classes = useStyles();
   return (
-    <TableRow className={classes.message}>
+    <Message>
       <TableCell>
         {icon}
         <Typography>{message}</Typography>
       </TableCell>
-    </TableRow>
+    </Message>
   );
 };
 

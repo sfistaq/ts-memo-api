@@ -20,7 +20,7 @@ import BottomControls from "./components/BottomControls/BottomControls";
 import Pagination from "./components/Pagination/Pagination";
 import useStyles from "./styles/App.styles";
 
-import { ThemeProvider, createTheme, Theme } from "@material-ui/core/styles";
+import { ThemeProvider, createTheme, Theme } from "@mui/material";
 
 const theme: Theme = createTheme();
 console.log(theme);
