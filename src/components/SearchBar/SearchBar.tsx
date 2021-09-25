@@ -1,10 +1,7 @@
 import React, { useEffect, memo } from "react";
-import FormControl from "@material-ui/core/FormControl";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import ErrorIcon from "@material-ui/icons/Error";
-import CreateIcon from "@material-ui/icons/Create";
-import useStyles from "./SearchBar.styles";
+import ErrorIcon from "@mui/icons-material/Error";
+import CreateIcon from "@mui/icons-material/Create";
+import { Form, TextField, Button } from "./SearchBar.styles";
 
 interface Props {
   searchInput: string;
@@ -21,8 +18,6 @@ const SearchBar: React.FC<Props> = ({
   setCreateModalOpen,
   createButtonDisabled,
 }) => {
-  const classes = useStyles();
-
   useEffect(() => {
     document.addEventListener("keydown", (event: KeyboardEvent) => {
       event.key === "Escape" && setCreateModalOpen(false);
@@ -33,9 +28,8 @@ const SearchBar: React.FC<Props> = ({
   }, [createModalOpen, setCreateModalOpen]);
 
   return (
-    <FormControl
-      component={"form"}
-      className={classes.form}
+    <Form
+      component="form"
       onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
       }}
@@ -44,7 +38,6 @@ const SearchBar: React.FC<Props> = ({
       }}
     >
       <TextField
-        className={classes.textfiled}
         type="search"
         label="search"
         variant="outlined"
@@ -55,7 +48,6 @@ const SearchBar: React.FC<Props> = ({
         inputProps={{ minLength: 1, maxLength: 50 }}
       />
       <Button
-        className={classes.button}
         size={createButtonDisabled ? "medium" : "large"}
         variant="contained"
         color="primary"
@@ -65,7 +57,7 @@ const SearchBar: React.FC<Props> = ({
       >
         {createButtonDisabled ? "max memos" : "Create"}
       </Button>
-    </FormControl>
+    </Form>
   );
 };
 

@@ -1,6 +1,5 @@
 import React, { memo } from "react";
-import TablePagination from "@material-ui/core/TablePagination";
-import useStyles from "./Pagination.styles";
+import { TablePagination } from "./Pagination.styles";
 
 interface Props {
   page: number;
@@ -17,8 +16,6 @@ const Pagination: React.FC<Props> = ({
   setRowsPerPage,
   itemCounter,
 }) => {
-  const classes = useStyles();
-
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -31,7 +28,6 @@ const Pagination: React.FC<Props> = ({
   };
   return (
     <TablePagination
-      className={classes.pagination}
       labelRowsPerPage="Memos per page"
       rowsPerPageOptions={[5, 10, 20]}
       count={itemCounter}
