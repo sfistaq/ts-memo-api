@@ -14,15 +14,15 @@ export const filterMemoByStatus = (
   searchInput: string
 ) => {
   switch (filterBy) {
-    case (filterBy = FilterType.All): {
+    case FilterType.All: {
       return filterHelper(data, searchInput);
     }
-    case (filterBy = FilterType.Active): {
+    case FilterType.Active: {
       //prettier-ignore
       const pendingData = data.filter((item: MemosData) => item.status === "pending");
       return filterHelper(pendingData, searchInput);
     }
-    case (filterBy = FilterType.Completed): {
+    case FilterType.Completed: {
       //prettier-ignore
       const completedData =  data.filter((item: MemosData) => item.status === "completed")
       return filterHelper(completedData, searchInput);

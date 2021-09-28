@@ -1,6 +1,6 @@
 import styled from "@mui/styled-engine-sc";
 import { MuiTheme } from "../../types/types";
-import { TableRow as MuiTableRow, TableCell, Typography } from "@mui/material";
+import { TableRow, TableCell, Typography } from "@mui/material";
 import PageviewIcon from "@mui/icons-material/Pageview";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
@@ -8,7 +8,7 @@ interface Props {
   status: "pending" | "completed";
 }
 
-export const MemoItemWrapper = styled(MuiTableRow)<Props>`
+export const MemoItemWrapper = styled(TableRow)<Props>`
   display: flex;
   align-items: center;
   height: 100px;

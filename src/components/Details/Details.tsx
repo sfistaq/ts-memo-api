@@ -2,24 +2,27 @@ import React, { useState } from "react";
 import * as Constants from "../../utils/constants";
 import { useDispatch } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
-import Paper from "@material-ui/core/Paper";
-import Backdrop from "@material-ui/core/Backdrop";
-import Dialog from "@material-ui/core/Dialog";
-import TextField from "@material-ui/core/TextField";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import MuiDialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
-import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import DoneIcon from "@material-ui/icons/Done";
-import RestoreIcon from "@material-ui/icons/Restore";
-import EditIcon from "@material-ui/icons/Edit";
-import SendIcon from "@material-ui/icons/Send";
-import CancelIcon from "@material-ui/icons/Cancel";
-import useStyles from "./Details.styles";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DoneIcon from "@mui/icons-material/Done";
+import RestoreIcon from "@mui/icons-material/Restore";
+import EditIcon from "@mui/icons-material/Edit";
+import SendIcon from "@mui/icons-material/Send";
+import CancelIcon from "@mui/icons-material/Cancel";
+import {
+  Backdrop,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogContentText,
+  MainText,
+  StatusText,
+  CloseButton,
+  DialogActions,
+  CompletePendingButton,
+} from "./Details.styles";
 
 interface Props {
   id: number;
@@ -42,10 +45,9 @@ const Details: React.FC<Props> = ({
 }) => {
   const [input, setInput] = useState<string>("");
   const [showEdit, setShowEdit] = useState<boolean>(false);
-
-  const classes = useStyles({ status: status });
   const dispatch = useDispatch();
 
+  //! export do utils to samo co w create
   const closeOnOverlay = (event: React.MouseEvent) => {
     if ((event.target as Element).classList.contains("MuiBackdrop-root")) {
       setOpen(false);
@@ -84,29 +86,19 @@ const Details: React.FC<Props> = ({
   return (
     <Backdrop
       open={open}
-      className={classes.backdrop}
       onClick={(event: React.MouseEvent) => closeOnOverlay(event)}
       onKeyPress={(event: React.KeyboardEvent) => {
         event.key === "Enter" && editHandler(id);
       }}
     >
-      <Dialog
-        className={classes.dialog}
-        open={open}
-        onClose={() => setOpen(false)}
-        PaperComponent={Paper}
-      >
-        <MuiDialogTitle className={classes.title}>
+      <Dialog open={open} onClose={() => setOpen(false)} PaperComponent={Paper}>
+        <DialogTitle>
           {showEdit ? "Edit Memo" : "Memo Details"}
-          <CloseIcon
-            className={classes.closeButton}
-            onClick={() => setOpen(false)}
-          />
-        </MuiDialogTitle>
-        <MuiDialogContent dividers className={classes.dialogContent}>
+          <CloseButton onClick={() => setOpen(false)} />
+        </DialogTitle>
+        <DialogContent dividers>
           {showEdit && (
             <TextField
-              className={classes.textarea}
               variant="outlined"
               multiline
               rows={5}
@@ -132,26 +124,24 @@ const Details: React.FC<Props> = ({
             />
           )}
           {!showEdit && (
-            <DialogContentText className={classes.dialogContentText}>
-              <Typography component={"span"} className={classes.mainText}>
-                {title}
-              </Typography>
-              <Typography component={"span"} className={classes.statusText}>
+            <DialogContentText>
+              <MainText>{title}</MainText>
+              <StatusText>
                 status: <strong>{status}</strong>
-              </Typography>
-              <Typography component={"span"} className={classes.statusText}>
+              </StatusText>
+              <StatusText>
                 created: {new Date(`${due_on}`).toLocaleDateString()}{" "}
                 {new Date(`${due_on}`).toLocaleTimeString()}
-              </Typography>
+              </StatusText>
             </DialogContentText>
           )}
-        </MuiDialogContent>
-        <MuiDialogActions className={classes.buttonWrapper}>
+        </DialogContent>
+        <DialogActions>
           {!showEdit && (
             <>
               <Button
                 variant="contained"
-                color="secondary"
+                color="error"
                 onClick={() => deleteHandler(id)}
                 endIcon={<DeleteForeverIcon />}
               >
@@ -165,14 +155,14 @@ const Details: React.FC<Props> = ({
               >
                 edit
               </Button>
-              <Button
+              <CompletePendingButton
+                status={status}
                 variant="contained"
-                className={classes.completePendingButton}
                 onClick={() => completeHandler(id, status)}
                 endIcon={status === "pending" ? <DoneIcon /> : <RestoreIcon />}
               >
                 {status === "pending" ? "complete" : "pending"}
-              </Button>
+              </CompletePendingButton>
             </>
           )}
           {showEdit && (
@@ -198,7 +188,7 @@ const Details: React.FC<Props> = ({
               </Button>
             </>
           )}
-        </MuiDialogActions>
+        </DialogActions>
       </Dialog>
     </Backdrop>
   );

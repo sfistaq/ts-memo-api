@@ -1,39 +1,44 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import styled from "@mui/styled-engine-sc";
+import { MuiTheme } from "../types/types";
+import {
+  Container,
+  ContainerProps,
+  Table as MuiTable,
+  TableRow as MuiTableRow,
+} from "@mui/material";
 import background from "../assets/images/background.jpg";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    app: {
-      display: "flex",
-      alignItems: "center",
-      backgroundImage: `url(${background})`,
-      backgroundSize: "cover",
-      minHeight: "100vh",
-      minWidth: "100vw",
-      "@media (max-width:499px)": {
-        paddingTop: theme.spacing(1),
-        alignItems: "start",
-      },
-    },
-    container: {
-      borderRadius: "15px",
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
-      backgroundColor: "rgba(245,245,245, 0.2)",
-      "@media (max-width:499px)": {
-        paddingTop: theme.spacing(1),
-        paddingBottom: theme.spacing(1),
-      },
-    },
-    table: {
-      display: "flex",
-      flexDirection: "column",
-    },
-    pagination: {
-      display: "flex",
-      width: "100%",
-    },
-  })
-);
+export const AppWrapper = styled(Container)`
+  display: flex;
+  align-items: center;
+  background-image: url(${background});
+  background-size: cover;
+  min-height: 100vh;
+  min-width: 100vw;
 
-export default useStyles;
+  @media (max-width: 499px) {
+    padding-top: ${({ theme }: MuiTheme) => theme.spacing(1)};
+    align-items: flex-start;
+  }
+`;
+
+export const TableWrapper = styled(Container)<ContainerProps>`
+  border-radius: 15px;
+  padding-top: ${({ theme }: MuiTheme) => theme.spacing(2)};
+  padding-bottom: ${({ theme }: MuiTheme) => theme.spacing(2)};
+  background-color: rgba(245, 245, 245, 0.2);
+
+  @media (max-width: 499px) {
+    padding-top: ${({ theme }: MuiTheme) => theme.spacing(1)};
+    padding-bottom: ${({ theme }: MuiTheme) => theme.spacing(1)};
+  }
+`;
+export const Table = styled(MuiTable)`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const TableRow = styled(MuiTableRow)`
+  display: flex;
+  width: 100%;
+`;

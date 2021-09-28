@@ -35,7 +35,7 @@ const Head: React.FC<Props> = ({
     {
       id: 3,
       title: "due_on",
-      class: classes.headDate,
+      class: classes.headDate, //ostylowany JSX TableCell zamiast class
     },
   ];
 

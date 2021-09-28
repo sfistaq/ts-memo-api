@@ -5,24 +5,37 @@ import { sortArrayOfObj } from "./utils/sort";
 import { filterMemoByStatus } from "./utils/filter";
 import { MemosData } from "./types/types";
 import { FilterType } from "./types/enums";
-import Container from "@material-ui/core/Container";
-import TableContainer from "@material-ui/core/TableContainer";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableRow from "@material-ui/core/TableRow";
-import TableFooter from "@material-ui/core/TableFooter";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import TableContainer from "@mui/material/TableContainer";
+import TableBody from "@mui/material/TableBody";
+import TableFooter from "@mui/material/TableFooter";
+
+import CssBaseline from "@material-ui/core/CssBaseline"; //!!FIXNIJ
+// import CssBaseline from "@mui/material/CssBaseline";
+
 import SearchBar from "./components/SearchBar/SearchBar";
 import Create from "./components/Create/Create";
 import Head from "./components/Head/Head";
 import MemosList from "./components/MemosList/MemosList";
 import BottomControls from "./components/BottomControls/BottomControls";
 import Pagination from "./components/Pagination/Pagination";
-import useStyles from "./styles/App.styles";
+import { AppWrapper, TableWrapper, Table, TableRow } from "./styles/App.styles";
 
 import { ThemeProvider, createTheme, Theme } from "@mui/material";
 
-const theme: Theme = createTheme();
+//! dodanie wartości do Theme
+declare module "@mui/material/styles/createPalette" {
+  interface TypeText {
+    hint: string;
+  }
+}
+
+const theme: Theme = createTheme({
+  palette: {
+    text: {
+      hint: "rgba(0, 0, 0, 0.38)",
+    },
+  },
+});
 
 const App: React.FC = () => {
   //prettier-ignore
@@ -34,7 +47,6 @@ const App: React.FC = () => {
   const [filterByStatus, setFilterByStatus] = useState<FilterType>(1);
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
 
-  const classes = useStyles();
   const dispatch = useDispatch();
   const memos = useSelector((state: RootStateOrAny) => state.memos);
 
@@ -58,8 +70,9 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container className={classes.app} component="main">
-        <Container maxWidth="md" className={classes.container}>
+
+      <AppWrapper>
+        <TableWrapper maxWidth="md">
           <TableContainer>
             <SearchBar
               searchInput={searchInput}
@@ -75,7 +88,7 @@ const App: React.FC = () => {
                 setSearchInput={setSearchInput}
               />
             )}
-            <Table className={classes.table}>
+            <Table>
               <Head
                 sortByProperty={sortByProperty}
                 setSortByProperty={setSortByProperty}
@@ -99,7 +112,7 @@ const App: React.FC = () => {
                 />
               </TableBody>
               <TableFooter>
-                <TableRow className={classes.pagination}>
+                <TableRow>
                   <Pagination
                     page={page}
                     setPage={setPage}
@@ -111,8 +124,8 @@ const App: React.FC = () => {
               </TableFooter>
             </Table>
           </TableContainer>
-        </Container>
-      </Container>
+        </TableWrapper>
+      </AppWrapper>
     </ThemeProvider>
   );
 };
