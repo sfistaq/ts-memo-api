@@ -19,10 +19,10 @@ export const Message = styled(TableRow)`
   & p {
     font-size: 24px;
     font-weight: 500;
-    color: ${(props: MuiTheme) => props.theme.palette.grey[600]};
+    color: ${({ theme }: MuiTheme) => theme.palette.grey[600]};
   }
 
-  ${(props: MuiTheme) => props.theme.breakpoints.down("sm")} {
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
     min-height: 450px;
   }
 `;

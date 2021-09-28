@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 export const Backdrop = styled(MuiBackdrop)`
-  z-index: ${(props: MuiTheme) => props.theme.zIndex.drawer + 1};
+  z-index: ${({ theme }: MuiTheme) => theme.zIndex.drawer + 1};
   backdrop-filter: blur(3px);
 `;
 
@@ -30,24 +30,24 @@ export const TextField = styled(MuiTextField)<TextFieldProps>`
 
 export const CloseButton = styled(CloseIcon)`
   position: absolute;
-  right: ${(props: MuiTheme) => props.theme.spacing(1)};
-  top: ${(props: MuiTheme) => props.theme.spacing(1)};
-  color: ${(props: MuiTheme) => props.theme.palette.grey[500]};
+  right: ${({ theme }: MuiTheme) => theme.spacing(1)};
+  top: ${({ theme }: MuiTheme) => theme.spacing(1)};
+  color: ${({ theme }: MuiTheme) => theme.palette.grey[500]};
   cursor: pointer;
 
   &:hover {
-    color: ${(props: MuiTheme) => props.theme.palette.error.main};
+    color: ${({ theme }: MuiTheme) => theme.palette.error.main};
   }
 `;
 export const DialogTitle = styled(MuiDialogTitle)`
-  background: ${(props: MuiTheme) => props.theme.palette.grey[200]};
-  color: ${(props: MuiTheme) => props.theme.palette.primary.main};
+  background: ${({ theme }: MuiTheme) => theme.palette.grey[200]};
+  color: ${({ theme }: MuiTheme) => theme.palette.primary.main};
 `;
 
 export const DialogActions = styled(MuiDialogActions)`
-  background: ${(props: MuiTheme) => props.theme.palette.grey[200]};
+  background: ${({ theme }: MuiTheme) => theme.palette.grey[200]};
 `;
 
 export const Button = styled(MuiButton)<ButtonProps>`
-  margin-right: ${(props: MuiTheme) => props.theme.spacing(2)};
+  margin-right: ${({ theme }: MuiTheme) => theme.spacing(2)};
 `;

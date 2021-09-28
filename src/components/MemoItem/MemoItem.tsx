@@ -2,22 +2,27 @@ import React, { useState, useEffect, memo } from "react";
 import { MemosData } from "../../types/types";
 import { useDispatch } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import PageviewIcon from "@material-ui/icons/Pageview";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Details from "../Details/Details";
-import useStyles from "./MemoItem.styles";
+import {
+  MemoItemWrapper,
+  Complete,
+  Title,
+  DateWrapper,
+  DateText,
+  EditButtonsWrapper,
+  EditIcon,
+  DeleteIcon,
+  ModalWrapper,
+} from "./MemoItem.styles";
 
 const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [windowSize, setWindowSize] = useState<number>(window.innerWidth);
   const [sliceText, setSliceText] = useState<number>(150);
-  const classes = useStyles({ status: status });
   const dispatch = useDispatch();
 
   const completeHandler = (id: number, status: string) => {
@@ -60,8 +65,8 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
   }, [sliceText, windowSize]);
 
   return (
-    <TableRow className={classes.row}>
-      <TableCell className={classes.completeItem}>
+    <MemoItemWrapper status={status}>
+      <Complete>
         <IconButton size="small" onClick={() => completeHandler(id, status)}>
           {status === "completed" ? (
             <CheckBoxIcon />
@@ -69,31 +74,27 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
             <CheckBoxOutlineBlankIcon />
           )}
         </IconButton>
-      </TableCell>
-      <TableCell className={classes.titleItem}>
+      </Complete>
+      <Title status={status}>
         <Typography onDoubleClick={() => setOpen(true)}>
           {title.length < sliceText
             ? title
             : `${title.slice(0, sliceText)} ...`}
         </Typography>
-      </TableCell>
-      <TableCell className={classes.dateItem}>
-        <Typography className={classes.dateText}>
-          {new Date(`${due_on}`).toLocaleDateString()}
-        </Typography>
-        <Typography className={classes.dateText}>
-          {new Date(`${due_on}`).toLocaleTimeString()}
-        </Typography>
-      </TableCell>
-      <TableCell className={classes.editButtons}>
+      </Title>
+      <DateWrapper status={status}>
+        <DateText>{new Date(`${due_on}`).toLocaleDateString()}</DateText>
+        <DateText>{new Date(`${due_on}`).toLocaleTimeString()}</DateText>
+      </DateWrapper>
+      <EditButtonsWrapper>
         <IconButton onClick={() => setOpen(true)}>
-          <PageviewIcon className={classes.blue} />
+          <EditIcon />
         </IconButton>
         <IconButton onClick={() => removeMemoHander(id)}>
-          <DeleteForeverIcon className={classes.red} />
+          <DeleteIcon />
         </IconButton>
-      </TableCell>
-      <TableCell className={classes.modalCell}>
+      </EditButtonsWrapper>
+      <ModalWrapper>
         {open && (
           <Details
             id={id}
@@ -105,8 +106,8 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
             complete={completeHandler}
           />
         )}
-      </TableCell>
-    </TableRow>
+      </ModalWrapper>
+    </MemoItemWrapper>
   );
 };
 

@@ -1,33 +1,14 @@
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import styled from "@mui/styled-engine-sc";
+import { MuiTheme } from "../../types/types";
+import { TableBody as MuiTableBody } from "@mui/material";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      borderRadius: "15px",
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
-      backgroundColor: "rgba(245,245,245, 0.2)",
-    },
-    table: {
-      display: "flex",
-      flexDirection: "column",
-    },
-    memosList: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-beetween",
-      minHeight: "500px",
-      backgroundColor: "rgba(245,245,245, 0.2)",
-      [theme.breakpoints.down("xs")]: {
-        minHeight: "450px",
-      },
-    },
+export const TableBody = styled(MuiTableBody)`
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+  background-color: rgba(245, 245, 245, 0.2);
 
-    pagination: {
-      display: "flex",
-      width: "100%",
-    },
-  })
-);
-
-export default useStyles;
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
+    min-height: 450px;
+  }
+`;

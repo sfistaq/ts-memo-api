@@ -12,35 +12,35 @@ export const TablePagination = styled(MuiTablePagination)<TablePaginationProps>`
   justify-content: center;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  color: ${(props: MuiTheme) => props.theme.palette.primary.main};
+  color: ${({ theme }: MuiTheme) => theme.palette.primary.main};
 
   & p {
-    font-weight: ${(props: MuiTheme) => props.theme.typography.fontWeightBold};
+    font-weight: ${({ theme }: MuiTheme) => theme.typography.fontWeightBold};
   }
 
   & select {
-    font-weight: ${(props: MuiTheme) => props.theme.typography.fontWeightBold};
+    font-weight: ${({ theme }: MuiTheme) => theme.typography.fontWeightBold};
   }
 
-  ${(props: MuiTheme) => props.theme.breakpoints.down("xs")} {
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
     & p {
       font-size: 12px;
-      font-weight: ${(props: MuiTheme) =>
-        props.theme.typography.fontWeightRegular};
+      font-weight: ${({ theme }: MuiTheme) =>
+        theme.typography.fontWeightRegular};
     }
 
     & select {
       font-size: 12px;
-      font-weight: ${(props: MuiTheme) =>
-        props.theme.typography.fontWeightRegular};
+      font-weight: ${({ theme }: MuiTheme) =>
+        theme.typography.fontWeightRegular};
     }
 
     &.MuiTablePagination-selectRoot {
-      margin: ${(props: MuiTheme) => props.theme.spacing(0.01)};
+      margin: ${({ theme }: MuiTheme) => theme.spacing(0.01)};
     }
 
     &.MuiTablePagination-actions {
-      margin: ${(props: MuiTheme) => props.theme.spacing(0.01)};
+      margin: ${({ theme }: MuiTheme) => theme.spacing(0.01)};
     }
   }
 `;

@@ -3,14 +3,13 @@ import { MemosData } from "../../types/types";
 import { FilterType } from "../../types/enums";
 import { RootStateOrAny, useSelector } from "react-redux";
 import { filterMemoByStatus } from "../../utils/filter";
-import TableBody from "@material-ui/core/TableBody";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import InfoIcon from "@material-ui/icons/Info";
-import WarningIcon from "@material-ui/icons/Warning";
-import FindReplaceIcon from "@material-ui/icons/FindReplace";
+import CircularProgress from "@mui/material/CircularProgress";
+import InfoIcon from "@mui/icons-material/Info";
+import WarningIcon from "@mui/icons-material/Warning";
+import FindReplaceIcon from "@mui/icons-material/FindReplace";
 import InfoMessage from "../InfoMessage/InfoMessage";
 import MemoItem from "../MemoItem/MemoItem";
-import useStyles from "./MemosList.styles";
+import { TableBody } from "./MemosList.styles";
 
 interface Props {
   filterByStatus: FilterType;
@@ -29,12 +28,11 @@ const MemosList: React.FC<Props> = ({
   sortedMemo,
   itemCounter,
 }) => {
-  const classes = useStyles();
   const loading = useSelector((state: RootStateOrAny) => state.loading);
   const error = useSelector((state: RootStateOrAny) => state.error);
 
   return (
-    <TableBody className={classes.memosList}>
+    <TableBody>
       {sortedMemo.length > 0 && itemCounter > 0 && !loading && !error ? (
         filterMemoByStatus(sortedMemo, filterByStatus, searchInput)
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -42,7 +40,7 @@ const MemosList: React.FC<Props> = ({
       ) : loading && !error ? (
         <InfoMessage
           message="Loading..."
-          icon={<CircularProgress color="secondary" />}
+          icon={<CircularProgress color="primary" />}
         />
       ) : sortedMemo.length === 0 && itemCounter === 0 && !error ? (
         <InfoMessage

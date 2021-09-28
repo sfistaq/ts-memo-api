@@ -1,105 +1,117 @@
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import styled from "@mui/styled-engine-sc";
+import { MuiTheme } from "../../types/types";
+import { TableRow as MuiTableRow, TableCell, Typography } from "@mui/material";
+import PageviewIcon from "@mui/icons-material/Pageview";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 interface Props {
   status: "pending" | "completed";
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    row: {
-      display: "flex",
-      alignItems: "center",
-      height: "100px",
-      maxHeight: "100px",
-      borderBottom: "1px solid black",
-      transition: "all 0.3s ease",
-      background: (props: Props) =>
-        props.status === "pending"
-          ? "rgba(245,245,245, 0.8)"
-          : theme.palette.grey[600],
+export const MemoItemWrapper = styled(MuiTableRow)<Props>`
+  display: flex;
+  align-items: center;
+  height: 100px;
+  max-height: 100px;
+  border-bottom: 1px solid black;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: ${({ status }: Props) =>
+    status === "pending"
+      ? "rgba(245,245,245, 0.8)"
+      : "#757575"}; //! palette.grey[600]
 
-      "&:hover": {
-        background: (props: Props) =>
-          props.status === "pending"
-            ? theme.palette.grey[100]
-            : theme.palette.grey[500],
-      },
-      [theme.breakpoints.down("xs")]: {
-        height: "90px",
-      },
-    },
-    completeItem: {
-      display: "flex",
-      justifyContent: "center",
-      flex: 0.05,
-      width: "6%",
-      border: "none",
-    },
+  &:hover {
+    background: ${({ status }: Props) =>
+      status === "pending"
+        ? `#f5f5f5`
+        : "#9e9e9e"}; //! fix theme in ternary palette.grey[100] ? palette.grey[500]
+  }
 
-    titleItem: {
-      flex: 0.8,
-      border: "none",
-      wordBreak: "break-word",
-      padding: theme.spacing(1),
-      textDecoration: (props: Props) =>
-        props.status === "pending" ? "none" : "line-through",
-      color: (props: Props) =>
-        props.status === "pending"
-          ? theme.palette.text.primary
-          : theme.palette.text.disabled,
-      "& p": {
-        [theme.breakpoints.down("xs")]: {
-          fontSize: "14px",
-        },
-      },
-      [theme.breakpoints.down("xs")]: {
-        padding: theme.spacing(0.5),
-      },
-    },
-    dateItem: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      flex: 0.05,
-      border: "none",
-      padding: 0,
-      textDecoration: (props: Props) =>
-        props.status === "pending" ? "none" : "line-through",
-      color: (props: Props) =>
-        props.status === "pending"
-          ? theme.palette.text.primary
-          : theme.palette.text.disabled,
-    },
-    dateText: {
-      fontSize: 12,
-      color: theme.palette.text.secondary,
-      [theme.breakpoints.down("xs")]: {
-        fontSize: 10,
-      },
-    },
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
+    height: 90px;
+  }
+`;
 
-    editButtons: {
-      display: "flex",
-      justifyContent: "center",
-      flex: 0.1,
-      border: "none",
-      [theme.breakpoints.down("xs")]: {
-        flexDirection: "column",
-        padding: theme.spacing(0.8),
-      },
-    },
-    modalCell: { border: "none", display: "none" },
-    red: {
-      "&:hover": {
-        color: theme.palette.error.main,
-      },
-    },
-    blue: {
-      "&:hover": {
-        color: theme.palette.primary.main,
-      },
-    },
-  })
-);
+export const Complete = styled(TableCell)`
+  display: flex;
+  justify-content: center;
+  flex: 0.05;
+  width: 6%;
+  border: none;
+`;
 
-export default useStyles;
+export const Title = styled(TableCell)<Props>`
+  flex: 0.8;
+  border: none;
+  word-break: break-word;
+  padding: ${({ theme }: MuiTheme) => theme.spacing(1)};
+  text-decoration: ${({ status }: Props) =>
+    status === "pending" ? "none" : "line-through"};
+  color: ${({ status }: Props) =>
+    status === "pending"
+      ? "rgba(0,0,0,0.87)"
+      : "rgba(0,0,0,0.38)"}; //! fix theme in ternary palette.text.primary / palette.text.disabled
+
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
+    padding: ${({ theme }: MuiTheme) => theme.spacing(0.5)};
+  }
+
+  & p {
+    ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
+      font-size: 14px;
+    }
+  }
+`;
+
+export const DateWrapper = styled(TableCell)<Props>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0.05;
+  border: none;
+  padding: none;
+  text-decoration: ${({ status }: Props) =>
+    status === "pending" ? "none" : "line-through"};
+  color: ${({ status }: Props) =>
+    status === "pending"
+      ? "rgba(0,0,0,0.87)"
+      : "rgba(0,0,0,0.38)"}; //! fix theme in ternary palette.text.primary / palette.text.disabled
+`;
+
+export const DateText = styled(Typography)`
+  font-size: 12px;
+  color: ${({ theme }: MuiTheme) => theme.palette.text.secondary};
+
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
+    font-size: 10px;
+  }
+`;
+
+export const EditButtonsWrapper = styled(TableCell)`
+  display: flex;
+  justify-content: center;
+  flex: 0.1;
+  border: none;
+
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
+    flex-direction: column;
+    padding: ${({ theme }: MuiTheme) => theme.spacing(0.8)};
+  }
+`;
+
+export const EditIcon = styled(PageviewIcon)`
+  &:hover {
+    color: ${({ theme }: MuiTheme) => theme.palette.primary.main};
+  }
+`;
+
+export const DeleteIcon = styled(DeleteForeverIcon)`
+  &:hover {
+    color: ${({ theme }: MuiTheme) => theme.palette.error.main};
+  }
+`;
+export const ModalWrapper = styled(TableCell)`
+  border: none;
+  display: none;
+`;

@@ -23,7 +23,6 @@ import useStyles from "./styles/App.styles";
 import { ThemeProvider, createTheme, Theme } from "@mui/material";
 
 const theme: Theme = createTheme();
-console.log(theme);
 
 const App: React.FC = () => {
   //prettier-ignore
