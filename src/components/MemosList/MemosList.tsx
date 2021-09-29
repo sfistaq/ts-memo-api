@@ -5,8 +5,8 @@ import { RootStateOrAny, useSelector } from "react-redux";
 import { filterMemoByStatus } from "../../utils/filter";
 import CircularProgress from "@mui/material/CircularProgress";
 import InfoIcon from "@mui/icons-material/Info";
-import WarningIcon from "@mui/icons-material/Warning";
 import FindReplaceIcon from "@mui/icons-material/FindReplace";
+import WarningIcon from "@mui/icons-material/Warning";
 import InfoMessage from "../InfoMessage/InfoMessage";
 import MemoItem from "../MemoItem/MemoItem";
 import { TableBody } from "./MemosList.styles";
@@ -45,12 +45,12 @@ const MemosList: React.FC<Props> = ({
       ) : sortedMemo.length === 0 && itemCounter === 0 && !error ? (
         <InfoMessage
           message="Add memo note by click 'Create' button"
-          icon={<InfoIcon style={{ color: "rgba(0, 0, 0, 0.38)" }} />}
+          icon={<InfoIcon color="disabled" />}
         />
       ) : sortedMemo.length > 0 && itemCounter === 0 && !error ? (
         <InfoMessage
           message="Memo not found..."
-          icon={<FindReplaceIcon style={{ color: "rgba(0, 0, 0, 0.38)" }} />}
+          icon={<FindReplaceIcon color="disabled" />}
         />
       ) : error ? (
         <InfoMessage

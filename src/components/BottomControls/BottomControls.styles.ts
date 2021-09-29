@@ -22,12 +22,12 @@ export const Container = styled(TableRow)`
     justify-items: center;
   }
 
-  ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
     padding: ${({ theme }: MuiTheme) => theme.spacing(1)};
   }
 
   @media (max-width: 450px) {
-    padding: ${({ theme }: MuiTheme) => theme.spacing(0.4)};
+    padding: ${({ theme }: MuiTheme) => theme.spacing(0.2)};
   }
 `;
 

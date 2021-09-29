@@ -45,3 +45,7 @@ export interface sendMemoData {
 export interface MuiTheme {
   theme: Theme;
 }
+
+export interface Status {
+  status: "pending" | "completed";
+}

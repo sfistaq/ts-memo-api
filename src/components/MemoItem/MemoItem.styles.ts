@@ -1,34 +1,28 @@
 import styled from "@mui/styled-engine-sc";
-import { MuiTheme } from "../../types/types";
+import { MuiTheme, Status } from "../../types/types";
 import { TableRow, TableCell, Typography } from "@mui/material";
 import PageviewIcon from "@mui/icons-material/Pageview";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-interface Props {
-  status: "pending" | "completed";
-}
-
-export const MemoItemWrapper = styled(TableRow)<Props>`
+export const MemoItemWrapper = styled(TableRow)<Status>`
   display: flex;
   align-items: center;
   height: 100px;
   max-height: 100px;
   border-bottom: 1px solid black;
-  transition: all 0.3s ease;
   cursor: pointer;
-  background: ${({ status }: Props) =>
+  transition: all 0.4s ease;
+  background: ${({ status, theme }: Status & MuiTheme) =>
     status === "pending"
-      ? "rgba(245,245,245, 0.8)"
-      : "#757575"}; //! palette.grey[600]
+      ? theme.palette.background.memo
+      : theme.palette.grey[600]};
 
   &:hover {
-    background: ${({ status }: Props) =>
-      status === "pending"
-        ? `#f5f5f5`
-        : "#9e9e9e"}; //! fix theme in ternary palette.grey[100] ? palette.grey[500]
+    background: ${({ status, theme }: Status & MuiTheme) =>
+      status === "pending" ? theme.palette.grey[100] : theme.palette.grey[500]};
   }
 
-  ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
     height: 90px;
   }
 `;
@@ -41,17 +35,17 @@ export const Complete = styled(TableCell)`
   border: none;
 `;
 
-export const Title = styled(TableCell)<Props>`
+export const Title = styled(TableCell)<Status>`
   flex: 0.8;
   border: none;
   word-break: break-word;
   padding: ${({ theme }: MuiTheme) => theme.spacing(1)};
-  text-decoration: ${({ status }: Props) =>
+  text-decoration: ${({ status }: Status) =>
     status === "pending" ? "none" : "line-through"};
-  color: ${({ status }: Props) =>
+  color: ${({ status, theme }: Status & MuiTheme) =>
     status === "pending"
-      ? "rgba(0,0,0,0.87)"
-      : "rgba(0,0,0,0.38)"}; //! fix theme in ternary palette.text.primary / palette.text.disabled
+      ? theme.palette.text.primary
+      : theme.palette.text.disabled};
 
   ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
     padding: ${({ theme }: MuiTheme) => theme.spacing(0.5)};
@@ -64,19 +58,19 @@ export const Title = styled(TableCell)<Props>`
   }
 `;
 
-export const DateWrapper = styled(TableCell)<Props>`
+export const DateWrapper = styled(TableCell)<Status>`
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 0.05;
   border: none;
   padding: none;
-  text-decoration: ${({ status }: Props) =>
+  text-decoration: ${({ status }: Status) =>
     status === "pending" ? "none" : "line-through"};
-  color: ${({ status }: Props) =>
+  color: ${({ status, theme }: Status & MuiTheme) =>
     status === "pending"
-      ? "rgba(0,0,0,0.87)"
-      : "rgba(0,0,0,0.38)"}; //! fix theme in ternary palette.text.primary / palette.text.disabled
+      ? theme?.palette.text.primary
+      : theme.palette.text.disabled};
 `;
 
 export const DateText = styled(Typography)`

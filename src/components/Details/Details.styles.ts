@@ -1,5 +1,5 @@
 import styled from "@mui/styled-engine-sc";
-import { MuiTheme } from "../../types/types";
+import { MuiTheme, Status } from "../../types/types";
 import {
   Backdrop as MuiBackdrop,
   Dialog as MuiDialog,
@@ -16,10 +16,6 @@ import {
   ButtonProps,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-
-interface Props {
-  status: "pending" | "completed";
-}
 
 export const Backdrop = styled(MuiBackdrop)`
   z-index: ${({ theme }: MuiTheme) => theme.zIndex.drawer + 1};
@@ -84,16 +80,16 @@ export const DialogActions = styled(MuiDialogActions)`
   background: ${({ theme }: MuiTheme) => theme.palette.grey[200]};
 `;
 
-export const CompletePendingButton = styled(Button)<ButtonProps & Props>`
-  background: ${({ status }: Props) =>
+export const CompletePendingButton = styled(Button)<ButtonProps & Status>`
+  background: ${({ status, theme }: Status & MuiTheme) =>
     status === "pending"
-      ? "#2e7d32"
-      : "#ED6C02"}; //! fix theme in ternary palette.success.main / palette.warning.main
+      ? theme.palette.success.main
+      : theme.palette.warning.main};
 
   &:hover {
-    background: ${({ status }: Props) =>
+    background: ${({ status, theme }: Status & MuiTheme) =>
       status === "pending"
-        ? "#1b5e20"
-        : "#e65100"}; //! fix theme in ternary palette.success.dark /palette.warning.dark
+        ? theme.palette.success.dark
+        : theme.palette.warning.dark};
   }
 `;

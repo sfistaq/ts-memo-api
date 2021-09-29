@@ -8,7 +8,7 @@ export const TableBody = styled(MuiTableBody)`
   min-height: 500px;
   background: ${({ theme }: MuiTheme) => theme.palette.background.transparent};
 
-  ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
     min-height: 450px;
   }
 `;

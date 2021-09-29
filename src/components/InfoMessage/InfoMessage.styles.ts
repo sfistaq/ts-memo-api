@@ -22,7 +22,7 @@ export const Message = styled(TableRow)`
     color: ${({ theme }: MuiTheme) => theme.palette.grey[600]};
   }
 
-  ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
     min-height: 450px;
   }
 `;
