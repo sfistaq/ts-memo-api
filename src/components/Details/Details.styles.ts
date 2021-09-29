@@ -27,7 +27,7 @@ export const Backdrop = styled(MuiBackdrop)`
 `;
 export const Dialog = styled(MuiDialog)`
   backdrop-filter: blur(3px);
-  background: rgba(0, 0, 0, 0.5);
+  background: ${({ theme }: MuiTheme) => theme.palette.background.dialog};
 `;
 
 export const DialogTitle = styled(MuiDialogTitle)`

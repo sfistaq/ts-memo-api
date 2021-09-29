@@ -9,7 +9,7 @@ export const Message = styled(TableRow)`
   justify-content: center;
   min-height: 500px;
   border-bottom: 1px solid black;
-  background-color: rgba(245, 245, 245, 0.2);
+  background: ${({ theme }: MuiTheme) => theme.palette.background.transparent};
 
   & td {
     border: none;

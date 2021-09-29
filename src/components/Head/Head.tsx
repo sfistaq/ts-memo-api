@@ -1,10 +1,9 @@
 import React, { memo } from "react";
-import { MemosData, HeadData } from "../../types/types";
-import TableHead from "@material-ui/core/TableHead";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import useStyles from "./HeadStyles";
+import { MemosData } from "../../types/types";
+import TableHead from "@mui/material/TableHead";
+import TableSortLabel from "@mui/material/TableSortLabel";
+
+import { HeadWrapper, Status, Title, Date } from "./HeadStyles";
 
 interface Props {
   sortByProperty: keyof MemosData;
@@ -13,32 +12,18 @@ interface Props {
   setSortDirection: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+//  interface HeadData {
+//   id: number;
+//   title: keyof MemosData;
+//   jsx: React.JSX;
+// }
+
 const Head: React.FC<Props> = ({
   sortByProperty,
   setSortByProperty,
   sortDirection,
   setSortDirection,
 }) => {
-  const classes = useStyles();
-
-  const headData: HeadData[] = [
-    {
-      id: 1,
-      title: "status",
-      class: classes.headStatus,
-    },
-    {
-      id: 2,
-      title: "title",
-      class: classes.headTitle,
-    },
-    {
-      id: 3,
-      title: "due_on",
-      class: classes.headDate, //ostylowany JSX TableCell zamiast class
-    },
-  ];
-
   const sortDirectionHandler = (sortBy: keyof MemosData) => {
     setSortDirection((prev: boolean) => !prev);
     setSortByProperty(sortBy);
@@ -50,21 +35,29 @@ const Head: React.FC<Props> = ({
 
   return (
     <TableHead component="thead">
-      <TableRow component="tr" className={classes.head}>
-        {headData.map((item: HeadData) => (
-          <TableCell
-            key={item.id}
-            className={item.class}
-            onClick={() => sortDirectionHandler(item.title)}
-          >
-            {item.title === "due_on" ? "create date" : item.title}
-            <TableSortLabel
-              active={sortByProperty === item.title}
-              direction={sortDirectionIndicator(item.title)}
-            />
-          </TableCell>
-        ))}
-      </TableRow>
+      <HeadWrapper>
+        <Status onClick={() => sortDirectionHandler("status")}>
+          status
+          <TableSortLabel
+            active={sortByProperty === "status"}
+            direction={sortDirectionIndicator("status")}
+          />
+        </Status>
+        <Title onClick={() => sortDirectionHandler("title")}>
+          title
+          <TableSortLabel
+            active={sortByProperty === "title"}
+            direction={sortDirectionIndicator("title")}
+          />
+        </Title>
+        <Date onClick={() => sortDirectionHandler("due_on")}>
+          create date
+          <TableSortLabel
+            active={sortByProperty === "due_on"}
+            direction={sortDirectionIndicator("due_on")}
+          />
+        </Date>
+      </HeadWrapper>
     </TableHead>
   );
 };

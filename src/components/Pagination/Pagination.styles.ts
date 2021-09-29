@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 
 export const TablePagination = styled(MuiTablePagination)<TablePaginationProps>`
-  background-color: rgba(245, 245, 245, 0.5);
+  background: ${({ theme }: MuiTheme) => theme.palette.background.main};
   display: flex;
   width: 100%;
   justify-content: center;

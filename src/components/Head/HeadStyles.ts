@@ -1,67 +1,72 @@
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import styled, { css } from "@mui/styled-engine-sc";
+import { MuiTheme } from "../../types/types";
+import { TableRow, TableCell } from "@mui/material";
 
-const css = {
-  fontSize: "13px",
-  paddingTop: "5px",
-  paddingBottom: "5px",
-};
+const cssHelper = css`
+  font-size: 13px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+`;
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    head: {
-      display: "flex",
-      backgroundColor: "rgba(245,245,245, 0.5)",
-      borderBottom: "1px solid black",
-    },
-    headStatus: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "start",
-      flex: 0.1,
-      border: "none",
+export const HeadWrapper = styled(TableRow)`
+  display: flex;
+  background-color: ${({ theme }: MuiTheme) => theme.palette.background.main};
+  border-bottom: 1px solid black;
+`;
 
-      "&:hover": {
-        color: theme.palette.primary.main,
-      },
-      [theme.breakpoints.down("xs")]: {
-        ...css,
-      },
-    },
-    headTitle: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flex: 0.55,
-      border: "none",
-      "&:hover": {
-        color: theme.palette.primary.main,
-      },
-      [theme.breakpoints.down("xs")]: {
-        ...css,
-      },
-    },
-    headDate: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flex: 0.35,
-      border: "none",
+export const Status = styled(TableCell)`
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex: 0.1;
+  border: none;
 
-      "&:hover": {
-        color: theme.palette.primary.main,
-      },
-      "@media (max-width:800px)": {
-        justifyContent: "start",
-      },
-      [theme.breakpoints.down("sm")]: {
-        ...css,
-      },
-      [theme.breakpoints.down("xs")]: {
-        ...css,
-        marginRight: "15px",
-      },
-    },
-  })
-);
+  &:hover {
+    color: ${({ theme }: MuiTheme) => theme.palette.primary.main};
+  }
 
-export default useStyles;
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
+    ${cssHelper}
+  }
+`;
+
+export const Title = styled(TableCell)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0.55;
+  border: none;
+
+  &:hover {
+    color: ${({ theme }: MuiTheme) => theme.palette.primary.main};
+  }
+
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
+    ${cssHelper}
+  }
+`;
+
+export const Date = styled(TableCell)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0.35;
+  border: none;
+
+  &:hover {
+    color: ${({ theme }: MuiTheme) => theme.palette.primary.main};
+  }
+
+  @media (max-width: 800px) {
+    justify-content: flex-start;
+  }
+
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
+    ${cssHelper}
+  }
+
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
+    ${cssHelper};
+    margin-right: 15px;
+  }
+`;

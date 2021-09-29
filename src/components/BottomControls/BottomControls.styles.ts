@@ -12,7 +12,7 @@ export const Container = styled(TableRow)`
   width: 100%;
   align-items: center;
   justify-content: space-around;
-  background-color: rgba(245, 245, 245, 0.5);
+  background: ${({ theme }: MuiTheme) => theme.palette.background.main};
   padding: ${({ theme }: MuiTheme) => theme.spacing(1.2)};
 
   ${({ theme }: MuiTheme) => theme.breakpoints.down("md")} {

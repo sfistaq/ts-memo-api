@@ -55,7 +55,7 @@ const MemosList: React.FC<Props> = ({
       ) : error ? (
         <InfoMessage
           message={`Request failed: "${error}"`}
-          icon={<WarningIcon color="secondary" />}
+          icon={<WarningIcon color="error" />}
         />
       ) : null}
     </TableBody>

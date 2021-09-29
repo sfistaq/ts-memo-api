@@ -9,12 +9,6 @@ export interface MemosData {
   status: "pending" | "completed";
 }
 
-export interface HeadData {
-  id: number;
-  title: keyof MemosData;
-  class: string;
-}
-
 export interface AddMemoData {
   title: string;
   due_on: string;

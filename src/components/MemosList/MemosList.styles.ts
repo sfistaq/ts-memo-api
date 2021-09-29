@@ -6,7 +6,7 @@ export const TableBody = styled(MuiTableBody)`
   display: flex;
   flex-direction: column;
   min-height: 500px;
-  background-color: rgba(245, 245, 245, 0.2);
+  background: ${({ theme }: MuiTheme) => theme.palette.background.transparent};
 
   ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
     min-height: 450px;
