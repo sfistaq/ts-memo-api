@@ -16,7 +16,7 @@ export const Form = styled(MuiBox)<BoxProps>`
   justify-content: space-evenly;
   width: 100%;
   padding: ${({ theme }: MuiTheme) => theme.spacing(2)};
-  background-color: rgba(245, 245, 245, 0.5);
+  background: ${({ theme }: MuiTheme) => theme.palette.background.main};
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 

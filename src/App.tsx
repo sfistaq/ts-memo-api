@@ -8,45 +8,16 @@ import { FilterType } from "./types/enums";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
 import TableFooter from "@mui/material/TableFooter";
-
-import CssBaseline from "@material-ui/core/CssBaseline"; //!!FIXNIJ
-// import CssBaseline from "@mui/material/CssBaseline";
-
+import CssBaseline from "@mui/material/CssBaseline";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Create from "./components/Create/Create";
 import Head from "./components/Head/Head";
 import MemosList from "./components/MemosList/MemosList";
 import BottomControls from "./components/BottomControls/BottomControls";
 import Pagination from "./components/Pagination/Pagination";
+import { theme } from "./styles/theme";
+import { ThemeProvider } from "@mui/material";
 import { AppWrapper, TableWrapper, Table, TableRow } from "./styles/App.styles";
-
-import { ThemeProvider, createTheme, Theme } from "@mui/material";
-
-//! dodanie wartości do Theme
-declare module "@mui/material/styles/createPalette" {
-  interface TypeText {
-    hint: string;
-  }
-  interface TypeBackground {
-    main: string;
-    transparent: string;
-    dialog: string;
-  }
-}
-
-//! dodaj wartosci z kolorami tła, exportuj do katalogu styles
-const theme: Theme = createTheme({
-  palette: {
-    text: {
-      hint: "rgba(0, 0, 0, 0.38)",
-    },
-    background: {
-      main: "rgba(245, 245, 245, 0.5)",
-      transparent: "rgba(245, 245, 245, 0.2)",
-      dialog: "rgba(0, 0, 0, 0.5)",
-    },
-  },
-});
 
 const App: React.FC = () => {
   //prettier-ignore
