@@ -29,7 +29,7 @@ const SearchBar: React.FC<Props> = ({
 
   return (
     <Form
-      component="form"
+      // component="form"
       onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
       }}
