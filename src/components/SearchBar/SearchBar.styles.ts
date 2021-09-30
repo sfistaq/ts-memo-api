@@ -20,7 +20,7 @@ export const Form = styled(MuiBox)<BoxProps>`
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 
-  ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
     padding: ${({ theme }: MuiTheme) => theme.spacing(1)};
   }
 `;
@@ -32,7 +32,7 @@ export const TextField = styled(MuiTextField)<TextFieldProps>`
   border: none;
   outline: none;
 
-  ${({ theme }: MuiTheme) => theme.breakpoints.down("xs")} {
+  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
     width: 60%;
 
     & input {

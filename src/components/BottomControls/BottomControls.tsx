@@ -1,11 +1,11 @@
 import React, { memo } from "react";
-import { useDispatch } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
-import { MemosData, MemoByStatus } from "../../types/types";
+import { useDispatch } from "react-redux";
 import { FilterType } from "../../types/enums";
+import { MemosData, MemoByStatus } from "../../types/types";
 import { bottomButtons } from "./data";
-import { Container, Wrapper, Button } from "./BottomControls.styles";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { Container, Wrapper, Button } from "./BottomControls.styles";
 
 interface Props {
   memos: MemosData[];

@@ -7,7 +7,13 @@ const initialState: MemosReducer = {
   error: null,
 };
 
-const reducer = (state: MemosReducer = initialState, action: any) => {
+//TODO Add action types in reducer
+
+const reducer = (
+  state: MemosReducer = initialState,
+  action: any
+): MemosReducer => {
+  console.log(action);
   switch (action.type) {
     case actionTypes.SET_LOADING:
       return {

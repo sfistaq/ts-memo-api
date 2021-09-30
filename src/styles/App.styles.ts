@@ -26,8 +26,7 @@ export const TableWrapper = styled(Container)<ContainerProps>`
   border-radius: 15px;
   padding-top: ${({ theme }: MuiTheme) => theme.spacing(2)};
   padding-bottom: ${({ theme }: MuiTheme) => theme.spacing(2)};
-  background-color: rgba(245, 245, 245, 0.2);
-
+  background: ${({ theme }: MuiTheme) => theme.palette.background.transparent};
   @media (max-width: 499px) {
     padding-top: ${({ theme }: MuiTheme) => theme.spacing(1)};
     padding-bottom: ${({ theme }: MuiTheme) => theme.spacing(1)};

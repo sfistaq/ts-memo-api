@@ -2,7 +2,6 @@ import React, { memo } from "react";
 import { MemosData } from "../../types/types";
 import TableHead from "@mui/material/TableHead";
 import TableSortLabel from "@mui/material/TableSortLabel";
-
 import { HeadWrapper, Status, Title, Date } from "./HeadStyles";
 
 interface Props {
@@ -11,12 +10,6 @@ interface Props {
   sortDirection: boolean;
   setSortDirection: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-//  interface HeadData {
-//   id: number;
-//   title: keyof MemosData;
-//   jsx: React.JSX;
-// }
 
 const Head: React.FC<Props> = ({
   sortByProperty,
@@ -32,6 +25,8 @@ const Head: React.FC<Props> = ({
   const sortDirectionIndicator = (sortBy: keyof MemosData) => {
     return sortByProperty === sortBy && sortDirection ? "asc" : "desc";
   };
+
+  //TODO refaktor
 
   return (
     <TableHead component="thead">

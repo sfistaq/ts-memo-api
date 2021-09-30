@@ -1,5 +1,6 @@
 import styled from "@mui/styled-engine-sc";
 import { MuiTheme, Status } from "../../types/types";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Backdrop as MuiBackdrop,
   Dialog as MuiDialog,
@@ -15,7 +16,6 @@ import {
   Button,
   ButtonProps,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 
 export const Backdrop = styled(MuiBackdrop)`
   z-index: ${({ theme }: MuiTheme) => theme.zIndex.drawer + 1};

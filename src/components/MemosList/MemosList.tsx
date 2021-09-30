@@ -1,14 +1,14 @@
 import React from "react";
+import { RootStateOrAny, useSelector } from "react-redux";
 import { MemosData } from "../../types/types";
 import { FilterType } from "../../types/enums";
-import { RootStateOrAny, useSelector } from "react-redux";
 import { filterMemoByStatus } from "../../utils/filter";
+import InfoMessage from "../InfoMessage/InfoMessage";
+import MemoItem from "../MemoItem/MemoItem";
 import CircularProgress from "@mui/material/CircularProgress";
 import InfoIcon from "@mui/icons-material/Info";
 import FindReplaceIcon from "@mui/icons-material/FindReplace";
 import WarningIcon from "@mui/icons-material/Warning";
-import InfoMessage from "../InfoMessage/InfoMessage";
-import MemoItem from "../MemoItem/MemoItem";
 import { TableBody } from "./MemosList.styles";
 
 interface Props {

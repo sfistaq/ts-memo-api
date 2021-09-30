@@ -5,6 +5,8 @@ import { sortArrayOfObj } from "./utils/sort";
 import { filterMemoByStatus } from "./utils/filter";
 import { MemosData } from "./types/types";
 import { FilterType } from "./types/enums";
+import { theme } from "./styles/theme";
+import { ThemeProvider } from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
 import TableFooter from "@mui/material/TableFooter";
@@ -15,8 +17,6 @@ import Head from "./components/Head/Head";
 import MemosList from "./components/MemosList/MemosList";
 import BottomControls from "./components/BottomControls/BottomControls";
 import Pagination from "./components/Pagination/Pagination";
-import { theme } from "./styles/theme";
-import { ThemeProvider } from "@mui/material";
 import { AppWrapper, TableWrapper, Table, TableRow } from "./styles/App.styles";
 
 const App: React.FC = () => {

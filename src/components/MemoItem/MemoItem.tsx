@@ -1,12 +1,12 @@
 import React, { useState, useEffect, memo } from "react";
-import { MemosData } from "../../types/types";
-import { useDispatch } from "react-redux";
 import * as Actions from "../../store/actions/actionsIndex";
+import { useDispatch } from "react-redux";
+import { MemosData } from "../../types/types";
+import Details from "../Details/Details";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import Details from "../Details/Details";
 import {
   MemoItemWrapper,
   Complete,

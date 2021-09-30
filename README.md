@@ -6,6 +6,7 @@
 - ![typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 - ![redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
 - ![material-ui](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white)
+- ![styled-components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 
 ## Summary
 
@@ -24,4 +25,3 @@ Register as a user at https://gorest.co.in or use a key previously given.
 Create a `.env` file in the root of the project directory as per the `.example.env`
 
 Add your api key and user id. Without the api key and user id the project will not run.
-
