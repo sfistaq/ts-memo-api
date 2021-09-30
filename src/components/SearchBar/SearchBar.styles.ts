@@ -1,15 +1,15 @@
 import styled from "@mui/styled-engine-sc";
 import { MuiTheme } from "../../types/types";
 import {
-  Box as MuiBox,
-  BoxProps,
+  FormControl,
+  FormControlProps,
   TextField as MuiTextField,
   TextFieldProps,
   Button as MuiButton,
   ButtonProps,
 } from "@mui/material";
 
-export const Form = styled(MuiBox)<BoxProps>`
+export const Form = styled(FormControl)<FormControlProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
