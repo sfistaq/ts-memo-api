@@ -1,6 +1,6 @@
 import React, { useEffect, memo } from "react";
-import ErrorIcon from "@mui/icons-material/Error";
 import CreateIcon from "@mui/icons-material/Create";
+import ErrorIcon from "@mui/icons-material/Error";
 import { Form, TextField, Button } from "./SearchBar.styles";
 
 interface Props {
@@ -18,6 +18,9 @@ const SearchBar: React.FC<Props> = ({
   setCreateModalOpen,
   createButtonDisabled,
 }) => {
+
+ 
+
   useEffect(() => {
     document.addEventListener("keydown", (event: KeyboardEvent) => {
       event.key === "Escape" && setCreateModalOpen(false);
@@ -27,16 +30,9 @@ const SearchBar: React.FC<Props> = ({
     };
   }, [createModalOpen, setCreateModalOpen]);
 
+
   return (
-    <Form
-      // component="form"
-      onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-      }}
-      onKeyPress={(event: React.KeyboardEvent<HTMLFormElement>) => {
-        event.key === "Enter" && event.preventDefault();
-      }}
-    >
+    <Form>
       <TextField
         type="search"
         label="search"
