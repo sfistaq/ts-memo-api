@@ -3,13 +3,13 @@ import { MuiTheme, Status } from "../../types/types";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Backdrop as MuiBackdrop,
+  Box,
   Dialog as MuiDialog,
   DialogTitle as MuiDialogTitle,
   DialogContent as MuiDialogContent,
   DialogContentProps,
   TextField as MuiTextField,
   TextFieldProps,
-  DialogContentText as MuiDialogContentText,
   Typography,
   TypographyProps,
   DialogActions as MuiDialogActions,
@@ -40,7 +40,7 @@ export const TextField = styled(MuiTextField)<TextFieldProps>`
   margin: 5% 0;
 `;
 
-export const DialogContentText = styled(MuiDialogContentText)`
+export const DialogContentText = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: center;

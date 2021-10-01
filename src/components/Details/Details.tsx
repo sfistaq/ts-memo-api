@@ -169,7 +169,7 @@ const Details: React.FC<Props> = ({
             <>
               <Button
                 variant="contained"
-                color="secondary"
+                color="error"
                 onClick={() => {
                   setShowEdit(false);
                 }}
