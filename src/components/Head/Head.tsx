@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { MemosData } from "../../types/types";
+import { MemosData, HeadData } from "../../types/types";
 import TableHead from "@mui/material/TableHead";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { HeadWrapper, Status, Title, Date } from "./HeadStyles";
@@ -26,32 +26,57 @@ const Head: React.FC<Props> = ({
     return sortByProperty === sortBy && sortDirection ? "asc" : "desc";
   };
 
-  //TODO refaktor
+  const sortLabel = (name: keyof MemosData) => (
+    <TableSortLabel
+      active={sortByProperty === name}
+      direction={sortDirectionIndicator(name)}
+    />
+  );
+
+  const headData: HeadData[] = [
+    {
+      id: 1,
+      title: "status",
+      jsx: (
+        <Status>
+          status
+          {sortLabel("status")}
+        </Status>
+      ),
+    },
+    {
+      id: 2,
+      title: "title",
+      jsx: (
+        <Title>
+          title
+          {sortLabel("title")}
+        </Title>
+      ),
+    },
+    {
+      id: 3,
+      title: "due_on",
+      jsx: (
+        <Date>
+          create date
+          {sortLabel("due_on")}
+        </Date>
+      ),
+    },
+  ];
 
   return (
     <TableHead component="thead">
       <HeadWrapper>
-        <Status onClick={() => sortDirectionHandler("status")}>
-          status
-          <TableSortLabel
-            active={sortByProperty === "status"}
-            direction={sortDirectionIndicator("status")}
-          />
-        </Status>
-        <Title onClick={() => sortDirectionHandler("title")}>
-          title
-          <TableSortLabel
-            active={sortByProperty === "title"}
-            direction={sortDirectionIndicator("title")}
-          />
-        </Title>
-        <Date onClick={() => sortDirectionHandler("due_on")}>
-          create date
-          <TableSortLabel
-            active={sortByProperty === "due_on"}
-            direction={sortDirectionIndicator("due_on")}
-          />
-        </Date>
+        {headData.map((item: HeadData) => {
+          return React.cloneElement(item.jsx, {
+            key: item.id,
+            onClick: () => {
+              sortDirectionHandler(item.title);
+            },
+          });
+        })}
       </HeadWrapper>
     </TableHead>
   );

@@ -49,3 +49,9 @@ export interface MuiTheme {
 export interface Status {
   status: "pending" | "completed";
 }
+
+export interface HeadData {
+  id: number;
+  title: keyof MemosData;
+  jsx: JSX.Element;
+}
