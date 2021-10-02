@@ -20,7 +20,6 @@ export const Status = styled(TableCell)`
   justify-content: start;
   flex: 0.1;
   border: none;
-  cursor: pointer;
 
   &:hover {
     color: ${({ theme }: MuiTheme) => theme.palette.primary.main};
@@ -37,7 +36,6 @@ export const Title = styled(TableCell)`
   justify-content: center;
   flex: 0.55;
   border: none;
-  cursor: pointer;
 
   &:hover {
     color: ${({ theme }: MuiTheme) => theme.palette.primary.main};
@@ -54,7 +52,6 @@ export const Date = styled(TableCell)`
   justify-content: center;
   flex: 0.35;
   border: none;
-  cursor: pointer;
 
   &:hover {
     color: ${({ theme }: MuiTheme) => theme.palette.primary.main};
