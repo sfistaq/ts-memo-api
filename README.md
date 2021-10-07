@@ -10,7 +10,7 @@
 
 ## Summary
 
-This simple CRUD app for create short memo notes. User can mark memo for completed or pending. Clicking on magnifier icon open details dialog and you can edit or delete note. You can check live [DEMO](https://ts-memo-app.netlify.app) uploaded to ![netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)
+This simple CRUD app for create short memo notes uses the GoRest API (https://gorest.co.in). User can mark memo for completed or pending. Clicking on magnifier icon open details dialog and you can edit or delete note. You can check live [DEMO](https://ts-memo-app.netlify.app) uploaded to ![netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)
 
 ## To initialize this project and its dependencies
 
