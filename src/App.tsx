@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, RootStateOrAny, useSelector } from "react-redux";
 import * as Actions from "./store/actions/actionsIndex";
 import { sortArrayOfObj } from "./utils/sort";
-import { filterMemoByStatus } from "./utils/filter";
+import { filterMemo } from "./utils/filter";
 import { MemosData } from "./types/types";
 import { FilterType } from "./types/enums";
 import { theme } from "./styles/theme";
@@ -35,7 +35,7 @@ const App: React.FC = () => {
   const sortedMemo: MemosData[] =
     memos && sortArrayOfObj(memos, sortByProperty, sortDirection);
 
-  const itemCounter: number = filterMemoByStatus(
+  const itemCounter: number = filterMemo(
     sortedMemo,
     filterByStatus,
     searchInput

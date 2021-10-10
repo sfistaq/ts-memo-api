@@ -2,7 +2,7 @@ import React from "react";
 import { RootStateOrAny, useSelector } from "react-redux";
 import { MemosData } from "../../types/types";
 import { FilterType } from "../../types/enums";
-import { filterMemoByStatus } from "../../utils/filter";
+import { filterMemo } from "../../utils/filter";
 import InfoMessage from "../InfoMessage/InfoMessage";
 import MemoItem from "../MemoItem/MemoItem";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -34,7 +34,7 @@ const MemosList: React.FC<Props> = ({
   return (
     <TableBody>
       {sortedMemo.length > 0 && itemCounter > 0 && !loading && !error ? (
-        filterMemoByStatus(sortedMemo, filterByStatus, searchInput)
+        filterMemo(sortedMemo, filterByStatus, searchInput)
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((item: MemosData, i: number) => <MemoItem {...item} key={i} />)
       ) : loading && !error ? (

@@ -78,9 +78,9 @@ const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
             rows={5}
             autoFocus={true}
             inputProps={{ minLength: 1, maxLength: Constants.CHARLIMIT }}
-            onChange={(
-              event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-            ) => setInput(event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+              setInput(event.target.value)
+            }
             value={input}
             placeholder="Add your memo note..."
             label={

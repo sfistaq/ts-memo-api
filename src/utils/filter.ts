@@ -8,7 +8,7 @@ const filterHelper = (data: MemosData[], searchInput: string) => {
   );
 };
 
-export const filterMemoByStatus = (
+export const filterMemo = (
   data: MemosData[],
   filterBy: FilterType,
   searchInput: string
