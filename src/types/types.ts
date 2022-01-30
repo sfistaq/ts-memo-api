@@ -1,18 +1,23 @@
 import { FilterType } from "./enums";
 import { Theme } from "@mui/material";
 
+const PENDING = "pending";
+const COMPLETED = "completed";
+
+type StatusType = typeof PENDING | typeof COMPLETED;
+
 export interface MemosData {
   id: number;
-  user_id: number;
+  user_id?: number;
   title: string;
   due_on: string;
-  status: "pending" | "completed";
+  status: StatusType;
 }
 
 export interface AddMemoData {
   title: string;
   due_on: string;
-  status: "pending" | "completed";
+  status: StatusType;
 }
 
 export interface MemoByStatus {
@@ -47,7 +52,7 @@ export interface MuiTheme {
 }
 
 export interface Status {
-  status: "pending" | "completed";
+  status: StatusType;
 }
 
 export interface HeadData {

@@ -80,16 +80,10 @@ export const DialogActions = styled(MuiDialogActions)`
   background: ${({ theme }: MuiTheme) => theme.palette.grey[200]};
 `;
 
-export const CompletePendingButton = styled(Button)<ButtonProps & Status>`
-  background: ${({ status, theme }: Status & MuiTheme) =>
-    status === "pending"
-      ? theme.palette.success.main
-      : theme.palette.warning.main};
-
-  &:hover {
-    background: ${({ status, theme }: Status & MuiTheme) =>
-      status === "pending"
-        ? theme.palette.success.dark
-        : theme.palette.warning.dark};
-  }
+export const CustomButton = styled(Button)<ButtonProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 120px;
 `;

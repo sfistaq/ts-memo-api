@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import TableCell from "@mui/material/TableCell";
 import Typography from "@mui/material/Typography";
 import { Message } from "./InfoMessage.styles";
@@ -8,7 +8,7 @@ interface Props {
   icon: JSX.Element;
 }
 
-const InfoMessage: React.FC<Props> = ({ message, icon }) => {
+const InfoMessage = ({ message, icon }: Props) => {
   return (
     <Message>
       <TableCell>

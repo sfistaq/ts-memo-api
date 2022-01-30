@@ -1,12 +1,15 @@
-import React, { useState, useEffect, memo } from "react";
-import * as Actions from "../../store/actions/actionsIndex";
-import { useDispatch } from "react-redux";
+import { useState, useEffect, memo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { MemosData } from "../../types/types";
+import useFetchMemos from "../../hooks/useFetchMemos";
+import { apiRequest } from "../../api/apiRequest";
+import { memoActions } from "../../store";
 import Details from "../Details/Details";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   MemoItemWrapper,
   Complete,
@@ -19,24 +22,68 @@ import {
   ModalWrapper,
 } from "./MemoItem.styles";
 
-const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
+const MemoItem = ({ id, title, due_on, status }: MemosData) => {
   const [open, setOpen] = useState<boolean>(false);
   const [windowSize, setWindowSize] = useState<number>(window.innerWidth);
   const [sliceText, setSliceText] = useState<number>(150);
+  const { fetchMemos } = useFetchMemos();
   const dispatch = useDispatch();
+  const [completeMemoID, setCompleteMemoID] = useState<number | null>(null);
+  const [deleteMemoID, setDeleteMemoId] = useState<number | null>(null);
 
-  const completeHandler = (id: number, status: string) => {
-    const data = {
+  const { loading } = useSelector((state: RootStore) => state.memo);
+
+  const {
+    LoadingsTypes: { COMPLETE, DELETE },
+    setLoading,
+    removeMemo,
+    completeMemo,
+  } = memoActions;
+
+  const completeMemoHandler = async (id: number, status: string) => {
+    if (loading) return;
+    setCompleteMemoID(id);
+    dispatch(setLoading(COMPLETE));
+
+    const data: MemosData = {
+      id: id,
       status: status === "pending" ? "completed" : "pending",
       title: title,
       due_on: new Date().toString(),
     };
-    dispatch(Actions.fetchComplete(data, id));
+    try {
+      const req = await apiRequest("PUT", id, data);
+
+      if (req.status === 200 && req.statusText === "OK") {
+        dispatch(completeMemo(data, id));
+        dispatch(setLoading(null));
+        setCompleteMemoID(null);
+      }
+    } catch (error) {
+      dispatch(setLoading(null));
+    }
   };
 
-  const removeMemoHander = (id: number) => {
-    dispatch(Actions.fetchRemove(id));
+  const removeMemoHandler = async (id: number) => {
+    if (loading) return;
+    setDeleteMemoId(id);
+    dispatch(setLoading(DELETE));
+
+    try {
+      const req = await apiRequest("DELETE", id);
+      if (req.status === 204) {
+        dispatch(removeMemo(id));
+        fetchMemos();
+        dispatch(setLoading(null));
+        setDeleteMemoId(null);
+        setOpen(false);
+      }
+    } catch (error) {
+      dispatch(setLoading(null));
+    }
   };
+
+  //  TODO ZROBIĆ HOOK useViewport
 
   const handleResize = () => {
     setWindowSize(window.innerWidth);
@@ -64,15 +111,22 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
     }
   }, [sliceText, windowSize]);
 
+  const spinner = <CircularProgress size={20} color="inherit" />;
+
+  console.log(deleteMemoID);
+
   return (
     <MemoItemWrapper status={status}>
       <Complete>
-        <IconButton size="small" onClick={() => completeHandler(id, status)}>
-          {status === "completed" ? (
-            <CheckBoxIcon />
-          ) : (
+        <IconButton
+          size="small"
+          onClick={() => completeMemoHandler(id, status)}
+        >
+          {status === "completed" && id !== completeMemoID && <CheckBoxIcon />}
+          {status === "pending" && id !== completeMemoID && (
             <CheckBoxOutlineBlankIcon />
           )}
+          {loading === COMPLETE && id === completeMemoID && spinner}
         </IconButton>
       </Complete>
       <Title status={status}>
@@ -90,8 +144,9 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
         <IconButton onClick={() => setOpen(true)}>
           <EditIcon />
         </IconButton>
-        <IconButton onClick={() => removeMemoHander(id)}>
-          <DeleteIcon />
+        <IconButton onClick={() => removeMemoHandler(id)}>
+          {loading === DELETE && deleteMemoID === id && spinner}
+          {deleteMemoID !== id && <DeleteIcon />}
         </IconButton>
       </EditButtonsWrapper>
       <ModalWrapper>
@@ -103,7 +158,8 @@ const MemoItem: React.FC<MemosData> = ({ id, title, due_on, status }) => {
             due_on={due_on}
             open={open}
             setOpen={setOpen}
-            complete={completeHandler}
+            completeMemoHandler={completeMemoHandler}
+            removeMemoHandler={removeMemoHandler}
           />
         )}
       </ModalWrapper>

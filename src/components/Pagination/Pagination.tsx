@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { TablePagination } from "./Pagination.styles";
 
 interface Props {
@@ -9,13 +9,13 @@ interface Props {
   itemCounter: number;
 }
 
-const Pagination: React.FC<Props> = ({
+const Pagination = ({
   page,
   setPage,
   rowsPerPage,
   setRowsPerPage,
   itemCounter,
-}) => {
+}: Props) => {
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };

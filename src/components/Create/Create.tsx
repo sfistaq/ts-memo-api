@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, RootStateOrAny, useSelector } from "react-redux";
-import { AddMemoData } from "../../types/types";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { MemosData } from "../../types/types";
 import * as Constants from "../../utils/constants";
-import * as Actions from "../../store/actions/actionsIndex";
+import { memoActions } from "../../store";
+import { apiRequest } from "../../api/apiRequest";
+import useFetchMemos from "../../hooks/useFetchMemos";
 import Paper from "@mui/material/Paper";
 import Dialog from "@mui/material/Dialog";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -23,11 +25,16 @@ interface Props {
   setSearchInput: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
+const Create = ({ open, setOpen }: Props) => {
   const [input, setInput] = useState<string>("");
-  const [startAddMemo, setStartAddMemo] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const loading = useSelector((state: RootStateOrAny) => state.loading);
+  const { loading } = useSelector((state: RootStore) => state.memo);
+  const { fetchMemos } = useFetchMemos();
+
+  const {
+    LoadingsTypes: { CREATE },
+    setLoading,
+  } = memoActions;
 
   const closeOnOverlay = (event: React.MouseEvent) => {
     if ((event.target as Element).classList.contains("MuiBackdrop-root")) {
@@ -35,26 +42,28 @@ const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
     }
   };
 
-  const addMemoHandler = (input: string) => {
+  const addMemoHandler = async (input: string) => {
     if (!input) return;
-    const data: AddMemoData = {
-      status: "pending",
-      title: `${input}`,
-      due_on: new Date().toString(),
-    };
-    dispatch(Actions.fetchAdd(data));
-    setInput("");
-    setSearchInput("");
-  };
 
-  useEffect(() => {
-    if (loading) {
-      setStartAddMemo(true);
+    try {
+      dispatch(setLoading(CREATE));
+      const memoData: MemosData = {
+        id: 1, //TODO ogarnij inny typ dla tej akcji zeby nie było ID
+        status: "pending",
+        title: `${input}`,
+        due_on: new Date().toString(),
+      };
+      const req = await apiRequest("POST", undefined, memoData);
+
+      if (req.status === 201 && req.statusText === "Created") {
+        fetchMemos(); // ogarnia setMemos
+        setOpen(false);
+        dispatch(setLoading(null));
+      }
+    } catch (error) {
+      dispatch(setLoading(null));
     }
-    if (!loading && startAddMemo) {
-      setOpen(false);
-    }
-  }, [loading, startAddMemo, setOpen]);
+  };
 
   return (
     <Backdrop
@@ -98,8 +107,12 @@ const Create: React.FC<Props> = ({ open, setOpen, setSearchInput }) => {
             onClick={() => {
               addMemoHandler(input);
             }}
-            endIcon={loading ? <CircularProgress size={20} /> : <SendIcon />}
-            disabled={input.replace(/\s+/g, "").length === 0 || loading}
+            endIcon={
+              loading === CREATE ? <CircularProgress size={20} /> : <SendIcon />
+            }
+            disabled={
+              input.replace(/\s+/g, "").length === 0 || loading !== null
+            }
           >
             Submit
           </Button>

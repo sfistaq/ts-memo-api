@@ -11,12 +11,12 @@ interface Props {
   setSortDirection: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Head: React.FC<Props> = ({
+const Head = ({
   sortByProperty,
   setSortByProperty,
   sortDirection,
   setSortDirection,
-}) => {
+}: Props) => {
   const sortDirectionHandler = (sortBy: keyof MemosData) => {
     setSortDirection((prev: boolean) => !prev);
     setSortByProperty(sortBy);
@@ -69,11 +69,11 @@ const Head: React.FC<Props> = ({
   return (
     <TableHead component="thead">
       <HeadWrapper>
-        {headData.map((item: HeadData) => {
-          return React.cloneElement(item.jsx, {
-            key: item.id,
+        {headData.map(({ jsx, id, title }: HeadData) => {
+          return React.cloneElement(jsx, {
+            key: id,
             onClick: () => {
-              sortDirectionHandler(item.title);
+              sortDirectionHandler(title);
             },
           });
         })}

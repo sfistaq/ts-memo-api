@@ -1,11 +1,14 @@
-import React, { memo } from "react";
-import * as Actions from "../../store/actions/actionsIndex";
-import { useDispatch } from "react-redux";
+import { memo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FilterType } from "../../types/enums";
 import { MemosData, MemoByStatus } from "../../types/types";
 import { bottomButtons } from "./data";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { memoActions } from "../../store";
+import useFetchMemos from "../../hooks/useFetchMemos";
+import { apiRequest } from "../../api/apiRequest";
 import { Container, Wrapper, Button } from "./BottomControls.styles";
+import CircularProgress from "@mui/material/CircularProgress";
 
 interface Props {
   memos: MemosData[];
@@ -13,46 +16,65 @@ interface Props {
   setFilterByStatus: React.Dispatch<React.SetStateAction<FilterType>>;
 }
 
-const BottomControls: React.FC<Props> = ({
+const BottomControls = ({
   memos,
   filterByStatus,
   setFilterByStatus,
-}) => {
+}: Props) => {
   const dispatch = useDispatch();
+  const { fetchMemos } = useFetchMemos();
+  const { loading } = useSelector((state: RootStore) => state.memo);
+  const {
+    LoadingsTypes: { CLEAR_COMPLETED },
+    setLoading,
+  } = memoActions;
 
-  const clearCompletedHandler = (data: MemosData[]) => {
-    const clearID = data
-      .filter((item: MemosData) => item.status === "completed")
-      .map((item: MemosData) => item.id);
-    dispatch(Actions.fetchClearCompleted(data, clearID));
-    setFilterByStatus(FilterType.All);
+  const clearCompletedHandler = async (data: MemosData[]) => {
+    dispatch(setLoading(CLEAR_COMPLETED));
+    const clearIDs: number[] = data
+      .filter(({ status }: MemosData) => status === "completed")
+      .map(({ id }: MemosData) => id);
+
+    try {
+      clearIDs.forEach(async (id: number) => {
+        const req = await apiRequest("DELETE", id);
+
+        if (req.status === 204) {
+          fetchMemos();
+          dispatch(setLoading(null));
+          setFilterByStatus(FilterType.All);
+        }
+      });
+    } catch (error) {
+      dispatch(setLoading(null));
+    }
   };
 
-  const disabled = (status: string) => {
+  const disabled = (property: string) => {
     //prettier-ignore
-    return (memos.filter((item: MemosData) => item.status === `${status}`).length === 0);
+    return (memos.filter(({status}: MemosData) => status === `${property}`).length === 0);
   };
+
+  const spinner = <CircularProgress size={20} color="inherit" />;
 
   return (
     <Container>
-      {bottomButtons.map((item: MemoByStatus) => (
-        <Wrapper key={item.id}>
+      {bottomButtons.map(({ id, sortProperty, icon, name }: MemoByStatus) => (
+        <Wrapper key={id}>
           <Button
             onClick={() => {
-              setFilterByStatus(item.sortProperty);
+              setFilterByStatus(sortProperty);
             }}
-            variant={
-              filterByStatus === item.sortProperty ? "contained" : "outlined"
-            }
+            variant={filterByStatus === sortProperty ? "contained" : "outlined"}
             color="primary"
             size="small"
-            endIcon={item.icon}
+            endIcon={icon}
             disabled={
-              (item.name === "Completed" && disabled("completed")) ||
-              (item.name === "Active" && disabled("pending"))
+              (name === "Completed" && disabled("completed")) ||
+              (name === "Active" && disabled("pending"))
             }
           >
-            {item.name}
+            {name}
           </Button>
         </Wrapper>
       ))}
@@ -62,10 +84,10 @@ const BottomControls: React.FC<Props> = ({
           size="small"
           variant="contained"
           color="error"
-          endIcon={<DeleteForeverIcon />}
+          endIcon={loading !== CLEAR_COMPLETED && <DeleteForeverIcon />}
           disabled={disabled("completed")}
         >
-          Remove Completed
+          {loading === CLEAR_COMPLETED ? spinner : "Delete Completed"}
         </Button>
       </Wrapper>
     </Container>

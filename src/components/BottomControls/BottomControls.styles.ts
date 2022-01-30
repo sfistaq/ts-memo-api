@@ -32,7 +32,11 @@ export const Container = styled(TableRow)`
 `;
 
 export const Button = styled(MuiButton)<ButtonProps>`
-  min-width: 110px;
+display: flex;
+align-items: center:
+justify-content: center;  
+width: 180px;
+height: 38px;
 
   ${({ theme }: MuiTheme) => theme.breakpoints.down("md")} {
     min-width: 180px;

@@ -1,141 +1,124 @@
-import { apiRequest } from "../../api/apiRequest";
-import { AppDispatch } from "../../index";
-import { MemosReduxData } from "../../types/types";
-import * as actionTypes from "./actionTypes";
+import { MemosData } from "../../types/types";
 
-const setLoading = () => {
+export enum MemoActionTypes {
+  SET_LOADING = "SET_LOADING",
+  SET_ERROR = "SET_ERROR",
+  INIT_MEMOS = "INIT_MEMOS",
+  REMOVE_MEMO = "REMOVE_MEMO",
+  ADD_MEMO = "ADD_MEMO",
+  COMPLETE_MEMO = "COMPLETE_MEMO",
+  EDIT_MEMO = "EDIT_MEMO",
+}
+
+export enum LoadingsTypes {
+  DELETE = "DELETE",
+  EDIT = "EDIT",
+  COMPLETE = "COMPLETE",
+  CREATE = "CREATE",
+  FETCH = "FETCH",
+  CLEAR_COMPLETED = "CLEAR_COMPLETED",
+}
+
+type SetLoadingActionType = {
+  type: MemoActionTypes.SET_LOADING;
+  payload: LoadingsTypes | null;
+};
+
+export const setLoading = (
+  loading: LoadingsTypes | null
+): SetLoadingActionType => {
   return {
-    type: actionTypes.SET_LOADING,
+    type: MemoActionTypes.SET_LOADING,
+    payload: loading,
   };
 };
 
-const setError = (error: string) => {
+type SetErrorActionType = {
+  type: MemoActionTypes.SET_ERROR;
+  payload: string;
+};
+
+export const setError = (error: string): SetErrorActionType => {
   return {
-    type: actionTypes.SET_ERROR,
-    data: error,
+    type: MemoActionTypes.SET_ERROR,
+    payload: error,
   };
 };
 
-const setMemos = (data: MemosReduxData) => {
+type SetMemosActionType = {
+  type: MemoActionTypes.INIT_MEMOS;
+  payload: MemosData[];
+};
+
+export const setMemos = (data: MemosData[]): SetMemosActionType => {
   return {
-    type: actionTypes.INIT_MEMOS,
-    data: data,
+    type: MemoActionTypes.INIT_MEMOS,
+    payload: data,
   };
 };
 
-export const fetchMemos = () => {
-  return (dispatch: AppDispatch) => {
-    dispatch(setLoading());
-    apiRequest("GET")
-      .then((res) => {
-        dispatch(setMemos(res!.data.data));
-      })
-      .catch((err) => {
-        dispatch(setError(err.response.statusText));
-      });
-  };
+type RemoveMemoActionType = {
+  type: MemoActionTypes.REMOVE_MEMO;
+  payload: number;
 };
 
-const removeMemo = (id: number) => {
+export const removeMemo = (id: number): RemoveMemoActionType => {
   return {
-    type: actionTypes.REMOVE_MEMO,
-    id: id,
+    type: MemoActionTypes.REMOVE_MEMO,
+    payload: id,
   };
 };
 
-export const fetchRemove = (id: number) => {
-  return (dispatch: AppDispatch) => {
-    apiRequest("DELETE", id)
-      .then(() => {
-        dispatch(removeMemo(id));
-      })
-      .catch((err) => {
-        dispatch(setError(err.response.statusText));
-      });
-  };
+type AddMemoActionType = {
+  type: MemoActionTypes.ADD_MEMO;
+  payload: MemosData;
 };
 
-const addMemo = (data: MemosReduxData) => {
+export const addMemo = (data: MemosData): AddMemoActionType => {
   return {
-    type: actionTypes.ADD_MEMO,
-    data: data,
+    type: MemoActionTypes.ADD_MEMO,
+    payload: data,
   };
 };
 
-export const fetchAdd = (data: MemosReduxData) => {
-  return (dispatch: AppDispatch) => {
-    dispatch(setLoading());
-    apiRequest("POST", undefined, data)
-      .then(() => {
-        dispatch(addMemo(data));
-      })
-      .then(() => {
-        dispatch(fetchMemos());
-      })
-      .catch((err) => {
-        dispatch(setError(err.response.statusText));
-      });
+type CompleteMemoActionType = {
+  type: MemoActionTypes.COMPLETE_MEMO;
+  payload: {
+    data: MemosData;
+    id: number;
   };
 };
 
-const completeMemo = (data: MemosReduxData, id: number) => {
+export const completeMemo = (
+  data: MemosData,
+  id: number
+): CompleteMemoActionType => {
   return {
-    type: actionTypes.COMPLETE_MEMO,
-    data: data,
-    id: id,
+    type: MemoActionTypes.COMPLETE_MEMO,
+    payload: { data, id },
   };
 };
 
-export const fetchComplete = (data: MemosReduxData, id: number) => {
-  return (dispatch: AppDispatch) => {
-    apiRequest("PUT", id, data)
-      .then(() => {
-        dispatch(completeMemo(data, id));
-      })
-      .catch((err) => {
-        dispatch(setError(err.response.statusText));
-      });
+type EditMemoActionType = {
+  type: MemoActionTypes.EDIT_MEMO;
+  payload: {
+    data: MemosData;
+    id: number;
   };
 };
 
-const editMemo = (data: MemosReduxData, id: number) => {
+export const editMemo = (data: MemosData, id: number): EditMemoActionType => {
   return {
-    type: actionTypes.EDIT_MEMO,
-    data: data,
-    id: id,
+    type: MemoActionTypes.EDIT_MEMO,
+    payload: { data, id },
   };
 };
 
-export const fetchEdit = (data: MemosReduxData, id: number) => {
-  return (dispatch: AppDispatch) => {
-    dispatch(setLoading());
-    apiRequest("PUT", id, data)
-      .then(() => {
-        dispatch(editMemo(data, id));
-      })
-      .catch((err) => {
-        dispatch(setError(err.response.statusText));
-      });
-  };
-};
-
-const clearCompleted = (data: MemosReduxData[]) => {
-  return {
-    type: actionTypes.CLEAR_COMPLETED,
-    data: data,
-  };
-};
-
-export const fetchClearCompleted = (data: MemosReduxData[], id: number[]) => {
-  return (dispatch: AppDispatch) => {
-    id.forEach((item: number) =>
-      apiRequest("DELETE", item)
-        .then(() => {
-          dispatch(clearCompleted(data));
-        })
-        .catch((err) => {
-          dispatch(setError(err.response.statusText));
-        })
-    );
-  };
-};
+export type MemoAction =
+  | SetLoadingActionType
+  | SetErrorActionType
+  | SetMemosActionType
+  | RemoveMemoActionType
+  | AddMemoActionType
+  | CompleteMemoActionType
+  | EditMemoActionType;

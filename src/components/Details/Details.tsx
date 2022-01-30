@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import * as Actions from "../../store/actions/actionsIndex";
+import { useDispatch, useSelector } from "react-redux";
 import * as Constants from "../../utils/constants";
+import { MemosData } from "../../types/types";
+import { apiRequest } from "../../api/apiRequest";
+import { memoActions } from "../../store";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DoneIcon from "@mui/icons-material/Done";
 import RestoreIcon from "@mui/icons-material/Restore";
 import EditIcon from "@mui/icons-material/Edit";
 import SendIcon from "@mui/icons-material/Send";
 import CancelIcon from "@mui/icons-material/Cancel";
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   Backdrop,
   Dialog,
@@ -21,7 +23,7 @@ import {
   StatusText,
   CloseButton,
   DialogActions,
-  CompletePendingButton,
+  CustomButton,
 } from "./Details.styles";
 
 interface Props {
@@ -31,21 +33,29 @@ interface Props {
   due_on: string;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  complete: (id: number, status: string) => void;
+  completeMemoHandler: (id: number, status: string) => Promise<void>;
+  removeMemoHandler: (id: number) => Promise<void>;
 }
 
-const Details: React.FC<Props> = ({
+const Details = ({
   id,
   title,
   status,
   due_on,
   open,
   setOpen,
-  complete,
-}) => {
+  completeMemoHandler,
+  removeMemoHandler,
+}: Props) => {
   const [input, setInput] = useState<string>("");
   const [showEdit, setShowEdit] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const { loading } = useSelector((state: RootStore) => state.memo);
+  const {
+    editMemo,
+    setLoading,
+    LoadingsTypes: { DELETE, EDIT, COMPLETE },
+  } = memoActions;
 
   //! export do utils to samo co w create
   const closeOnOverlay = (event: React.MouseEvent) => {
@@ -59,36 +69,38 @@ const Details: React.FC<Props> = ({
     setInput(title);
   };
 
-  const deleteHandler = (id: number) => {
-    dispatch(Actions.fetchRemove(id));
-    setOpen(false);
-  };
-
-  const completeHandler = (id: number, status: string) => {
-    complete(id, status);
-  };
-
-  const editHandler = (id: number) => {
+  const editMemoHandler = async (id: number, input: string) => {
+    if (loading) return;
+    dispatch(setLoading(EDIT));
     if (title === input) {
       return setShowEdit(false);
     }
-    const data = {
+    const data: MemosData = {
       id: id,
       title: input,
       status: status,
       due_on: new Date().toString(),
     };
-    dispatch(Actions.fetchEdit(data, id));
-    setShowEdit(false);
-    setOpen(false);
+    try {
+      const req = await apiRequest("PUT", id, data);
+      if (req.status === 200 && req.statusText === "OK") {
+        dispatch(editMemo(data, id));
+        dispatch(setLoading(null));
+        setShowEdit(false);
+      }
+    } catch (error) {
+      dispatch(setLoading(null));
+    }
   };
+
+  const spinner = <CircularProgress size={20} color="inherit" />;
 
   return (
     <Backdrop
       open={open}
       onClick={(event: React.MouseEvent) => closeOnOverlay(event)}
       onKeyPress={(event: React.KeyboardEvent) => {
-        event.key === "Enter" && editHandler(id);
+        event.key === "Enter" && editMemoHandler(id, input);
       }}
     >
       <Dialog open={open} onClose={() => setOpen(false)} PaperComponent={Paper}>
@@ -127,7 +139,7 @@ const Details: React.FC<Props> = ({
             <DialogContentText>
               <MainText>{title}</MainText>
               <StatusText>
-                status: <strong>{status}</strong>
+                status: <strong>{loading ? "loading..." : status}</strong>
               </StatusText>
               <StatusText>
                 created: {new Date(`${due_on}`).toLocaleDateString()}{" "}
@@ -139,35 +151,45 @@ const Details: React.FC<Props> = ({
         <DialogActions>
           {!showEdit && (
             <>
-              <Button
+              <CustomButton
                 variant="contained"
                 color="error"
-                onClick={() => deleteHandler(id)}
-                endIcon={<DeleteForeverIcon />}
+                onClick={() => removeMemoHandler(id)}
+                endIcon={loading !== DELETE && <DeleteForeverIcon />}
               >
-                delete
-              </Button>
-              <Button
+                {loading === DELETE ? spinner : "delete"}
+              </CustomButton>
+              <CustomButton
                 variant="contained"
                 color="primary"
                 onClick={openEditTextarea}
                 endIcon={<EditIcon />}
               >
                 edit
-              </Button>
-              <CompletePendingButton
-                status={status}
+              </CustomButton>
+              <CustomButton
+                color={status === "pending" ? "success" : "warning"}
                 variant="contained"
-                onClick={() => completeHandler(id, status)}
-                endIcon={status === "pending" ? <DoneIcon /> : <RestoreIcon />}
+                onClick={() => completeMemoHandler(id, status)}
+                endIcon={
+                  loading !== COMPLETE ? (
+                    status === "pending" ? (
+                      <DoneIcon />
+                    ) : (
+                      <RestoreIcon />
+                    )
+                  ) : null
+                }
               >
-                {status === "pending" ? "complete" : "pending"}
-              </CompletePendingButton>
+                {loading === COMPLETE && spinner}
+                {loading !== COMPLETE && status === "pending" && "complete"}
+                {loading !== COMPLETE && status === "completed" && "pending"}
+              </CustomButton>
             </>
           )}
           {showEdit && (
             <>
-              <Button
+              <CustomButton
                 variant="contained"
                 color="error"
                 onClick={() => {
@@ -176,16 +198,16 @@ const Details: React.FC<Props> = ({
                 endIcon={<CancelIcon />}
               >
                 cancel
-              </Button>
-              <Button
+              </CustomButton>
+              <CustomButton
                 variant="contained"
                 color="primary"
-                onClick={() => editHandler(id)}
-                endIcon={<SendIcon />}
+                onClick={() => editMemoHandler(id, input)}
+                endIcon={loading !== EDIT && <SendIcon />}
                 disabled={input.length === 0}
               >
-                save
-              </Button>
+                {loading === EDIT ? spinner : "save"}
+              </CustomButton>
             </>
           )}
         </DialogActions>

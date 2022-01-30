@@ -11,16 +11,13 @@ interface Props {
   createButtonDisabled: boolean;
 }
 
-const SearchBar: React.FC<Props> = ({
+const SearchBar = ({
   searchInput,
   setSearchInput,
   createModalOpen,
   setCreateModalOpen,
   createButtonDisabled,
-}) => {
-
- 
-
+}: Props) => {
   useEffect(() => {
     document.addEventListener("keydown", (event: KeyboardEvent) => {
       event.key === "Escape" && setCreateModalOpen(false);
@@ -29,7 +26,6 @@ const SearchBar: React.FC<Props> = ({
       document.removeEventListener("keydown", (event: KeyboardEvent) => event);
     };
   }, [createModalOpen, setCreateModalOpen]);
-
 
   return (
     <Form>

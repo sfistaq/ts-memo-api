@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, RootStateOrAny, useSelector } from "react-redux";
-import * as Actions from "./store/actions/actionsIndex";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import useFetchMemos from "./hooks/useFetchMemos";
 import { sortArrayOfObj } from "./utils/sort";
 import { filterMemo } from "./utils/filter";
 import { MemosData } from "./types/types";
@@ -19,7 +19,7 @@ import BottomControls from "./components/BottomControls/BottomControls";
 import Pagination from "./components/Pagination/Pagination";
 import { AppWrapper, TableWrapper, Table, TableRow } from "./styles/App.styles";
 
-const App: React.FC = () => {
+const App = () => {
   //prettier-ignore
   const [sortByProperty, setSortByProperty] = useState<keyof MemosData>("due_on");
   const [sortDirection, setSortDirection] = useState<boolean>(false);
@@ -28,26 +28,19 @@ const App: React.FC = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [filterByStatus, setFilterByStatus] = useState<FilterType>(1);
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
-
-  const dispatch = useDispatch();
-  const memos = useSelector((state: RootStateOrAny) => state.memos);
-
+  const { fetchMemos } = useFetchMemos();
+  const { memos } = useSelector((state: RootStore) => state.memo);
   const sortedMemo: MemosData[] =
     memos && sortArrayOfObj(memos, sortByProperty, sortDirection);
-
   const itemCounter: number = filterMemo(
     sortedMemo,
     filterByStatus,
     searchInput
   ).length;
 
-  const onInitMemos = useCallback(
-    () => dispatch(Actions.fetchMemos()),
-    [dispatch]
-  );
   useEffect(() => {
-    onInitMemos();
-  }, [onInitMemos]);
+    fetchMemos();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
