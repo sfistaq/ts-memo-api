@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as Constants from "../../utils/constants";
+
 import { MemosData } from "../../types/types";
 import { apiRequest } from "../../api/apiRequest";
 import { memoActions } from "../../store";
@@ -9,15 +9,14 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DoneIcon from "@mui/icons-material/Done";
 import RestoreIcon from "@mui/icons-material/Restore";
 import EditIcon from "@mui/icons-material/Edit";
-import SendIcon from "@mui/icons-material/Send";
-import CancelIcon from "@mui/icons-material/Cancel";
+
 import CircularProgress from "@mui/material/CircularProgress";
+import EditForm from "./EditForm";
 import {
   Backdrop,
   Dialog,
   DialogTitle,
   DialogContent,
-  TextField,
   DialogContentText,
   MainText,
   StatusText,
@@ -108,109 +107,69 @@ const Details = ({
           {showEdit ? "Edit Memo" : "Memo Details"}
           <CloseButton onClick={() => setOpen(false)} />
         </DialogTitle>
-        <DialogContent dividers>
-          {showEdit && (
-            <TextField
-              variant="outlined"
-              multiline
-              rows={5}
-              ref={(ref) => ref && ref.focus()}
-              autoFocus={true}
-              onFocus={(e) =>
-                e.currentTarget.setSelectionRange(
-                  e.currentTarget.value.length,
-                  e.currentTarget.value.length
-                )
-              }
-              onChange={(
-                event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-              ) => setInput(event.target.value)}
-              value={input}
-              inputProps={{ minLength: 1, maxLength: Constants.CHARLIMIT }}
-              label={
-                input.length > 0
-                  ? `${input.length} /  ${Constants.CHARLIMIT}`
-                  : ""
-              }
-              error={input.length === Constants.CHARLIMIT}
-            />
-          )}
-          {!showEdit && (
-            <DialogContentText>
-              <MainText>{title}</MainText>
-              <StatusText>
-                status: <strong>{loading ? "loading..." : status}</strong>
-              </StatusText>
-              <StatusText>
-                created: {new Date(`${due_on}`).toLocaleDateString()}{" "}
-                {new Date(`${due_on}`).toLocaleTimeString()}
-              </StatusText>
-            </DialogContentText>
-          )}
-        </DialogContent>
-        <DialogActions>
-          {!showEdit && (
-            <>
-              <CustomButton
-                variant="contained"
-                color="error"
-                onClick={() => removeMemoHandler(id)}
-                endIcon={loading !== DELETE && <DeleteForeverIcon />}
-              >
-                {loading === DELETE ? spinner : "delete"}
-              </CustomButton>
-              <CustomButton
-                variant="contained"
-                color="primary"
-                onClick={openEditTextarea}
-                endIcon={<EditIcon />}
-              >
-                edit
-              </CustomButton>
-              <CustomButton
-                color={status === "pending" ? "success" : "warning"}
-                variant="contained"
-                onClick={() => completeMemoHandler(id, status)}
-                endIcon={
-                  loading !== COMPLETE ? (
-                    status === "pending" ? (
-                      <DoneIcon />
-                    ) : (
-                      <RestoreIcon />
-                    )
-                  ) : null
-                }
-              >
-                {loading === COMPLETE && spinner}
-                {loading !== COMPLETE && status === "pending" && "complete"}
-                {loading !== COMPLETE && status === "completed" && "pending"}
-              </CustomButton>
-            </>
-          )}
-          {showEdit && (
-            <>
-              <CustomButton
-                variant="contained"
-                color="error"
-                onClick={() => {
-                  setShowEdit(false);
-                }}
-                endIcon={<CancelIcon />}
-              >
-                cancel
-              </CustomButton>
-              <CustomButton
-                variant="contained"
-                color="primary"
-                onClick={() => editMemoHandler(id, input)}
-                endIcon={loading !== EDIT && <SendIcon />}
-                disabled={input.length === 0}
-              >
-                {loading === EDIT ? spinner : "save"}
-              </CustomButton>
-            </>
-          )}
-        </DialogActions>
+        {!showEdit && (
+          <>
+            <DialogContent dividers>
+              <DialogContentText>
+                <MainText>{title}</MainText>
+                <StatusText>
+                  status: <strong>{loading ? "loading..." : status}</strong>
+                </StatusText>
+                <StatusText>
+                  created: {new Date(`${due_on}`).toLocaleDateString()}{" "}
+                  {new Date(`${due_on}`).toLocaleTimeString()}
+                </StatusText>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <>
+                <CustomButton
+                  variant="contained"
+                  color="error"
+                  onClick={() => removeMemoHandler(id)}
+                  endIcon={loading !== DELETE && <DeleteForeverIcon />}
+                >
+                  {loading === DELETE ? spinner : "delete"}
+                </CustomButton>
+                <CustomButton
+                  variant="contained"
+                  color="primary"
+                  onClick={openEditTextarea}
+                  endIcon={<EditIcon />}
+                >
+                  edit
+                </CustomButton>
+                <CustomButton
+                  color={status === "pending" ? "success" : "warning"}
+                  variant="contained"
+                  onClick={() => completeMemoHandler(id, status)}
+                  endIcon={
+                    loading !== COMPLETE ? (
+                      status === "pending" ? (
+                        <DoneIcon />
+                      ) : (
+                        <RestoreIcon />
+                      )
+                    ) : null
+                  }
+                >
+                  {loading === COMPLETE && spinner}
+                  {loading !== COMPLETE && status === "pending" && "complete"}
+                  {loading !== COMPLETE && status === "completed" && "pending"}
+                </CustomButton>
+              </>
+            </DialogActions>
+          </>
+        )}
+        {showEdit && (
+          <EditForm
+            showEdit={showEdit}
+            setShowEdit={setShowEdit}
+            id={id}
+            title={title}
+            status={status}
+          />
+        )}
       </Dialog>
     </Backdrop>
   );

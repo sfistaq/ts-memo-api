@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useForm, useWatch } from "react-hook-form";
 import { MemosData } from "../../types/types";
 import * as Constants from "../../utils/constants";
 import { memoActions } from "../../store";
@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import Dialog from "@mui/material/Dialog";
 import CircularProgress from "@mui/material/CircularProgress";
 import SendIcon from "@mui/icons-material/Send";
+import Box from "@mui/material/Box";
 import {
   Backdrop,
   DialogContent,
@@ -22,15 +23,20 @@ import {
 interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setSearchInput: React.Dispatch<React.SetStateAction<string>>;
 }
 
+const CREATE_INPUT = "CREATE_INPUT";
+
 const Create = ({ open, setOpen }: Props) => {
-  const [input, setInput] = useState<string>("");
   const dispatch = useDispatch();
   const { loading } = useSelector((state: RootStore) => state.memo);
   const { fetchMemos } = useFetchMemos();
-
+  const { handleSubmit, register, control } = useForm({
+    defaultValues: {
+      [CREATE_INPUT]: "",
+    },
+  });
+  const input = useWatch({ control, name: CREATE_INPUT });
   const {
     LoadingsTypes: { CREATE },
     setLoading,
@@ -42,7 +48,7 @@ const Create = ({ open, setOpen }: Props) => {
     }
   };
 
-  const addMemoHandler = async (input: string) => {
+  const addMemoHandler = async () => {
     if (!input) return;
 
     try {
@@ -56,67 +62,68 @@ const Create = ({ open, setOpen }: Props) => {
       const req = await apiRequest("POST", undefined, memoData);
 
       if (req.status === 201 && req.statusText === "Created") {
-        fetchMemos(); // ogarnia setMemos
+        fetchMemos();
         setOpen(false);
         dispatch(setLoading(null));
       }
     } catch (error) {
       dispatch(setLoading(null));
+      console.error(error);
     }
   };
+
+  const inputLabel =
+    input.length > 0
+      ? `${input.length} /  ${Constants.CHARLIMIT}`
+      : `0 / ${Constants.CHARLIMIT}`;
 
   return (
     <Backdrop
       open={open}
       onClick={(event: React.MouseEvent) => closeOnOverlay(event)}
-      onKeyPress={(event: React.KeyboardEvent) => {
-        if (input.replace(/\s+/g, "").length >= 1) {
-          event.key === "Enter" && addMemoHandler(input);
-        }
-      }}
     >
       <Dialog open={open} onClose={() => setOpen(false)} PaperComponent={Paper}>
         <DialogTitle>
           Create Memo
           <CloseButton onClick={() => setOpen(false)} />
         </DialogTitle>
-        <DialogContent dividers>
-          <TextField
-            variant="outlined"
-            multiline
-            rows={5}
-            autoFocus={true}
-            inputProps={{ minLength: 1, maxLength: Constants.CHARLIMIT }}
-            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-              setInput(event.target.value)
-            }
-            value={input}
-            placeholder="Add your memo note..."
-            label={
-              input.length > 0
-                ? `${input.length} /  ${Constants.CHARLIMIT}`
-                : ""
-            }
-            error={input.length === Constants.CHARLIMIT}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              addMemoHandler(input);
-            }}
-            endIcon={
-              loading === CREATE ? <CircularProgress size={20} /> : <SendIcon />
-            }
-            disabled={
-              input.replace(/\s+/g, "").length === 0 || loading !== null
-            }
-          >
-            Submit
-          </Button>
-        </DialogActions>
+
+        <Box component="form" onSubmit={handleSubmit(addMemoHandler)}>
+          <DialogContent dividers>
+            <TextField
+              variant="outlined"
+              type="text"
+              multiline
+              rows={5}
+              autoFocus={true}
+              inputProps={{ minLength: 1, maxLength: Constants.CHARLIMIT }}
+              value={input}
+              placeholder="Add your memo note..."
+              label={inputLabel}
+              error={input.length === Constants.CHARLIMIT}
+              {...register(CREATE_INPUT)}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              endIcon={
+                loading === CREATE ? (
+                  <CircularProgress size={20} />
+                ) : (
+                  <SendIcon />
+                )
+              }
+              disabled={
+                input.replace(/\s+/g, "").length === 0 || loading !== null
+              }
+            >
+              Submit
+            </Button>
+          </DialogActions>
+        </Box>
       </Dialog>
     </Backdrop>
   );
