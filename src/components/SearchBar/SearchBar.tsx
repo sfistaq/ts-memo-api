@@ -2,21 +2,21 @@ import React, { useEffect, memo } from "react";
 import CreateIcon from "@mui/icons-material/Create";
 import ErrorIcon from "@mui/icons-material/Error";
 import { Form, TextField, Button } from "./SearchBar.styles";
-
+import { UseFormRegisterReturn } from "react-hook-form";
 interface Props {
   searchInput: string;
-  setSearchInput: React.Dispatch<React.SetStateAction<string>>;
   createModalOpen: boolean;
   setCreateModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   createButtonDisabled: boolean;
+  register: UseFormRegisterReturn;
 }
 
 const SearchBar = ({
   searchInput,
-  setSearchInput,
   createModalOpen,
   setCreateModalOpen,
   createButtonDisabled,
+  register,
 }: Props) => {
   useEffect(() => {
     document.addEventListener("keydown", (event: KeyboardEvent) => {
@@ -34,10 +34,8 @@ const SearchBar = ({
         label="search"
         variant="outlined"
         value={searchInput}
-        onChange={(
-          event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-        ) => setSearchInput(event.target.value)}
         inputProps={{ minLength: 1, maxLength: 50 }}
+        {...register}
       />
       <Button
         size={createButtonDisabled ? "medium" : "large"}

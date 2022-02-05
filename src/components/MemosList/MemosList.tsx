@@ -33,8 +33,6 @@ const MemosList = ({
     LoadingsTypes: { FETCH },
   } = memoActions;
 
-  console.log(loading === FETCH);
-
   return (
     <TableBody>
       {sortedMemo.length > 0 &&

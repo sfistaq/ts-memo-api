@@ -83,8 +83,6 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
     }
   };
 
-  //  TODO ZROBIĆ HOOK useViewport
-
   const handleResize = () => {
     setWindowSize(window.innerWidth);
   };
@@ -112,8 +110,6 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
   }, [sliceText, windowSize]);
 
   const spinner = <CircularProgress size={20} color="inherit" />;
-
-  console.log(deleteMemoID);
 
   return (
     <MemoItemWrapper status={status}>

@@ -17,21 +17,30 @@ import Head from "./components/Head/Head";
 import MemosList from "./components/MemosList/MemosList";
 import BottomControls from "./components/BottomControls/BottomControls";
 import Pagination from "./components/Pagination/Pagination";
+import { useForm, useWatch } from "react-hook-form";
 import { AppWrapper, TableWrapper, Table, TableRow } from "./styles/App.styles";
 
 const App = () => {
-  //prettier-ignore
-  const [sortByProperty, setSortByProperty] = useState<keyof MemosData>("due_on");
+  const [sortByProperty, setSortByProperty] =
+    useState<keyof MemosData>("due_on");
   const [sortDirection, setSortDirection] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
-  const [searchInput, setSearchInput] = useState<string>("");
   const [filterByStatus, setFilterByStatus] = useState<FilterType>(1);
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
   const { fetchMemos } = useFetchMemos();
   const { memos } = useSelector((state: RootStore) => state.memo);
   const sortedMemo: MemosData[] =
     memos && sortArrayOfObj(memos, sortByProperty, sortDirection);
+
+  const SEARCH_INPUT = "SEARCH_INPUT";
+  const { register, control } = useForm({
+    defaultValues: {
+      [SEARCH_INPUT]: "",
+    },
+  });
+  const searchInput = useWatch({ control, name: SEARCH_INPUT });
+
   const itemCounter: number = filterMemo(
     sortedMemo,
     filterByStatus,
@@ -40,6 +49,7 @@ const App = () => {
 
   useEffect(() => {
     fetchMemos();
+    // console.log("FETCH");
   }, []);
 
   return (
@@ -51,17 +61,13 @@ const App = () => {
           <TableContainer>
             <SearchBar
               searchInput={searchInput}
-              setSearchInput={setSearchInput}
               createModalOpen={createModalOpen}
               setCreateModalOpen={setCreateModalOpen}
               createButtonDisabled={memos.length === 20}
+              register={register(SEARCH_INPUT)}
             />
             {createModalOpen && (
-              <Create
-                open={createModalOpen}
-                setOpen={setCreateModalOpen}
-                setSearchInput={setSearchInput}
-              />
+              <Create open={createModalOpen} setOpen={setCreateModalOpen} />
             )}
             <Table>
               <Head
