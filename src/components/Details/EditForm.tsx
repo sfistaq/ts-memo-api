@@ -1,12 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
 import * as Constants from "../../utils/constants";
-import { MemosData } from "../../types/types";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm, useWatch } from "react-hook-form";
+import { MemosData, StatusType } from "../../types/types";
 import { apiRequest } from "../../api/apiRequest";
 import { memoActions } from "../../store";
+import CircularProgress from "@mui/material/CircularProgress";
 import SendIcon from "@mui/icons-material/Send";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useForm, useWatch } from "react-hook-form";
-import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import {
   DialogContent,
@@ -14,20 +14,19 @@ import {
   DialogActions,
   CustomButton,
 } from "./Details.styles";
-
-const EDIT_INPUT = "EDIT_INPUT";
+import { INPUTS } from "../../utils/constants";
 
 interface Props {
   id: number;
-  status: "pending" | "completed";
+  status: StatusType;
   title: string;
-  showEdit: boolean;
   setShowEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const EditForm = ({ showEdit, setShowEdit, title, id, status }: Props) => {
+const EditForm = ({ setShowEdit, title, id, status }: Props) => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state: RootStore) => state.memo);
+  const { EDIT_INPUT } = INPUTS;
   const {
     editMemo,
     setLoading,
@@ -67,6 +66,7 @@ const EditForm = ({ showEdit, setShowEdit, title, id, status }: Props) => {
   };
 
   const spinner = <CircularProgress size={20} color="inherit" />;
+
   return (
     <Box component="form" onSubmit={handleSubmit(editMemoHandler)}>
       <DialogContent>
@@ -98,7 +98,7 @@ const EditForm = ({ showEdit, setShowEdit, title, id, status }: Props) => {
           color="error"
           type="button"
           onClick={() => {
-            setShowEdit(false);
+            !loading && setShowEdit(false);
           }}
           endIcon={<CancelIcon />}
         >
@@ -108,9 +108,8 @@ const EditForm = ({ showEdit, setShowEdit, title, id, status }: Props) => {
           variant="contained"
           color="primary"
           type="submit"
-          // onClick={() => editMemoHandler(id, input)}
           endIcon={loading !== EDIT && <SendIcon />}
-          // disabled={input.length === 0}
+          disabled={editInput.length === 0}
         >
           {loading === EDIT ? spinner : "save"}
         </CustomButton>

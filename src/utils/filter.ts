@@ -18,13 +18,15 @@ export const filterMemo = (
       return filterHelper(data, searchInput);
     }
     case FilterType.Active: {
-      //prettier-ignore
-      const pendingData = data.filter((item: MemosData) => item.status === "pending");
+      const pendingData = data.filter(
+        (item: MemosData) => item.status === "pending"
+      );
       return filterHelper(pendingData, searchInput);
     }
     case FilterType.Completed: {
-      //prettier-ignore
-      const completedData =  data.filter((item: MemosData) => item.status === "completed")
+      const completedData = data.filter(
+        (item: MemosData) => item.status === "completed"
+      );
       return filterHelper(completedData, searchInput);
     }
     default:

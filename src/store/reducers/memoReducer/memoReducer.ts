@@ -1,4 +1,5 @@
 import { MemosData } from "../../../types/types";
+import { STATUS } from "../../../types/enums";
 
 import {
   MemoActionTypes,
@@ -57,13 +58,13 @@ const memoReducer = (
       return {
         ...state,
         memos: state.memos.map((item: MemosData) => {
-          if (item.id === action.payload.id && item.status === "pending") {
-            item.status = "completed";
+          if (item.id === action.payload.id && item.status === STATUS.PENDING) {
+            item.status = STATUS.COMPLETED;
           } else if (
             item.id === action.payload.id &&
-            item.status === "completed"
+            item.status === STATUS.COMPLETED
           ) {
-            item.status = "pending";
+            item.status = STATUS.PENDING;
           }
           return item;
         }),

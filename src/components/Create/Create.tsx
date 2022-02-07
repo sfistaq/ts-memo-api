@@ -1,9 +1,13 @@
+import * as Constants from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, useWatch } from "react-hook-form";
-import { MemosData } from "../../types/types";
-import * as Constants from "../../utils/constants";
+import { AddMemoData } from "../../types/types";
 import { memoActions } from "../../store";
 import { apiRequest } from "../../api/apiRequest";
+import { INPUTS } from "../../utils/constants";
+import { useEffect } from "react";
+import { cancelToken } from "../../api/apiRequest";
+import { STATUS } from "../../types/enums";
 import useFetchMemos from "../../hooks/useFetchMemos";
 import Paper from "@mui/material/Paper";
 import Dialog from "@mui/material/Dialog";
@@ -25,12 +29,11 @@ interface Props {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CREATE_INPUT = "CREATE_INPUT";
-
 const Create = ({ open, setOpen }: Props) => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state: RootStore) => state.memo);
   const { fetchMemos } = useFetchMemos();
+  const { CREATE_INPUT } = INPUTS;
   const { handleSubmit, register, control } = useForm({
     defaultValues: {
       [CREATE_INPUT]: "",
@@ -43,7 +46,10 @@ const Create = ({ open, setOpen }: Props) => {
   } = memoActions;
 
   const closeOnOverlay = (event: React.MouseEvent) => {
-    if ((event.target as Element).classList.contains("MuiBackdrop-root")) {
+    if (
+      (event.target as Element).classList.contains("MuiBackdrop-root") &&
+      loading !== CREATE
+    ) {
       setOpen(false);
     }
   };
@@ -53,18 +59,17 @@ const Create = ({ open, setOpen }: Props) => {
 
     try {
       dispatch(setLoading(CREATE));
-      const memoData: MemosData = {
-        id: 1, //TODO ogarnij inny typ dla tej akcji zeby nie było ID
-        status: "pending",
+      const memoData: AddMemoData = {
+        status: STATUS.PENDING,
         title: `${input}`,
         due_on: new Date().toString(),
       };
       const req = await apiRequest("POST", undefined, memoData);
 
       if (req.status === 201 && req.statusText === "Created") {
-        fetchMemos();
-        setOpen(false);
         dispatch(setLoading(null));
+        setOpen(false);
+        fetchMemos();
       }
     } catch (error) {
       dispatch(setLoading(null));
@@ -72,20 +77,31 @@ const Create = ({ open, setOpen }: Props) => {
     }
   };
 
-  const inputLabel =
-    input.length > 0
-      ? `${input.length} /  ${Constants.CHARLIMIT}`
-      : `0 / ${Constants.CHARLIMIT}`;
+  useEffect(() => {
+    return () => {
+      cancelToken && cancelToken.cancel();
+    };
+  }, []);
+
+  const onCloseHandler = () => {
+    loading !== CREATE && setOpen(false);
+  };
 
   return (
     <Backdrop
       open={open}
       onClick={(event: React.MouseEvent) => closeOnOverlay(event)}
     >
-      <Dialog open={open} onClose={() => setOpen(false)} PaperComponent={Paper}>
+      <Dialog
+        open={open}
+        onClose={() => {
+          loading !== CREATE && setOpen(false);
+        }}
+        PaperComponent={Paper}
+      >
         <DialogTitle>
           Create Memo
-          <CloseButton onClick={() => setOpen(false)} />
+          <CloseButton onClick={() => onCloseHandler()} />
         </DialogTitle>
 
         <Box component="form" onSubmit={handleSubmit(addMemoHandler)}>
@@ -99,7 +115,11 @@ const Create = ({ open, setOpen }: Props) => {
               inputProps={{ minLength: 1, maxLength: Constants.CHARLIMIT }}
               value={input}
               placeholder="Add your memo note..."
-              label={inputLabel}
+              label={
+                input.length > 0
+                  ? `${input.length} /  ${Constants.CHARLIMIT}`
+                  : `0 / ${Constants.CHARLIMIT}`
+              }
               error={input.length === Constants.CHARLIMIT}
               {...register(CREATE_INPUT)}
             />

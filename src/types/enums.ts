@@ -3,3 +3,8 @@ export enum FilterType {
   Active = 2,
   Completed = 3,
 }
+
+export enum STATUS {
+  PENDING = "pending",
+  COMPLETED = "completed",
+}

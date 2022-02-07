@@ -1,12 +1,16 @@
-import axios, { Method } from "axios";
-import { MemosData } from "../types/types";
+import axios, { CancelTokenSource, Method } from "axios";
+import { MemosData, AddMemoData } from "../types/types";
 import * as Constants from "../utils/constants";
+
+export let cancelToken: CancelTokenSource;
 
 export async function apiRequest(
   method: Method,
   id: string | number = `?user_id=${Constants.API_ID}`,
-  data?: MemosData
+  data?: MemosData | AddMemoData
 ) {
+  cancelToken = axios.CancelToken.source();
+
   const request = await axios({
     method: method,
     url: `${Constants.URL}/${id}`,
@@ -15,6 +19,7 @@ export async function apiRequest(
       authorization: `Bearer ${Constants.API_TOKEN}`,
       "Content-Type": "application/json",
     },
+    cancelToken: cancelToken.token,
   });
 
   return request;

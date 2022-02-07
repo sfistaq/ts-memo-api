@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import useFetchMemos from "./hooks/useFetchMemos";
+import { useForm, useWatch } from "react-hook-form";
+import { INPUTS } from "./utils/constants";
 import { sortArrayOfObj } from "./utils/sort";
 import { filterMemo } from "./utils/filter";
 import { MemosData } from "./types/types";
 import { FilterType } from "./types/enums";
 import { theme } from "./styles/theme";
 import { ThemeProvider } from "@mui/material";
+import useFetchMemos from "./hooks/useFetchMemos";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
 import TableFooter from "@mui/material/TableFooter";
@@ -17,7 +19,6 @@ import Head from "./components/Head/Head";
 import MemosList from "./components/MemosList/MemosList";
 import BottomControls from "./components/BottomControls/BottomControls";
 import Pagination from "./components/Pagination/Pagination";
-import { useForm, useWatch } from "react-hook-form";
 import { AppWrapper, TableWrapper, Table, TableRow } from "./styles/App.styles";
 
 const App = () => {
@@ -30,16 +31,17 @@ const App = () => {
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
   const { fetchMemos } = useFetchMemos();
   const { memos } = useSelector((state: RootStore) => state.memo);
-  const sortedMemo: MemosData[] =
-    memos && sortArrayOfObj(memos, sortByProperty, sortDirection);
-
-  const SEARCH_INPUT = "SEARCH_INPUT";
+  const { SEARCH_INPUT } = INPUTS;
   const { register, control } = useForm({
     defaultValues: {
       [SEARCH_INPUT]: "",
     },
   });
+
   const searchInput = useWatch({ control, name: SEARCH_INPUT });
+
+  const sortedMemo: MemosData[] =
+    memos && sortArrayOfObj(memos, sortByProperty, sortDirection);
 
   const itemCounter: number = filterMemo(
     sortedMemo,
@@ -49,7 +51,7 @@ const App = () => {
 
   useEffect(() => {
     fetchMemos();
-    // console.log("FETCH");
+    console.log("FETCH FROM HOME");
   }, []);
 
   return (

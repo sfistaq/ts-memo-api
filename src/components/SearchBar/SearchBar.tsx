@@ -1,8 +1,9 @@
 import React, { useEffect, memo } from "react";
-import CreateIcon from "@mui/icons-material/Create";
-import ErrorIcon from "@mui/icons-material/Error";
 import { Form, TextField, Button } from "./SearchBar.styles";
 import { UseFormRegisterReturn } from "react-hook-form";
+import CreateIcon from "@mui/icons-material/Create";
+import ErrorIcon from "@mui/icons-material/Error";
+
 interface Props {
   searchInput: string;
   createModalOpen: boolean;

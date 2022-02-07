@@ -1,13 +1,13 @@
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FilterType } from "../../types/enums";
-import { MemosData, MemoByStatus } from "../../types/types";
-import { bottomButtons } from "./data";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { memoActions } from "../../store";
-import useFetchMemos from "../../hooks/useFetchMemos";
 import { apiRequest } from "../../api/apiRequest";
+import { FilterType, STATUS } from "../../types/enums";
+import { bottomButtons } from "./data";
+import { MemosData, MemoByStatus } from "../../types/types";
 import { Container, Wrapper, Button } from "./BottomControls.styles";
+import useFetchMemos from "../../hooks/useFetchMemos";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CircularProgress from "@mui/material/CircularProgress";
 
 interface Props {
@@ -30,16 +30,18 @@ const BottomControls = ({
   } = memoActions;
 
   const clearCompletedHandler = async (data: MemosData[]) => {
+    if (loading) return;
+
     dispatch(setLoading(CLEAR_COMPLETED));
     const clearIDs: number[] = data
-      .filter(({ status }: MemosData) => status === "completed")
+      .filter(({ status }: MemosData) => status === STATUS.COMPLETED)
       .map(({ id }: MemosData) => id);
 
     try {
-      clearIDs.forEach(async (id: number) => {
+      clearIDs.forEach(async (id: number, index: number) => {
         const req = await apiRequest("DELETE", id);
 
-        if (req.status === 204) {
+        if (req.status === 204 && clearIDs.length === index + 1) {
           fetchMemos();
           dispatch(setLoading(null));
           setFilterByStatus(FilterType.All);
@@ -70,8 +72,8 @@ const BottomControls = ({
             size="small"
             endIcon={icon}
             disabled={
-              (name === "Completed" && disabled("completed")) ||
-              (name === "Active" && disabled("pending"))
+              (name === "Completed" && disabled(STATUS.COMPLETED)) ||
+              (name === "Active" && disabled(STATUS.PENDING))
             }
           >
             {name}
@@ -85,7 +87,7 @@ const BottomControls = ({
           variant="contained"
           color="error"
           endIcon={loading !== CLEAR_COMPLETED && <DeleteForeverIcon />}
-          disabled={disabled("completed")}
+          disabled={disabled(STATUS.COMPLETED)}
         >
           {loading === CLEAR_COMPLETED ? spinner : "Delete Completed"}
         </Button>
