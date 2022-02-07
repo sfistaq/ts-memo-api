@@ -1,10 +1,7 @@
-import { FilterType } from "./enums";
+import { FilterType, STATUS } from "./enums";
 import { Theme } from "@mui/material";
 
-const PENDING = "pending";
-const COMPLETED = "completed";
-
-type StatusType = typeof PENDING | typeof COMPLETED;
+export type StatusType = typeof STATUS.PENDING | typeof STATUS.COMPLETED;
 
 export interface MemosData {
   id: number;

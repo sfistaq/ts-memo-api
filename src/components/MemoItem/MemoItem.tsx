@@ -1,9 +1,10 @@
 import { useState, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MemosData } from "../../types/types";
-import useFetchMemos from "../../hooks/useFetchMemos";
 import { apiRequest } from "../../api/apiRequest";
 import { memoActions } from "../../store";
+import { STATUS } from "../../types/enums";
+import useFetchMemos from "../../hooks/useFetchMemos";
 import Details from "../Details/Details";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -47,7 +48,7 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
 
     const data: MemosData = {
       id: id,
-      status: status === "pending" ? "completed" : "pending",
+      status: status === STATUS.PENDING ? STATUS.COMPLETED : STATUS.PENDING,
       title: title,
       due_on: new Date().toString(),
     };
@@ -118,8 +119,10 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
           size="small"
           onClick={() => completeMemoHandler(id, status)}
         >
-          {status === "completed" && id !== completeMemoID && <CheckBoxIcon />}
-          {status === "pending" && id !== completeMemoID && (
+          {status === STATUS.COMPLETED && id !== completeMemoID && (
+            <CheckBoxIcon />
+          )}
+          {status === STATUS.PENDING && id !== completeMemoID && (
             <CheckBoxOutlineBlankIcon />
           )}
           {loading === COMPLETE && id === completeMemoID && spinner}
