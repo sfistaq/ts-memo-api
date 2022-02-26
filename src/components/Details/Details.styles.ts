@@ -1,5 +1,5 @@
 import styled from "@mui/styled-engine-sc";
-import { MuiTheme, Status } from "../../types/types";
+import { MuiTheme } from "../../types/types";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Backdrop as MuiBackdrop,
