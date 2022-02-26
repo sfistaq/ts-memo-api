@@ -35,7 +35,7 @@ const memoReducer = (
         error: action.payload,
         loading: null,
       };
-    case MemoActionTypes.INIT_MEMOS:
+    case MemoActionTypes.SET_MEMOS:
       return {
         ...state,
         memos: [...action.payload],

@@ -31,6 +31,7 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
   const dispatch = useDispatch();
   const [completeMemoID, setCompleteMemoID] = useState<number | null>(null);
   const [deleteMemoID, setDeleteMemoId] = useState<number | null>(null);
+  const [isPending, setIsPending] = useState<boolean>(false);
 
   const { loading } = useSelector((state: RootStore) => state.memo);
 
@@ -42,7 +43,7 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
   } = memoActions;
 
   const completeMemoHandler = async (id: number, status: string) => {
-    if (loading) return;
+    if (isPending) return;
     setCompleteMemoID(id);
     dispatch(setLoading(COMPLETE));
 
@@ -66,7 +67,7 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
   };
 
   const removeMemoHandler = async (id: number) => {
-    if (loading) return;
+    if (isPending) return;
     setDeleteMemoId(id);
     dispatch(setLoading(DELETE));
 
@@ -74,10 +75,10 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
       const req = await apiRequest("DELETE", id);
       if (req.status === 204) {
         dispatch(removeMemo(id));
-        fetchMemos();
         dispatch(setLoading(null));
         setDeleteMemoId(null);
         setOpen(false);
+        await fetchMemos();
       }
     } catch (error) {
       dispatch(setLoading(null));
@@ -87,6 +88,13 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
   const handleResize = () => {
     setWindowSize(window.innerWidth);
   };
+
+  useEffect(() => {
+    loading && setIsPending(true);
+    return () => {
+      setIsPending(false);
+    };
+  }, [loading]);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);

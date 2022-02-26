@@ -20,8 +20,8 @@ const useFetchMemos = () => {
       const req = await apiRequest("GET");
 
       if (req.status === 200 && req.statusText === "OK") {
-        dispatch(setLoading(null));
         dispatch(setMemos(req!.data.data));
+        dispatch(setLoading(null));
       }
     } catch (error) {
       dispatch(setLoading(null));

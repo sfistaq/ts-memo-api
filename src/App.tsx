@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useForm, useWatch } from "react-hook-form";
 import { INPUTS } from "./utils/constants";
+import { cancelToken } from "./api/apiRequest";
 import { sortArrayOfObj } from "./utils/sort";
 import { filterMemo } from "./utils/filter";
 import { MemosData } from "./types/types";
@@ -52,6 +53,11 @@ const App = () => {
   useEffect(() => {
     fetchMemos();
     console.log("FETCH FROM HOME");
+
+    return () => {
+      console.log("HOME CLEANING");
+      cancelToken.cancel();
+    };
   }, []);
 
   return (
