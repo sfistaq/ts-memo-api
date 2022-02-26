@@ -41,7 +41,7 @@ const BottomControls = ({
         const req = await apiRequest("DELETE", id);
 
         if (req.status === 204 && clearIDs.length === index + 1) {
-          fetchMemos();
+          await fetchMemos();
           dispatch(setLoading(null));
           setFilterByStatus(FilterType.All);
         }

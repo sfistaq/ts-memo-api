@@ -89,6 +89,7 @@ type CompleteMemoActionType = {
   };
 };
 
+// TODO przerobić na patch
 export const completeMemo = (
   data: MemosData,
   id: number
