@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useForm, useWatch } from "react-hook-form";
-import { INPUTS } from "./utils/constants";
-import { cancelToken } from "./api/apiRequest";
-import { sortArrayOfObj } from "./utils/sort";
-import { filterMemo } from "./utils/filter";
-import { MemosData } from "./types/types";
-import { FilterType } from "./types/enums";
+import { INPUTS, sortArrayOfObjHelper, filterMemoHelper } from "./helpers";
+import { cancelToken } from "./api";
+import { FilterType, MemosData } from "./types";
 import { theme } from "./styles/theme";
 import { ThemeProvider } from "@mui/material";
-import useFetchMemos from "./hooks/useFetchMemos";
-import TableContainer from "@mui/material/TableContainer";
-import TableBody from "@mui/material/TableBody";
-import TableFooter from "@mui/material/TableFooter";
-import CssBaseline from "@mui/material/CssBaseline";
-import SearchBar from "./components/SearchBar/SearchBar";
-import Create from "./components/Create/Create";
-import Head from "./components/Head/Head";
-import MemosList from "./components/MemosList/MemosList";
-import BottomControls from "./components/BottomControls/BottomControls";
-import Pagination from "./components/Pagination/Pagination";
-import { AppWrapper, TableWrapper, Table, TableRow } from "./styles/App.styles";
+import { useFetchMemos } from "./hooks";
+import {
+  CssBaseline,
+  TableFooter,
+  TableBody,
+  TableContainer,
+} from "@mui/material";
+import {
+  SearchBar,
+  Create,
+  Head,
+  MemosList,
+  BottomControls,
+  Pagination,
+} from "./components";
+import * as S from "./App.styles";
 
 const App = () => {
   const [sortByProperty, setSortByProperty] =
@@ -42,9 +43,9 @@ const App = () => {
   const searchInput = useWatch({ control, name: SEARCH_INPUT });
 
   const sortedMemo: MemosData[] =
-    memos && sortArrayOfObj(memos, sortByProperty, sortDirection);
+    memos && sortArrayOfObjHelper(memos, sortByProperty, sortDirection);
 
-  const itemCounter: number = filterMemo(
+  const itemCounter: number = filterMemoHelper(
     sortedMemo,
     filterByStatus,
     searchInput
@@ -64,8 +65,8 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <AppWrapper>
-        <TableWrapper maxWidth="md">
+      <S.AppWrapper>
+        <S.TableWrapper maxWidth="md">
           <TableContainer>
             <SearchBar
               searchInput={searchInput}
@@ -77,7 +78,7 @@ const App = () => {
             {createModalOpen && (
               <Create open={createModalOpen} setOpen={setCreateModalOpen} />
             )}
-            <Table>
+            <S.Table>
               <Head
                 sortByProperty={sortByProperty}
                 setSortByProperty={setSortByProperty}
@@ -101,7 +102,7 @@ const App = () => {
                 />
               </TableBody>
               <TableFooter>
-                <TableRow>
+                <S.TableRow>
                   <Pagination
                     page={page}
                     setPage={setPage}
@@ -109,12 +110,12 @@ const App = () => {
                     setRowsPerPage={setRowsPerPage}
                     itemCounter={itemCounter}
                   />
-                </TableRow>
+                </S.TableRow>
               </TableFooter>
-            </Table>
+            </S.Table>
           </TableContainer>
-        </TableWrapper>
-      </AppWrapper>
+        </S.TableWrapper>
+      </S.AppWrapper>
     </ThemeProvider>
   );
 };

@@ -1,27 +1,14 @@
 import { useState, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MemosData } from "../../types/types";
-import { apiRequest } from "../../api/apiRequest";
+import { apiRequest } from "../../api";
 import { memoActions } from "../../store";
-import { STATUS } from "../../types/enums";
-import useFetchMemos from "../../hooks/useFetchMemos";
-import Details from "../Details/Details";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import { STATUS, MemosData } from "../../types";
+import { useFetchMemos } from "../../hooks";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import CircularProgress from "@mui/material/CircularProgress";
-import {
-  MemoItemWrapper,
-  Complete,
-  Title,
-  DateWrapper,
-  DateText,
-  EditButtonsWrapper,
-  EditIcon,
-  DeleteIcon,
-  ModalWrapper,
-} from "./MemoItem.styles";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import { Details } from "..";
+import { Typography, IconButton, CircularProgress } from "@mui/material";
+import * as S from "./MemoItem.styles";
 
 const MemoItem = ({ id, title, due_on, status }: MemosData) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -121,8 +108,8 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
   const spinner = <CircularProgress size={20} color="inherit" />;
 
   return (
-    <MemoItemWrapper status={status}>
-      <Complete>
+    <S.MemoItemWrapper status={status}>
+      <S.Complete>
         <IconButton
           size="small"
           onClick={() => completeMemoHandler(id, status)}
@@ -135,28 +122,28 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
           )}
           {loading === COMPLETE && id === completeMemoID && spinner}
         </IconButton>
-      </Complete>
-      <Title status={status}>
+      </S.Complete>
+      <S.Title status={status}>
         <Typography onDoubleClick={() => setOpen(true)}>
           {title.length < sliceText
             ? title
             : `${title.slice(0, sliceText)} ...`}
         </Typography>
-      </Title>
-      <DateWrapper status={status}>
-        <DateText>{new Date(`${due_on}`).toLocaleDateString()}</DateText>
-        <DateText>{new Date(`${due_on}`).toLocaleTimeString()}</DateText>
-      </DateWrapper>
-      <EditButtonsWrapper>
+      </S.Title>
+      <S.DateWrapper status={status}>
+        <S.DateText>{new Date(`${due_on}`).toLocaleDateString()}</S.DateText>
+        <S.DateText>{new Date(`${due_on}`).toLocaleTimeString()}</S.DateText>
+      </S.DateWrapper>
+      <S.EditButtonsWrapper>
         <IconButton onClick={() => setOpen(true)}>
-          <EditIcon />
+          <S.EditIcon />
         </IconButton>
         <IconButton onClick={() => removeMemoHandler(id)}>
           {loading === DELETE && deleteMemoID === id && spinner}
-          {deleteMemoID !== id && <DeleteIcon />}
+          {deleteMemoID !== id && <S.DeleteIcon />}
         </IconButton>
-      </EditButtonsWrapper>
-      <ModalWrapper>
+      </S.EditButtonsWrapper>
+      <S.ModalWrapper>
         {open && (
           <Details
             id={id}
@@ -169,8 +156,8 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
             removeMemoHandler={removeMemoHandler}
           />
         )}
-      </ModalWrapper>
-    </MemoItemWrapper>
+      </S.ModalWrapper>
+    </S.MemoItemWrapper>
   );
 };
 

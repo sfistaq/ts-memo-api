@@ -1,6 +1,6 @@
 import axios, { CancelTokenSource, Method } from "axios";
-import { MemosData, AddMemoData } from "../types/types";
-import * as Constants from "../utils/constants";
+import { MemosData, AddMemoData } from "../types";
+import * as Constants from "../helpers";
 
 export let cancelToken: CancelTokenSource;
 

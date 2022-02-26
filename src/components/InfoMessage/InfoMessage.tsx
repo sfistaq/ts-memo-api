@@ -1,7 +1,6 @@
 import { memo } from "react";
-import TableCell from "@mui/material/TableCell";
-import Typography from "@mui/material/Typography";
-import { Message } from "./InfoMessage.styles";
+import { TableCell, Typography } from "@mui/material";
+import * as S from "./InfoMessage.styles";
 
 interface Props {
   message: string;
@@ -10,12 +9,12 @@ interface Props {
 
 const InfoMessage = ({ message, icon }: Props) => {
   return (
-    <Message>
+    <S.Message>
       <TableCell>
         {icon}
         <Typography>{message}</Typography>
       </TableCell>
-    </Message>
+    </S.Message>
   );
 };
 

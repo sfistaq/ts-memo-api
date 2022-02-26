@@ -1,8 +1,7 @@
 import React, { memo } from "react";
-import { MemosData, HeadData } from "../../types/types";
-import TableHead from "@mui/material/TableHead";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import { HeadWrapper, Status, Title, Date } from "./HeadStyles";
+import { MemosData, HeadData } from "../../types";
+import { TableHead, TableSortLabel } from "@mui/material";
+import * as S from "./HeadStyles";
 
 interface Props {
   sortByProperty: keyof MemosData;
@@ -38,37 +37,37 @@ const Head = ({
       id: 1,
       title: "status",
       jsx: (
-        <Status>
+        <S.Status>
           status
           {sortLabel("status")}
-        </Status>
+        </S.Status>
       ),
     },
     {
       id: 2,
       title: "title",
       jsx: (
-        <Title>
+        <S.Title>
           title
           {sortLabel("title")}
-        </Title>
+        </S.Title>
       ),
     },
     {
       id: 3,
       title: "due_on",
       jsx: (
-        <Date>
+        <S.Date>
           create date
           {sortLabel("due_on")}
-        </Date>
+        </S.Date>
       ),
     },
   ];
 
   return (
     <TableHead component="thead">
-      <HeadWrapper>
+      <S.HeadWrapper>
         {headData.map(({ jsx, id, title }: HeadData) => {
           return React.cloneElement(jsx, {
             key: id,
@@ -77,7 +76,7 @@ const Head = ({
             },
           });
         })}
-      </HeadWrapper>
+      </S.HeadWrapper>
     </TableHead>
   );
 };

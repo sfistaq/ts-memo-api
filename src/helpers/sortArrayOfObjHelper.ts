@@ -1,6 +1,6 @@
-import { MemosData } from "../types/types";
+import { MemosData } from "../types";
 
-export const sortArrayOfObj = (
+export const sortArrayOfObjHelper = (
   arr: MemosData[],
   sortBy: keyof MemosData,
   sortDirection: boolean

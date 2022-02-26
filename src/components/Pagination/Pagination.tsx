@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { TablePagination } from "./Pagination.styles";
+import * as S from "./Pagination.styles";
 
 interface Props {
   page: number;
@@ -27,7 +27,7 @@ const Pagination = ({
     setPage(0);
   };
   return (
-    <TablePagination
+    <S.TablePagination
       labelRowsPerPage="Memos per page"
       rowsPerPageOptions={[5, 10, 20]}
       count={itemCounter}

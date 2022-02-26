@@ -1,27 +1,14 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { memoActions } from "../../store";
-import { STATUS } from "../../types/enums";
-import { StatusType } from "../../types/types";
-import Paper from "@mui/material/Paper";
+import { StatusType, STATUS } from "../../types";
+import { CircularProgress, Paper } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DoneIcon from "@mui/icons-material/Done";
 import RestoreIcon from "@mui/icons-material/Restore";
 import EditIcon from "@mui/icons-material/Edit";
-import CircularProgress from "@mui/material/CircularProgress";
-import EditForm from "./EditForm";
-import {
-  Backdrop,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  MainText,
-  StatusText,
-  CloseButton,
-  DialogActions,
-  CustomButton,
-} from "./Details.styles";
+import DetailsEditForm from "./DetailsEditForm";
+import * as S from "./Details.styles";
 
 interface Props {
   id: number;
@@ -66,52 +53,56 @@ const Details = ({
   const spinner = <CircularProgress size={20} color="inherit" />;
 
   return (
-    <Backdrop
+    <S.Backdrop
       open={open}
       onClick={(event: React.MouseEvent) => closeOnOverlay(event)}
     >
-      <Dialog open={open} onClose={() => setOpen(false)} PaperComponent={Paper}>
-        <DialogTitle>
+      <S.Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        PaperComponent={Paper}
+      >
+        <S.DialogTitle>
           {showEdit ? "Edit Memo" : "Memo Details"}
-          <CloseButton
+          <S.CloseButton
             onClick={() => {
               !loading && setOpen(false);
             }}
           />
-        </DialogTitle>
+        </S.DialogTitle>
         {!showEdit && (
           <>
-            <DialogContent dividers>
-              <DialogContentText>
-                <MainText>{title}</MainText>
-                <StatusText>
+            <S.DialogContent dividers>
+              <S.DialogContentText>
+                <S.MainText>{title}</S.MainText>
+                <S.StatusText>
                   status: <strong>{loading ? "loading..." : status}</strong>
-                </StatusText>
-                <StatusText>
+                </S.StatusText>
+                <S.StatusText>
                   created: {new Date(`${due_on}`).toLocaleDateString()}{" "}
                   {new Date(`${due_on}`).toLocaleTimeString()}
-                </StatusText>
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
+                </S.StatusText>
+              </S.DialogContentText>
+            </S.DialogContent>
+            <S.DialogActions>
               <>
-                <CustomButton
+                <S.CustomButton
                   variant="contained"
                   color="error"
                   onClick={() => removeMemoHandler(id)}
                   endIcon={loading !== DELETE && <DeleteForeverIcon />}
                 >
                   {loading === DELETE ? spinner : "delete"}
-                </CustomButton>
-                <CustomButton
+                </S.CustomButton>
+                <S.CustomButton
                   variant="contained"
                   color="primary"
                   onClick={openEditTextarea}
                   endIcon={<EditIcon />}
                 >
                   edit
-                </CustomButton>
-                <CustomButton
+                </S.CustomButton>
+                <S.CustomButton
                   color={status === STATUS.PENDING ? "success" : "warning"}
                   variant="contained"
                   onClick={() => completeMemoHandler(id, status)}
@@ -132,21 +123,21 @@ const Details = ({
                   {loading !== COMPLETE &&
                     status === STATUS.COMPLETED &&
                     STATUS.PENDING}
-                </CustomButton>
+                </S.CustomButton>
               </>
-            </DialogActions>
+            </S.DialogActions>
           </>
         )}
         {showEdit && (
-          <EditForm
+          <DetailsEditForm
             setShowEdit={setShowEdit}
             id={id}
             title={title}
             status={status}
           />
         )}
-      </Dialog>
-    </Backdrop>
+      </S.Dialog>
+    </S.Backdrop>
   );
 };
 

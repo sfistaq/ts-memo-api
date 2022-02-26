@@ -1,4 +1,4 @@
-import * as Constants from "../../utils/constants";
+import * as Constants from "../../helpers/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, useWatch } from "react-hook-form";
 import { MemosData, StatusType } from "../../types/types";
@@ -14,7 +14,7 @@ import {
   DialogActions,
   CustomButton,
 } from "./Details.styles";
-import { INPUTS } from "../../utils/constants";
+import { INPUTS } from "../../helpers";
 
 interface Props {
   id: number;
@@ -23,7 +23,7 @@ interface Props {
   setShowEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const EditForm = ({ setShowEdit, title, id, status }: Props) => {
+const DetailsEditForm = ({ setShowEdit, title, id, status }: Props) => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state: RootStore) => state.memo);
   const { EDIT_INPUT } = INPUTS;
@@ -118,4 +118,4 @@ const EditForm = ({ setShowEdit, title, id, status }: Props) => {
   );
 };
 
-export default EditForm;
+export default DetailsEditForm;

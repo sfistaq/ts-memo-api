@@ -1,28 +1,13 @@
-import * as Constants from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, useWatch } from "react-hook-form";
-import { AddMemoData } from "../../types/types";
+import { apiRequest } from "../../api";
 import { memoActions } from "../../store";
-import { apiRequest } from "../../api/apiRequest";
-import { INPUTS } from "../../utils/constants";
-import { useEffect } from "react";
-import { cancelToken } from "../../api/apiRequest";
-import { STATUS } from "../../types/enums";
-import useFetchMemos from "../../hooks/useFetchMemos";
-import Paper from "@mui/material/Paper";
-import Dialog from "@mui/material/Dialog";
-import CircularProgress from "@mui/material/CircularProgress";
+import { STATUS, AddMemoData } from "../../types";
+import { useFetchMemos } from "../../hooks";
+import { Paper, Dialog, CircularProgress, Box } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import Box from "@mui/material/Box";
-import {
-  Backdrop,
-  DialogContent,
-  TextField,
-  CloseButton,
-  DialogTitle,
-  DialogActions,
-  Button,
-} from "./Create.styles";
+import * as S from "./Create.styles";
+import * as Constants from "../../helpers";
 
 interface Props {
   open: boolean;
@@ -33,7 +18,9 @@ const Create = ({ open, setOpen }: Props) => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state: RootStore) => state.memo);
   const { fetchMemos } = useFetchMemos();
-  const { CREATE_INPUT } = INPUTS;
+  const {
+    INPUTS: { CREATE_INPUT },
+  } = Constants;
   const { handleSubmit, register, control } = useForm({
     defaultValues: {
       [CREATE_INPUT]: "",
@@ -67,9 +54,9 @@ const Create = ({ open, setOpen }: Props) => {
       const req = await apiRequest("POST", undefined, memoData);
 
       if (req.status === 201 && req.statusText === "Created") {
+        await fetchMemos();
         dispatch(setLoading(null));
         setOpen(false);
-        fetchMemos();
       }
     } catch (error) {
       dispatch(setLoading(null));
@@ -77,18 +64,12 @@ const Create = ({ open, setOpen }: Props) => {
     }
   };
 
-  useEffect(() => {
-    return () => {
-      cancelToken && cancelToken.cancel();
-    };
-  }, []);
-
   const onCloseHandler = () => {
     loading !== CREATE && setOpen(false);
   };
 
   return (
-    <Backdrop
+    <S.Backdrop
       open={open}
       onClick={(event: React.MouseEvent) => closeOnOverlay(event)}
     >
@@ -99,14 +80,14 @@ const Create = ({ open, setOpen }: Props) => {
         }}
         PaperComponent={Paper}
       >
-        <DialogTitle>
+        <S.DialogTitle>
           Create Memo
-          <CloseButton onClick={() => onCloseHandler()} />
-        </DialogTitle>
+          <S.CloseButton onClick={() => onCloseHandler()} />
+        </S.DialogTitle>
 
         <Box component="form" onSubmit={handleSubmit(addMemoHandler)}>
-          <DialogContent dividers>
-            <TextField
+          <S.DialogContent dividers>
+            <S.TextField
               variant="outlined"
               type="text"
               multiline
@@ -123,9 +104,9 @@ const Create = ({ open, setOpen }: Props) => {
               error={input.length === Constants.CHARLIMIT}
               {...register(CREATE_INPUT)}
             />
-          </DialogContent>
-          <DialogActions>
-            <Button
+          </S.DialogContent>
+          <S.DialogActions>
+            <S.Button
               variant="contained"
               color="primary"
               type="submit"
@@ -141,11 +122,11 @@ const Create = ({ open, setOpen }: Props) => {
               }
             >
               Submit
-            </Button>
-          </DialogActions>
+            </S.Button>
+          </S.DialogActions>
         </Box>
       </Dialog>
-    </Backdrop>
+    </S.Backdrop>
   );
 };
 

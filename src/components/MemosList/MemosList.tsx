@@ -1,15 +1,13 @@
 import { useSelector } from "react-redux";
-import { MemosData } from "../../types/types";
-import { FilterType } from "../../types/enums";
-import { filterMemo } from "../../utils/filter";
-import InfoMessage from "../InfoMessage/InfoMessage";
-import MemoItem from "../MemoItem/MemoItem";
-import CircularProgress from "@mui/material/CircularProgress";
+import { memoActions } from "../../store";
+import { FilterType, MemosData } from "../../types";
+import { filterMemoHelper } from "../../helpers";
+import { CircularProgress } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import FindReplaceIcon from "@mui/icons-material/FindReplace";
 import WarningIcon from "@mui/icons-material/Warning";
-import { TableBody } from "./MemosList.styles";
-import { memoActions } from "../../store";
+import { MemoItem, InfoMessage } from "..";
+import * as S from "./MemosList.styles";
 
 interface Props {
   filterByStatus: FilterType;
@@ -34,12 +32,12 @@ const MemosList = ({
   } = memoActions;
 
   return (
-    <TableBody>
+    <S.TableBody>
       {sortedMemo.length > 0 &&
       itemCounter > 0 &&
       loading !== FETCH &&
       !error ? (
-        filterMemo(sortedMemo, filterByStatus, searchInput)
+        filterMemoHelper(sortedMemo, filterByStatus, searchInput)
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((item: MemosData, i: number) => (
             <MemoItem {...(item as MemosData)} key={i} />
@@ -71,7 +69,7 @@ const MemosList = ({
           icon={<WarningIcon color="error" />}
         />
       ) : null}
-    </TableBody>
+    </S.TableBody>
   );
 };
 

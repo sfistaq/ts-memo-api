@@ -1,8 +1,8 @@
 import React, { useEffect, memo } from "react";
-import { Form, TextField, Button } from "./SearchBar.styles";
 import { UseFormRegisterReturn } from "react-hook-form";
 import CreateIcon from "@mui/icons-material/Create";
 import ErrorIcon from "@mui/icons-material/Error";
+import * as S from "./SearchBar.styles";
 
 interface Props {
   searchInput: string;
@@ -29,8 +29,8 @@ const SearchBar = ({
   }, [createModalOpen, setCreateModalOpen]);
 
   return (
-    <Form>
-      <TextField
+    <S.Form>
+      <S.TextField
         type="search"
         label="search"
         variant="outlined"
@@ -38,7 +38,7 @@ const SearchBar = ({
         inputProps={{ minLength: 1, maxLength: 50 }}
         {...register}
       />
-      <Button
+      <S.Button
         size={createButtonDisabled ? "medium" : "large"}
         variant="contained"
         color="primary"
@@ -47,8 +47,8 @@ const SearchBar = ({
         disabled={createButtonDisabled}
       >
         {createButtonDisabled ? "max memos" : "Create"}
-      </Button>
-    </Form>
+      </S.Button>
+    </S.Form>
   );
 };
 

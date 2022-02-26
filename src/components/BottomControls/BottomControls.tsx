@@ -1,14 +1,13 @@
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { memoActions } from "../../store";
-import { apiRequest } from "../../api/apiRequest";
-import { FilterType, STATUS } from "../../types/enums";
+import { apiRequest } from "../../api";
+import { useFetchMemos } from "../../hooks";
+import { MemosData, MemoByStatus, FilterType, STATUS } from "../../types";
 import { bottomButtons } from "./data";
-import { MemosData, MemoByStatus } from "../../types/types";
-import { Container, Wrapper, Button } from "./BottomControls.styles";
-import useFetchMemos from "../../hooks/useFetchMemos";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import CircularProgress from "@mui/material/CircularProgress";
+import { CircularProgress } from "@mui/material";
+import * as S from "./BottomControls.styles";
 
 interface Props {
   memos: MemosData[];
@@ -60,10 +59,10 @@ const BottomControls = ({
   const spinner = <CircularProgress size={20} color="inherit" />;
 
   return (
-    <Container>
+    <S.Container>
       {bottomButtons.map(({ id, sortProperty, icon, name }: MemoByStatus) => (
-        <Wrapper key={id}>
-          <Button
+        <S.Wrapper key={id}>
+          <S.Button
             onClick={() => {
               setFilterByStatus(sortProperty);
             }}
@@ -77,11 +76,11 @@ const BottomControls = ({
             }
           >
             {name}
-          </Button>
-        </Wrapper>
+          </S.Button>
+        </S.Wrapper>
       ))}
-      <Wrapper>
-        <Button
+      <S.Wrapper>
+        <S.Button
           onClick={() => clearCompletedHandler(memos)}
           size="small"
           variant="contained"
@@ -90,9 +89,9 @@ const BottomControls = ({
           disabled={disabled(STATUS.COMPLETED)}
         >
           {loading === CLEAR_COMPLETED ? spinner : "Delete Completed"}
-        </Button>
-      </Wrapper>
-    </Container>
+        </S.Button>
+      </S.Wrapper>
+    </S.Container>
   );
 };
 

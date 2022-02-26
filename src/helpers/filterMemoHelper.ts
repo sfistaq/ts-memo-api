@@ -1,5 +1,4 @@
-import { MemosData } from "../types/types";
-import { FilterType } from "../types/enums";
+import { FilterType, MemosData } from "../types";
 
 const filterHelper = (data: MemosData[], searchInput: string) => {
   return data.filter(
@@ -8,7 +7,7 @@ const filterHelper = (data: MemosData[], searchInput: string) => {
   );
 };
 
-export const filterMemo = (
+export const filterMemoHelper = (
   data: MemosData[],
   filterBy: FilterType,
   searchInput: string

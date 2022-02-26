@@ -1,12 +1,12 @@
 import styled from "@mui/styled-engine-sc";
-import { MuiTheme } from "../types/types";
+import { MuiTheme } from "./types";
 import {
   Container,
   ContainerProps,
   Table as MuiTable,
   TableRow as MuiTableRow,
 } from "@mui/material";
-import background from "../assets/images/background.jpg";
+import background from "./assets/images/background.jpg";
 
 export const AppWrapper = styled(Container)`
   display: flex;
