@@ -2,7 +2,7 @@ import { STATUS, MemosData } from "../../types";
 import {
   setLoading,
   setError,
-  setMemos,
+  fetchMemos,
   removeMemo,
   addMemo,
   completeMemo,
@@ -34,8 +34,8 @@ describe("Redux Memo Actions", () => {
     });
   });
   test("setMemos Action", () => {
-    expect(setMemos([])).toEqual({
-      type: MemoActionTypes.SET_MEMOS,
+    expect(fetchMemos([])).toEqual({
+      type: MemoActionTypes.FETCH_MEMOS,
       payload: [],
     });
   });

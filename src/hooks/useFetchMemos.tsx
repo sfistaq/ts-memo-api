@@ -9,7 +9,7 @@ const useFetchMemos = () => {
   const {
     LoadingsTypes: { FETCH },
     setLoading,
-    setMemos,
+    fetchMemos: setMemos,
   } = memoActions;
 
   const fetchMemos = async () => {

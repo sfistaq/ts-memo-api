@@ -1,6 +1,4 @@
-import { MemosData } from "../../../types/types";
-import { STATUS } from "../../../types/enums";
-
+import { MemosData, STATUS } from "../../../types";
 import {
   MemoActionTypes,
   MemoAction,
@@ -13,7 +11,7 @@ interface MemoState {
   error: null | string;
 }
 
-const initialState: MemoState = {
+export const initialState: MemoState = {
   memos: [],
   loading: null,
   error: null,
@@ -33,13 +31,11 @@ const memoReducer = (
       return {
         ...state,
         error: action.payload,
-        loading: null,
       };
-    case MemoActionTypes.SET_MEMOS:
+    case MemoActionTypes.FETCH_MEMOS:
       return {
         ...state,
         memos: [...action.payload],
-        loading: null,
       };
     case MemoActionTypes.REMOVE_MEMO:
       return {
@@ -52,7 +48,6 @@ const memoReducer = (
       return {
         ...state,
         memos: [action.payload, ...state.memos],
-        loading: null,
       };
     case MemoActionTypes.COMPLETE_MEMO:
       return {
@@ -81,7 +76,6 @@ const memoReducer = (
         memos: state.memos.map((item: MemosData) =>
           item.id === action.payload.id ? action.payload.data : item
         ),
-        loading: null,
       };
     default:
       return state;

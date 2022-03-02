@@ -3,7 +3,7 @@ import { MemosData } from "../../types/types";
 export enum MemoActionTypes {
   SET_LOADING = "SET_LOADING",
   SET_ERROR = "SET_ERROR",
-  SET_MEMOS = "SET_MEMOS",
+  FETCH_MEMOS = "FETCH_MEMOS",
   REMOVE_MEMO = "REMOVE_MEMO",
   ADD_MEMO = "ADD_MEMO",
   COMPLETE_MEMO = "COMPLETE_MEMO",
@@ -45,14 +45,14 @@ export const setError = (error: string): SetErrorActionType => {
   };
 };
 
-type SetMemosActionType = {
-  type: MemoActionTypes.SET_MEMOS;
+type FetchMemosActionType = {
+  type: MemoActionTypes.FETCH_MEMOS;
   payload: MemosData[];
 };
 
-export const setMemos = (data: MemosData[]): SetMemosActionType => {
+export const fetchMemos = (data: MemosData[]): FetchMemosActionType => {
   return {
-    type: MemoActionTypes.SET_MEMOS,
+    type: MemoActionTypes.FETCH_MEMOS,
     payload: data,
   };
 };
@@ -118,7 +118,7 @@ export const editMemo = (data: MemosData, id: number): EditMemoActionType => {
 export type MemoAction =
   | SetLoadingActionType
   | SetErrorActionType
-  | SetMemosActionType
+  | FetchMemosActionType
   | RemoveMemoActionType
   | AddMemoActionType
   | CompleteMemoActionType
