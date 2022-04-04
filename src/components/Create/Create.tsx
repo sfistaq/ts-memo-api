@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, useWatch } from "react-hook-form";
+import { toast } from "react-toastify";
 import { apiRequest } from "../../api";
 import { memoActions } from "../../store";
 import { STATUS, AddMemoData } from "../../types";
@@ -60,7 +61,12 @@ const Create = ({ open, setOpen }: Props) => {
       }
     } catch (error) {
       dispatch(setLoading(null));
-      console.error(error);
+
+      toast.error(
+        "Server error. Unable to create memo, please try again later."
+      );
+      console.error((error as Error).message);
+      setOpen(false);
     }
   };
 

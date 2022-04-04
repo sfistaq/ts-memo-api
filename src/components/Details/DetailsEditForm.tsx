@@ -1,6 +1,7 @@
 import * as Constants from "../../helpers/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, useWatch } from "react-hook-form";
+import { toast } from "react-toastify";
 import { MemosData, StatusType } from "../../types/types";
 import { apiRequest } from "../../api/apiRequest";
 import { memoActions } from "../../store";
@@ -61,6 +62,8 @@ const DetailsEditForm = ({ setShowEdit, title, id, status }: Props) => {
         setShowEdit(false);
       }
     } catch (error) {
+      toast.error((error as Error).message);
+      setShowEdit(false);
       dispatch(setLoading(null));
     }
   };

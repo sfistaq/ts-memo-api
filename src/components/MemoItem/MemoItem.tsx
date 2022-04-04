@@ -1,5 +1,6 @@
 import { useState, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { apiRequest } from "../../api";
 import { memoActions } from "../../store";
 import { STATUS, MemosData } from "../../types";
@@ -49,6 +50,7 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
         setCompleteMemoID(null);
       }
     } catch (error) {
+      toast.error((error as Error).message);
       dispatch(setLoading(null));
     }
   };
@@ -68,6 +70,7 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
         await fetchMemos();
       }
     } catch (error) {
+      toast.error((error as Error).message);
       dispatch(setLoading(null));
     }
   };

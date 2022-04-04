@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useForm, useWatch } from "react-hook-form";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { INPUTS, sortArrayOfObjHelper, filterMemoHelper } from "./helpers";
 import { cancelToken } from "./api";
 import { FilterType, MemosData } from "./types";
@@ -53,10 +55,7 @@ const App = () => {
 
   useEffect(() => {
     fetchMemos();
-    console.log("FETCH FROM HOME");
-
     return () => {
-      console.log("HOME CLEANING");
       cancelToken.cancel();
     };
   }, []);
@@ -64,8 +63,8 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
       <S.AppWrapper>
+        <ToastContainer role="alert" newestOnTop />
         <S.TableWrapper maxWidth="md">
           <TableContainer>
             <SearchBar
