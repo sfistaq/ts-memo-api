@@ -1,6 +1,7 @@
 import { apiRequest } from "../api/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { memoActions } from "../store";
+import { toast } from "react-toastify";
 
 const useFetchMemos = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const useFetchMemos = () => {
         dispatch(setLoading(null));
       }
     } catch (error) {
+      toast.error((error as Error).message);
       dispatch(setLoading(null));
     }
   };
