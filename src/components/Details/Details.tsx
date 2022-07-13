@@ -1,7 +1,8 @@
+import type { StatusType } from "../../@types/memo";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { memoActions } from "../../store";
-import { StatusType, STATUS } from "../../types";
+import { STATUS } from "../../helpers";
 import { CircularProgress, Paper } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DoneIcon from "@mui/icons-material/Done";

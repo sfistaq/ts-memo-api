@@ -1,6 +1,6 @@
-import { apiRequest } from "../api/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { memoActions } from "../store";
+import { apiRequest } from "../api/apiRequest";
 import { toast } from "react-toastify";
 
 const useFetchMemos = () => {
@@ -19,13 +19,11 @@ const useFetchMemos = () => {
     dispatch(setLoading(FETCH));
     try {
       const req = await apiRequest("GET");
-
-      if (req.status === 200 && req.statusText === "OK") {
-        dispatch(setMemos(req!.data.data));
-        dispatch(setLoading(null));
-      }
+      const { data } = req!.data;
+      dispatch(setMemos(data));
     } catch (error) {
       toast.error((error as Error).message);
+    } finally {
       dispatch(setLoading(null));
     }
   };

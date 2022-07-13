@@ -1,5 +1,4 @@
 import styled from "@mui/styled-engine-sc";
-import { MuiTheme } from "./types";
 import {
   Container,
   ContainerProps,
@@ -17,19 +16,19 @@ export const AppWrapper = styled(Container)`
   min-width: 100vw;
 
   @media (max-width: 499px) {
-    padding-top: ${({ theme }: MuiTheme) => theme.spacing(1)};
+    padding-top: ${({ theme: { spacing } }) => spacing(1)};
     align-items: flex-start;
   }
 `;
 
 export const TableWrapper = styled(Container)<ContainerProps>`
   border-radius: 15px;
-  padding-top: ${({ theme }: MuiTheme) => theme.spacing(2)};
-  padding-bottom: ${({ theme }: MuiTheme) => theme.spacing(2)};
-  background: ${({ theme }: MuiTheme) => theme.palette.background.transparent};
+  padding-top: ${({ theme: { spacing } }) => spacing(2)};
+  padding-bottom: ${({ theme: { spacing } }) => spacing(2)};
+  background: ${({ theme: { palette } }) => palette.background.transparent};
   @media (max-width: 499px) {
-    padding-top: ${({ theme }: MuiTheme) => theme.spacing(1)};
-    padding-bottom: ${({ theme }: MuiTheme) => theme.spacing(1)};
+    padding-top: ${({ theme: { spacing } }) => spacing(1)};
+    padding-bottom: ${({ theme: { spacing } }) => spacing(1)};
   }
 `;
 export const Table = styled(MuiTable)`

@@ -2,12 +2,12 @@ import { memo } from "react";
 import { TableCell, Typography } from "@mui/material";
 import * as S from "./InfoMessage.styles";
 
-interface Props {
+interface InfoMessageProps {
   message: string;
   icon: JSX.Element;
 }
 
-const InfoMessage = ({ message, icon }: Props) => {
+const InfoMessage = ({ message, icon }: InfoMessageProps) => {
   return (
     <S.Message>
       <TableCell>

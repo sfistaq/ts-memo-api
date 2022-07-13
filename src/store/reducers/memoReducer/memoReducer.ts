@@ -1,4 +1,5 @@
-import { MemosData, STATUS } from "../../../types";
+import type { MemosData } from "../../../@types/memo";
+import { STATUS } from "../../../helpers";
 import {
   MemoActionTypes,
   MemoAction,

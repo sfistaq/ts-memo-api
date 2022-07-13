@@ -1,5 +1,5 @@
-import { MemoByStatus } from "../../types/types";
-import { FilterType } from "../../types/enums";
+import type { MemoByStatus } from "../../@types/memo";
+import { FilterType } from "../../helpers";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ScheduleIcon from "@mui/icons-material/Schedule";

@@ -1,9 +1,10 @@
+import type { MemosData } from "../../@types/memo";
 import { useState, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { apiRequest } from "../../api";
 import { memoActions } from "../../store";
-import { STATUS, MemosData } from "../../types";
+import { STATUS } from "../../helpers";
 import { useFetchMemos } from "../../hooks";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -20,7 +21,6 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
   const [completeMemoID, setCompleteMemoID] = useState<number | null>(null);
   const [deleteMemoID, setDeleteMemoId] = useState<number | null>(null);
   const [isPending, setIsPending] = useState<boolean>(false);
-
   const { loading } = useSelector((state: RootStore) => state.memo);
 
   const {
@@ -42,35 +42,31 @@ const MemoItem = ({ id, title, due_on, status }: MemosData) => {
       due_on: new Date().toString(),
     };
     try {
-      const req = await apiRequest("PUT", id, data);
-
-      if (req.status === 200 && req.statusText === "OK") {
-        dispatch(completeMemo(data, id));
-        dispatch(setLoading(null));
-        setCompleteMemoID(null);
-      }
+      await apiRequest("PUT", id, data);
+      dispatch(completeMemo(data, id));
+      setCompleteMemoID(null);
     } catch (error) {
       toast.error((error as Error).message);
+    } finally {
       dispatch(setLoading(null));
     }
   };
 
   const removeMemoHandler = async (id: number) => {
     if (isPending) return;
+
     setDeleteMemoId(id);
     dispatch(setLoading(DELETE));
 
     try {
-      const req = await apiRequest("DELETE", id);
-      if (req.status === 204) {
-        dispatch(removeMemo(id));
-        dispatch(setLoading(null));
-        setDeleteMemoId(null);
-        setOpen(false);
-        await fetchMemos();
-      }
+      await apiRequest("DELETE", id);
+      dispatch(removeMemo(id));
+      setDeleteMemoId(null);
+      setOpen(false);
+      await fetchMemos();
     } catch (error) {
       toast.error((error as Error).message);
+    } finally {
       dispatch(setLoading(null));
     }
   };

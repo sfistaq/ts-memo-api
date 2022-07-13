@@ -1,5 +1,4 @@
 import styled from "@mui/styled-engine-sc";
-import { MuiTheme } from "../../types/types";
 import TableRow from "@mui/material/TableRow";
 
 export const Message = styled(TableRow)`
@@ -9,7 +8,7 @@ export const Message = styled(TableRow)`
   justify-content: center;
   min-height: 500px;
   border-bottom: 1px solid black;
-  background: ${({ theme }: MuiTheme) => theme.palette.background.transparent};
+  background: ${({ theme: { palette } }) => palette.background.transparent};
 
   & td {
     border: none;
@@ -19,10 +18,10 @@ export const Message = styled(TableRow)`
   & p {
     font-size: 24px;
     font-weight: 500;
-    color: ${({ theme }: MuiTheme) => theme.palette.grey[600]};
+    color: ${({ theme: { palette } }) => palette.grey[600]};
   }
 
-  ${({ theme }: MuiTheme) => theme.breakpoints.down("sm")} {
+  ${({ theme: { breakpoints } }) => breakpoints.down("sm")} {
     min-height: 450px;
   }
 `;

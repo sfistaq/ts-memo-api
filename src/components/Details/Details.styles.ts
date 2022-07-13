@@ -1,5 +1,4 @@
 import styled from "@mui/styled-engine-sc";
-import { MuiTheme } from "../../types/types";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Backdrop as MuiBackdrop,
@@ -18,17 +17,17 @@ import {
 } from "@mui/material";
 
 export const Backdrop = styled(MuiBackdrop)`
-  z-index: ${({ theme }: MuiTheme) => theme.zIndex.drawer + 1};
+  z-index: ${({ theme: { zIndex } }) => zIndex.drawer + 1};
   backdrop-filter: blur(3px);
 `;
 export const Dialog = styled(MuiDialog)`
   backdrop-filter: blur(3px);
-  background: ${({ theme }: MuiTheme) => theme.palette.background.dialog};
+  background: ${({ theme: { palette } }) => palette.background.dialog};
 `;
 
 export const DialogTitle = styled(MuiDialogTitle)`
-  background: ${({ theme }: MuiTheme) => theme.palette.grey[200]};
-  color: ${({ theme }: MuiTheme) => theme.palette.primary.main};
+  background: ${({ theme: { palette } }) => palette.grey[200]};
+  color: ${({ theme: { palette } }) => palette.primary.main};
 `;
 
 export const DialogContent = styled(MuiDialogContent)<DialogContentProps>`
@@ -53,31 +52,31 @@ export const MainText = styled(Typography)<TypographyProps>`
   margin: 5% 0;
   flex: 0.9;
   font-size: 18px;
-  color: ${({ theme }: MuiTheme) => theme.palette.text.primary};
+  color: ${({ theme: { palette } }) => palette.text.primary};
 `;
 
 export const StatusText = styled(Typography)<TypographyProps>`
   flex: 0.1;
   font-size: 14px;
-  color: ${({ theme }: MuiTheme) => theme.palette.text.hint};
+  color: ${({ theme: { palette } }) => palette.text.hint};
 `;
 
 export const CloseButton = styled(CloseIcon)`
   position: absolute;
-  right: ${({ theme }: MuiTheme) => theme.spacing(1)};
-  top: ${({ theme }: MuiTheme) => theme.spacing(1)};
-  color: ${({ theme }: MuiTheme) => theme.palette.grey[500]};
+  right: ${({ theme: { spacing } }) => spacing(1)};
+  top: ${({ theme: { spacing } }) => spacing(1)};
+  color: ${({ theme: { palette } }) => palette.grey[500]};
   cursor: pointer;
 
   &:hover {
-    color: ${({ theme }: MuiTheme) => theme.palette.error.main};
+    color: ${({ theme: { palette } }) => palette.error.main};
   }
 `;
 
 export const DialogActions = styled(MuiDialogActions)`
   display: flex;
   justify-content: space-around;
-  background: ${({ theme }: MuiTheme) => theme.palette.grey[200]};
+  background: ${({ theme: { palette } }) => palette.grey[200]};
 `;
 
 export const CustomButton = styled(Button)<ButtonProps>`

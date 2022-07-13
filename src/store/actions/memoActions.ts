@@ -1,4 +1,4 @@
-import { MemosData } from "../../types/types";
+import type { MemosData } from "../../@types/memo";
 
 export enum MemoActionTypes {
   SET_LOADING = "SET_LOADING",

@@ -1,8 +1,7 @@
-import * as Constants from "../../helpers/constants";
+import type { MemosData, StatusType } from "../../@types/memo";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
-import { MemosData, StatusType } from "../../types/types";
 import { apiRequest } from "../../api/apiRequest";
 import { memoActions } from "../../store";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -15,6 +14,7 @@ import {
   DialogActions,
   CustomButton,
 } from "./Details.styles";
+import * as Constants from "../../helpers/constants";
 import { INPUTS } from "../../helpers";
 
 interface Props {
@@ -55,15 +55,13 @@ const DetailsEditForm = ({ setShowEdit, title, id, status }: Props) => {
       due_on: new Date().toString(),
     };
     try {
-      const req = await apiRequest("PUT", id, data);
-      if (req.status === 200 && req.statusText === "OK") {
-        dispatch(editMemo(data, id));
-        dispatch(setLoading(null));
-        setShowEdit(false);
-      }
+      await apiRequest("PUT", id, data);
+      dispatch(editMemo(data, id));
+      setShowEdit(false);
     } catch (error) {
       toast.error((error as Error).message);
       setShowEdit(false);
+    } finally {
       dispatch(setLoading(null));
     }
   };

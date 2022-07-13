@@ -1,6 +1,7 @@
+import { MemosData } from "../../@types/memo";
 import { useSelector } from "react-redux";
 import { memoActions } from "../../store";
-import { FilterType, MemosData } from "../../types";
+import { FilterType } from "../../helpers";
 import { filterMemoHelper } from "../../helpers";
 import { CircularProgress } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
