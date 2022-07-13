@@ -1,11 +1,9 @@
-import { MemosData } from "../types";
-
-export const sortArrayOfObjHelper = (
-  arr: MemosData[],
-  sortBy: keyof MemosData,
+export const sortArrayOfObjHelper = <T>(
+  arr: T[],
+  sortBy: keyof T,
   sortDirection: boolean
 ) => {
-  const sorted = [...arr].sort((a: MemosData, b: MemosData) => {
+  const sorted = [...arr].sort((a: T, b: T) => {
     return a[sortBy]! > b[sortBy]! ? 1 : -1;
   });
   return sortDirection ? sorted : sorted.reverse();

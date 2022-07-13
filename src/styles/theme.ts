@@ -1,18 +1,6 @@
-import { createTheme, Theme } from "@mui/material";
+import { createTheme } from "@mui/material";
 
-declare module "@mui/material/styles/createPalette" {
-  interface TypeText {
-    hint: string;
-  }
-  interface TypeBackground {
-    main: string;
-    memo: string;
-    transparent: string;
-    dialog: string;
-  }
-}
-
-export const theme: Theme = createTheme({
+export const theme = createTheme({
   palette: {
     text: {
       hint: "rgba(0, 0, 0, 0.38)",
@@ -24,4 +12,4 @@ export const theme: Theme = createTheme({
       dialog: "rgba(0, 0, 0, 0.5)",
     },
   },
-});
+}) as any;

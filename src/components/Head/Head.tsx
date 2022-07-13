@@ -1,5 +1,5 @@
+import type { MemosData, HeadData } from "../../@types/memo";
 import React, { memo } from "react";
-import { MemosData, HeadData } from "../../types";
 import { TableHead, TableSortLabel } from "@mui/material";
 import * as S from "./HeadStyles";
 

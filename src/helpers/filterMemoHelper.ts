@@ -1,4 +1,5 @@
-import { FilterType, MemosData } from "../types";
+import type { MemosData } from "../@types/memo";
+import { FilterType } from "../helpers";
 
 const filterHelper = (data: MemosData[], searchInput: string) => {
   return data.filter(

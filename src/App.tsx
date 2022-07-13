@@ -1,20 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import type { MemosData } from "./@types/memo";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useForm, useWatch } from "react-hook-form";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { INPUTS, sortArrayOfObjHelper, filterMemoHelper } from "./helpers";
-import { cancelToken } from "./api";
-import { FilterType, MemosData } from "./types";
-import { theme } from "./styles/theme";
-import { ThemeProvider } from "@mui/material";
+import { FilterType } from "./helpers";
 import { useFetchMemos } from "./hooks";
-import {
-  CssBaseline,
-  TableFooter,
-  TableBody,
-  TableContainer,
-} from "@mui/material";
+import { TableFooter, TableBody, TableContainer } from "@mui/material";
 import {
   SearchBar,
   Create,
@@ -35,13 +27,13 @@ const App = () => {
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
   const { fetchMemos } = useFetchMemos();
   const { memos } = useSelector((state: RootStore) => state.memo);
+
   const { SEARCH_INPUT } = INPUTS;
   const { register, control } = useForm({
     defaultValues: {
       [SEARCH_INPUT]: "",
     },
   });
-
   const searchInput = useWatch({ control, name: SEARCH_INPUT });
 
   const sortedMemo: MemosData[] =
@@ -55,67 +47,61 @@ const App = () => {
 
   useEffect(() => {
     fetchMemos();
-    return () => {
-      cancelToken.cancel();
-    };
+    console.log("fetch form useEffect");
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <S.AppWrapper>
-        <ToastContainer role="alert" newestOnTop />
-        <S.TableWrapper maxWidth="md">
-          <TableContainer>
-            <SearchBar
-              searchInput={searchInput}
-              createModalOpen={createModalOpen}
-              setCreateModalOpen={setCreateModalOpen}
-              createButtonDisabled={memos.length === 20}
-              register={register(SEARCH_INPUT)}
+    <S.AppWrapper>
+      <S.TableWrapper maxWidth="md">
+        <TableContainer>
+          <SearchBar
+            searchInput={searchInput}
+            createModalOpen={createModalOpen}
+            setCreateModalOpen={setCreateModalOpen}
+            createButtonDisabled={memos.length === 20}
+            register={register(SEARCH_INPUT)}
+          />
+          {createModalOpen && (
+            <Create open={createModalOpen} setOpen={setCreateModalOpen} />
+          )}
+          <S.Table>
+            <Head
+              sortByProperty={sortByProperty}
+              setSortByProperty={setSortByProperty}
+              sortDirection={sortDirection}
+              setSortDirection={setSortDirection}
             />
-            {createModalOpen && (
-              <Create open={createModalOpen} setOpen={setCreateModalOpen} />
-            )}
-            <S.Table>
-              <Head
-                sortByProperty={sortByProperty}
-                setSortByProperty={setSortByProperty}
-                sortDirection={sortDirection}
-                setSortDirection={setSortDirection}
-              />
 
-              <MemosList
+            <MemosList
+              filterByStatus={filterByStatus}
+              searchInput={searchInput}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              sortedMemo={sortedMemo}
+              itemCounter={itemCounter}
+            />
+            <TableBody>
+              <BottomControls
+                memos={memos}
                 filterByStatus={filterByStatus}
-                searchInput={searchInput}
-                page={page}
-                rowsPerPage={rowsPerPage}
-                sortedMemo={sortedMemo}
-                itemCounter={itemCounter}
+                setFilterByStatus={setFilterByStatus}
               />
-              <TableBody>
-                <BottomControls
-                  memos={memos}
-                  filterByStatus={filterByStatus}
-                  setFilterByStatus={setFilterByStatus}
+            </TableBody>
+            <TableFooter>
+              <S.TableRow>
+                <Pagination
+                  page={page}
+                  setPage={setPage}
+                  rowsPerPage={rowsPerPage}
+                  setRowsPerPage={setRowsPerPage}
+                  itemCounter={itemCounter}
                 />
-              </TableBody>
-              <TableFooter>
-                <S.TableRow>
-                  <Pagination
-                    page={page}
-                    setPage={setPage}
-                    rowsPerPage={rowsPerPage}
-                    setRowsPerPage={setRowsPerPage}
-                    itemCounter={itemCounter}
-                  />
-                </S.TableRow>
-              </TableFooter>
-            </S.Table>
-          </TableContainer>
-        </S.TableWrapper>
-      </S.AppWrapper>
-    </ThemeProvider>
+              </S.TableRow>
+            </TableFooter>
+          </S.Table>
+        </TableContainer>
+      </S.TableWrapper>
+    </S.AppWrapper>
   );
 };
 

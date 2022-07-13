@@ -1,10 +1,12 @@
+import type { MemosData, MemoByStatus } from "../../@types/memo";
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { memoActions } from "../../store";
 import { apiRequest } from "../../api";
 import { useFetchMemos } from "../../hooks";
-import { MemosData, MemoByStatus, FilterType, STATUS } from "../../types";
+import { FilterType, STATUS } from "../../helpers";
 import { bottomButtons } from "./data";
+import { toast } from "react-toastify";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { CircularProgress } from "@mui/material";
 import * as S from "./BottomControls.styles";
@@ -38,16 +40,16 @@ const BottomControls = ({
 
     try {
       clearIDs.forEach(async (id: number, index: number) => {
-        const req = await apiRequest("DELETE", id);
+        await apiRequest("DELETE", id);
 
-        if (req.status === 204 && clearIDs.length === index + 1) {
+        if (clearIDs.length === index + 1) {
           await fetchMemos();
-          dispatch(setLoading(null));
           setFilterByStatus(FilterType.All);
         }
       });
     } catch (error) {
-      dispatch(setLoading(null));
+      toast.error((error as Error).message);
+    } finally {
     }
   };
 

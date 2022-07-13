@@ -1,6 +1,7 @@
+import type { MemosData } from "../../../@types/memo";
 import memoReducer, { initialState } from "./memoReducer";
 import { MemoActionTypes, LoadingsTypes } from "../../actions/memoActions";
-import { STATUS, MemosData } from "../../../types";
+import { STATUS } from "../../../helpers";
 
 describe("Redux Memo Reducer", () => {
   const testErrorMessage = "Error message!";

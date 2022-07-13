@@ -1,4 +1,5 @@
-import { STATUS, MemosData } from "../../types";
+import type { MemosData } from "../../@types/memo";
+import { STATUS } from "../../helpers";
 import {
   setLoading,
   setError,

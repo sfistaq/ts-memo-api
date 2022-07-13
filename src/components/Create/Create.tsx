@@ -1,14 +1,15 @@
+import type { AddMemoData } from "../../@types/memo";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { apiRequest } from "../../api";
 import { memoActions } from "../../store";
-import { STATUS, AddMemoData } from "../../types";
+import { STATUS } from "../../helpers";
 import { useFetchMemos } from "../../hooks";
 import { Paper, Dialog, CircularProgress, Box } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import * as S from "./Create.styles";
 import * as Constants from "../../helpers";
+import * as S from "./Create.styles";
 
 interface Props {
   open: boolean;
@@ -52,21 +53,16 @@ const Create = ({ open, setOpen }: Props) => {
         title: `${input}`,
         due_on: new Date().toString(),
       };
-      const req = await apiRequest("POST", undefined, memoData);
-
-      if (req.status === 201 && req.statusText === "Created") {
-        await fetchMemos();
-        dispatch(setLoading(null));
-        setOpen(false);
-      }
+      await apiRequest("POST", undefined, memoData);
+      await fetchMemos();
+      setOpen(false);
     } catch (error) {
-      dispatch(setLoading(null));
-
       toast.error(
         "Server error. Unable to create memo, please try again later."
       );
-      console.error((error as Error).message);
       setOpen(false);
+    } finally {
+      dispatch(setLoading(null));
     }
   };
 
