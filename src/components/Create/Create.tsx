@@ -72,6 +72,7 @@ const Create = ({ open, setOpen }: Props) => {
 
   return (
     <S.Backdrop
+      data-testid="backdrop"
       open={open}
       onClick={(event: React.MouseEvent) => closeOnOverlay(event)}
     >
