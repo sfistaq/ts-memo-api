@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import memoReducer from "./memoReducer/memoReducer";
+import { memoReducer } from "./memoReducer/memoReducer";
 
 const rootReducer = combineReducers({
-  memo: memoReducer,
+  memo: memoReducer || (() => null),
 });
 
 export default rootReducer;

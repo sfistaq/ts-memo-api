@@ -18,7 +18,7 @@ export const initialState: MemoState = {
   error: null,
 };
 
-const memoReducer = (
+export const memoReducer = (
   state: MemoState = initialState,
   action: MemoAction
 ): MemoState => {
@@ -82,5 +82,3 @@ const memoReducer = (
       return state;
   }
 };
-
-export default memoReducer;
