@@ -1,18 +1,13 @@
 import styled from "@mui/styled-engine-sc";
-import {
-  Button as MuiButton,
-  ButtonProps,
-  TableRow,
-  TableCell,
-} from "@mui/material";
+import { Button as MuiButton, ButtonProps, Box } from "@mui/material";
 
-export const Container = styled(TableRow)`
+export const Container = styled(Box)`
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-around;
   background: ${({ theme: { palette } }) => palette.background.main};
-  padding: ${({ theme: { spacing } }) => spacing(1.2)};
+  padding: ${({ theme }) => theme.spacing(1.2)};
 
   ${({ theme: { breakpoints } }) => breakpoints.down("md")} {
     display: grid;
@@ -47,6 +42,6 @@ export const Button = styled(MuiButton)<ButtonProps>`
   }
 `;
 
-export const Wrapper = styled(TableCell)`
+export const Wrapper = styled(Box)`
   border: none;
 `;

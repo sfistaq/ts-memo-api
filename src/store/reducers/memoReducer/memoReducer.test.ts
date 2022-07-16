@@ -1,5 +1,5 @@
 import type { MemosData } from "../../../@types/memo";
-import memoReducer, { initialState } from "./memoReducer";
+import { memoReducer, initialState } from "./memoReducer";
 import { MemoActionTypes, LoadingsTypes } from "../../actions/memoActions";
 import { STATUS } from "../../../helpers";
 
